@@ -1,0 +1,17 @@
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\bin\Debug\net7.0\ecommeceBack.DAL.deps.json
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\bin\Debug\net7.0\ecommeceBack.DAL.runtimeconfig.json
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\bin\Debug\net7.0\ecommeceBack.DAL.dll
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\bin\Debug\net7.0\ecommeceBack.DAL.pdb
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\bin\Debug\net7.0\ecommeceBack.Models.dll
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\bin\Debug\net7.0\ecommeceBack.Models.pdb
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.csproj.AssemblyReference.cache
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.AssemblyInfoInputs.cache
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.AssemblyInfo.cs
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.csproj.CopyComplete
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.dll
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\refint\ecommeceBack.DAL.dll
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.pdb
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ecommeceBack.DAL.genruntimeconfig.cache
+C:\Users\Indatech\Documents\Desarrollo\Proyectos No_contry\s12-17-m-csharp-js\Backend\ecommeceBack\ecommeceBack.DAL\obj\Debug\net7.0\ref\ecommeceBack.DAL.dll

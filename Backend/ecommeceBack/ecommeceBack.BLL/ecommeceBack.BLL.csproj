@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ecommeceBack.DAL\ecommeceBack.DAL.csproj" />
+    <ProjectReference Include="..\ecommeceBack.Models\ecommeceBack.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="contrato\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+</Project>
