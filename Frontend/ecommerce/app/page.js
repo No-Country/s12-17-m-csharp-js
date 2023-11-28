@@ -1,5 +1,9 @@
+import PopUp from './components/Popup/PopUp'
+
 export default function Home() {
   return (
-    <main></main>
+    <main>
+      <PopUp open title={'Registro Exitoso!'} description={'Revisa tu email para validar tu cuenta.'} />
+    </main>
   )
 }
