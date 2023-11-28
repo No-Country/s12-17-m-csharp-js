@@ -18,7 +18,13 @@ namespace ecommeceBack.DAL.Dbcontext
 
         }
 
+        public DbSet<Datos> Datos { get; set; }
+
         public DbSet<Marca> Marcas {  get; set; }
+
+        
+
+
 
     }
 }

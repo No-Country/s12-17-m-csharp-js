@@ -1,4 +1,8 @@
+using ecommeceBack.BLL.contrato;
+using ecommeceBack.BLL.Service;
+using ecommeceBack.DAL.Contrato;
 using ecommeceBack.DAL.Dbcontext;
+using ecommeceBack.DAL.Repository;
 using ecommeceBack.Models.Entidades;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +23,36 @@ builder.Services.AddDbContext<AplicationDBcontext>(option =>
 );
 
 builder.Services.AddIdentity<Usuario, IdentityRole>(option => { option.Password.RequireNonAlphanumeric = false; option.User.RequireUniqueEmail = true; }).AddEntityFrameworkStores<AplicationDBcontext>().AddDefaultTokenProviders();
+//Inyeccion de Dependencia
+
+builder.Services.AddScoped<IGenericRepository<Usuario>, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 
 var app = builder.Build();
+
+
+
+
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var dataSeeder = services.GetRequiredService<IDataSeeder>();
+        await dataSeeder.CrearRoles();
+        await dataSeeder.CrearUsuarioAdmin(); 
+    }
+    catch (Exception)
+    {
+
+
+    }
+}
 
 //using (var scope = app.Services.CreateScope()) 
 //{
@@ -29,8 +61,8 @@ var app = builder.Build();
 //}
 
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
