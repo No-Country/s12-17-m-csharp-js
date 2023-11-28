@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
 
             {/* Columna del formulario */}
             <div className="w-1/2 flex items-center justify-center bg-white ">
-                <form className="w-1/2">
+                <form>
                     {children}
                 </form>
             </div>
