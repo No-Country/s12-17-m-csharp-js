@@ -21,9 +21,13 @@ namespace ecommeceBack.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Registro([FromBody]CreacionUsuarioDTO modelo) 
         {
-            bool Resultado = await usuarioService.Insertar(modelo);
-           
-            return StatusCode(StatusCodes.Status200OK, new { valor = Resultado });
+            bool Resultado = await usuarioService.Registrar(modelo);
+           if (!Resultado) 
+            { 
+                return BadRequest("No se pudo agregar su Usuario");
+            }
+
+            return Ok();
         }
     }
 }

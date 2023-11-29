@@ -15,10 +15,12 @@ namespace ecommeceBack.BLL.Service
     public class UsuarioService : IUsuarioService
     {
         private readonly IGenericRepository<Usuario> _UsuarioRepo;
+        private readonly IUsuarioRepository _registrarRepo;
 
-        public UsuarioService(IGenericRepository<Usuario> usuarioRepo)
+        public UsuarioService(IGenericRepository<Usuario> usuarioRepo, IUsuarioRepository registrarRepo)
         {
             _UsuarioRepo = usuarioRepo;
+            _registrarRepo = registrarRepo;
         }
 
         public Task<bool> Actualizar(Usuario modelo)
@@ -31,26 +33,18 @@ namespace ecommeceBack.BLL.Service
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Insertar(CreacionUsuarioDTO modelo)
+        public async Task<bool> Registrar(CreacionUsuarioDTO modelo)
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-
-            string PasswordHash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: modelo.Password,
-            salt: salt,
-            prf: KeyDerivationPrf.HMACSHA256,
-            iterationCount: 100000,
-            numBytesRequested: 256 / 8));
 
             Usuario Usuario = new Usuario()
             {
                 UserName = modelo.Email,
                 Email = modelo.Email,
-                PasswordHash = PasswordHash,
+                FechaCreacion = DateTime.Now
 
             };
 
-            return await _UsuarioRepo.Insertar(Usuario);
+            return await _registrarRepo.Registrar(Usuario, modelo.Password);
         }
 
         public Task<Usuario> ObtenerPorId(int id)

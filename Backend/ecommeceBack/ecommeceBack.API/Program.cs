@@ -26,7 +26,9 @@ builder.Services.AddIdentity<Usuario, IdentityRole>(option => { option.Password.
 //Inyeccion de Dependencia
 
 builder.Services.AddScoped<IGenericRepository<Usuario>, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 

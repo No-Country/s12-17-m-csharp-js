@@ -22,7 +22,7 @@ namespace ecommeceBack.BLL.Service
 
         public async Task CrearRoles()
         {
-            string[] roles = { "admin", "cliente" };
+            string[] roles = { "admin", "usuario" };
 
             foreach (string rol in roles)
             {

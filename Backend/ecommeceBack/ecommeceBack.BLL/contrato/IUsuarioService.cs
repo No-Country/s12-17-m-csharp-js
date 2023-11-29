@@ -10,7 +10,7 @@ namespace ecommeceBack.BLL.contrato
 {
     public interface IUsuarioService
     {
-        Task<bool> Insertar(CreacionUsuarioDTO modelo);
+        Task<bool> Registrar(CreacionUsuarioDTO modelo);
 
         Task<bool> Actualizar(Usuario modelo);
 
