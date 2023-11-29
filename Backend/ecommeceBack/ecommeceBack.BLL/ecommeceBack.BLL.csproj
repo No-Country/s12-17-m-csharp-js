@@ -11,9 +11,4 @@
     <ProjectReference Include="..\ecommeceBack.Models\ecommeceBack.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="contrato\" />
-    <Folder Include="Service\" />
-  </ItemGroup>
-
 </Project>
