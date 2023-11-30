@@ -7,7 +7,7 @@ import TextInput from "../components/Form/TextInput";
 import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
 import { useForm } from "react-hook-form";
-import Validations from "../components/Form/Validations";
+import { register_validations } from "../components/Form/Validations";
 
 const Page = () => {
   const {
@@ -37,11 +37,11 @@ const Page = () => {
           </h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TextInput errorsMessage={Validations[0]} errors={errors} register={register} registerName="name" name="Nombres" required />
-          <TextInput errorsMessage={Validations[1]} errors={errors} register={register} registerName="lastname" name="Apellidos" required />
-          <TextInput errorsMessage={Validations[2]} errors={errors} register={register} registerName="email" name="Email" type="email" required />
-          <TextInput errorsMessage={Validations[3]} errors={errors} register={register} registerName="password" name="Contraseña" type="password" required />
-          <TextInput errorsMessage={Validations[4]} errors={errors} register={register} registerName="confirm_password" name="Confirmar contraseña" type="password" required />
+          <TextInput errorsMessage={register_validations[0]} errors={errors} register={register} registerName="name"             name="Nombres" required />
+          <TextInput errorsMessage={register_validations[1]} errors={errors} register={register} registerName="lastname"         name="Apellidos" required />
+          <TextInput errorsMessage={register_validations[2]} errors={errors} register={register} registerName="email"            name="Email" type="email" required />
+          <TextInput errorsMessage={register_validations[3]} errors={errors} register={register} registerName="password"         name="Contraseña" type="password" required />
+          <TextInput errorsMessage={register_validations[4]} errors={errors} register={register} registerName="confirm_password" name="Confirmar contraseña" type="password" required />
 
           <div className="mt-10 mb-10">
             <label className="flex items-center">

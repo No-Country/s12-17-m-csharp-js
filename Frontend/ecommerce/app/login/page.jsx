@@ -1,3 +1,5 @@
+"use client"
+
 import Button from "../components/Form/Button";
 import Layout from "../components/Form/Layout";
 import TextInput from "../components/Form/TextInput";
@@ -5,8 +7,22 @@ import SocialButton from "../components/Form/SocialButton";
 import { FaArrowRight } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
+import { login_validations } from "../components/Form/Validations";
+import { useForm } from "react-hook-form";
 
-const page = () => {
+const Page = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+      console.log(data)
+  }
+
   return (
     <Layout>
       <div className="w-1/2 mx-auto">
@@ -32,19 +48,19 @@ const page = () => {
           </SocialButton>
         </div>
       </div>
-      <div className="w-1/2 mx-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 mx-auto">
           <p className="text-center mt-10 mb-8 font-bold">o</p>
           <div className="mb-4">
-            <TextInput name="Email" type="email" />
-            <TextInput name="Password" type="password" />
+            <TextInput errorsMessage={login_validations[0]} errors={errors} register={register} registerName="email"      name="Email" type="email" />
+            <TextInput errorsMessage={login_validations[1]} errors={errors} register={register} registerName="password"   name="Password" type="password" />
           </div>
           <div className="mt-16 mb-4">
             <button className=" bg-secondary text-primary rounded-full h-14 w-14 hover:bg-secondary-600 transition duration-300 mb-2 flex items-center justify-center">
               <FaArrowRight className="text-primary" size={20} />
             </button>
           </div>
-      </div>
+      </form>
     </Layout>
   );
 };
-export default page;
+export default Page;

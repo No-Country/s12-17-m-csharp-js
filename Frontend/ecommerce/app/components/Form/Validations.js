@@ -11,7 +11,7 @@ function hasUppercaseLowercaseNumber(text) {
     );
 }
 
-const Validations = [
+export const register_validations = [
     {
         required: "Se necesita ingresar un nombre."
     },
@@ -20,7 +20,6 @@ const Validations = [
     },
     {
         required: "Se necesita ingresar un email.",
-        isEmail: "El formato del correo electrónico no es válido."
     },
     {
         required: "Se necesita ingresar una contraseña.",
@@ -41,5 +40,15 @@ const Validations = [
     }
 ];
 
-
-export default Validations;
+export const login_validations = [
+    {
+        required: "Se necesita ingresar un email.",
+    },
+    {
+        required: "Se necesita ingresar una contraseña.",
+        minLength: {
+            value: 8,
+            message: "La contraseña debe tener al menos 8 caracteres."
+        }
+    }
+];
