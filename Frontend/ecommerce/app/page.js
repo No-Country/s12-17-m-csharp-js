@@ -24,13 +24,13 @@ export default function Home() {
   return (
     <div className="flex">
     {/* Primer carrusel */}
-    <div className="w-[60%] h-96 mt-16 ml-10 ">
+    <div className="w-[50%] h-70 mt-16 ml-10 ">
       <Carousel slides={slides} />
     </div>
   
     {/* Segundo carrusel dividido en dos */}
     <div className="w-[35%] mt-16 flex flex-col">
-      <div className="h-[50%] ml-10 mr-10">
+      <div className="h-[96%] ml-10 mr-10">
         <Carousel slides={secondSlides} />
       </div>
       <div className="h-[50%] ml-10 mt-4 mr-10">

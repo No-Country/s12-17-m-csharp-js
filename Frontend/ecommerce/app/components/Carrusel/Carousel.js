@@ -1,9 +1,7 @@
 "use client"
 import { useState } from "react";
-import {
-  BsFillArrowRightCircleFill,
-  BsFillArrowLeftCircleFill,
-} from "react-icons/bs";
+import { CiCircleChevLeft } from "react-icons/ci";
+import { CiCircleChevRight } from "react-icons/ci";
 export default function Carousel({ slides }) {
   let [current, setCurrent] = useState(0);
 
@@ -31,11 +29,11 @@ export default function Carousel({ slides }) {
       </div>
 
       <div className="absolute top-0 h-full w-full justify-between items-center flex text-white px-10 text-3xl">
-        <button onClick={previousSlide}>
-          <BsFillArrowLeftCircleFill />
+        <button onClick={previousSlide} className="rounded-full p-2 bg-white">
+          <CiCircleChevLeft style={{ fill: 'black' }} />
         </button>
-        <button onClick={nextSlide}>
-          <BsFillArrowRightCircleFill />
+        <button onClick={nextSlide} className="rounded-full p-2 bg-white ">
+        <CiCircleChevRight style={{ fill: 'black' }} />
         </button>
       </div>
 
