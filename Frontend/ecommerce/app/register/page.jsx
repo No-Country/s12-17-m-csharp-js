@@ -52,7 +52,7 @@ const RegisterPage = () => {
         //     token,
         //   })
         // );
-        alert("Registro exitoso");
+        // alert("Registro exitoso");
 
         setShowPopUp(true);
       } catch (error) {
@@ -66,6 +66,7 @@ const RegisterPage = () => {
       <PopUp
         title={"Registro Exitoso!"}
         description={"Revisa tu email para validar tu cuenta."}
+        togglePopUp={() => setShowPopUp((prev) => !prev)}
         open={showPopUp}
       />
       <div className="w-1/2 mx-auto my-16">
