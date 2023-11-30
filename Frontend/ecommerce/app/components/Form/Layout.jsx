@@ -3,6 +3,7 @@ import TextInput from "./TextInput"
 
 
 const Layout = ({ children }) => {
+
     return (
         <div className="flex h-full">
             {/* Columna del logo */}
@@ -14,9 +15,9 @@ const Layout = ({ children }) => {
 
             {/* Columna del formulario */}
             <div className="w-1/2 flex items-center justify-center bg-white ">
-                <form>
+                <div>
                     {children}
-                </form>
+                </div>
             </div>
         </div>
     )

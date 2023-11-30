@@ -1,11 +1,33 @@
+"use client"
+
 import Button from "../components/Form/Button";
 import Layout from "../components/Form/Layout";
 import SocialButton from "../components/Form/SocialButton";
 import TextInput from "../components/Form/TextInput";
 import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
+import { useForm } from "react-hook-form";
+import Validations from "../components/Form/Validations";
 
-const page = () => {
+const Page = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    if (watch("password") != watch("confirm_password")) {
+      setError("confirm_password", {type:"custom", message: "La confirmación de contraseña no coincide con la contraseña ingresada."})
+    }
+    else {
+      //Enviar data a endpoint
+      console.log(data)
+    }
+  }
+
   return (
     <Layout>
       <div className="w-1/2 mx-auto">
@@ -14,12 +36,13 @@ const page = () => {
             Regístrate para ser usuario
           </h1>
         </div>
-        <div>
-          <TextInput name="Nombres" required />
-          <TextInput name="Apellidos" required />
-          <TextInput name="Email" type="email" required />
-          <TextInput name="Contraseña" type="password" required />
-          <TextInput name="Confirmar contraseña" type="password" required />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextInput errorsMessage={Validations[0]} errors={errors} register={register} registerName="name" name="Nombres" required />
+          <TextInput errorsMessage={Validations[1]} errors={errors} register={register} registerName="lastname" name="Apellidos" required />
+          <TextInput errorsMessage={Validations[2]} errors={errors} register={register} registerName="email" name="Email" type="email" required />
+          <TextInput errorsMessage={Validations[3]} errors={errors} register={register} registerName="password" name="Contraseña" type="password" required />
+          <TextInput errorsMessage={Validations[4]} errors={errors} register={register} registerName="confirm_password" name="Confirmar contraseña" type="password" required />
+
           <div className="mt-10 mb-10">
             <label className="flex items-center">
               <input type="checkbox" className="mr-2" required />
@@ -44,9 +67,9 @@ const page = () => {
           <p className="text-center mt-10 mb-8">
             ¿Ya tienes contraseña? <a href="#">Ingresa</a>
           </p>
-        </div>
+        </form>
       </div>
     </Layout>
   );
 };
-export default page;
+export default Page;
