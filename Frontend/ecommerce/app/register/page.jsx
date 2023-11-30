@@ -41,19 +41,6 @@ const RegisterPage = () => {
         });
         console.log(token);
 
-        // localStorage.setItem(
-        //   "user",
-        //   JSON.stringify({
-        //     user: {
-        //       email: data.email,
-        //       first_name: data.name,
-        //       last_name: data.lastname,
-        //     },
-        //     token,
-        //   })
-        // );
-        // alert("Registro exitoso");
-
         setShowPopUp(true);
       } catch (error) {
         console.error(error);
@@ -63,12 +50,13 @@ const RegisterPage = () => {
 
   return (
     <Layout>
-      <PopUp
-        title={"Registro Exitoso!"}
-        description={"Revisa tu email para validar tu cuenta."}
-        togglePopUp={() => setShowPopUp((prev) => !prev)}
-        open={showPopUp}
-      />
+      {showPopUp && (
+        <PopUp
+          title={"Registro Exitoso!"}
+          description={"Revisa tu email para validar tu cuenta."}
+          onClose={() => setShowPopUp(false)}
+        />
+      )}
       <div className="w-1/2 mx-auto my-16">
         <h1 className="w-full text-2xl font-medium">
           Regístrate para ser usuario
