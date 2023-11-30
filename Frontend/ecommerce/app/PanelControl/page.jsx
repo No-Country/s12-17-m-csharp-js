@@ -8,16 +8,18 @@ import { IoEyeOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { FaMoneyBills } from "react-icons/fa6";
+import { TbMinusVertical } from "react-icons/tb";
+
 function page() {
     return (
         
         <div className="flex h-screen">
           {/* Sección de cabecera */}
           <div className=" text-Black py-4 px-4 w-1/5" style={{ background: 'linear-gradient(to bottom, rgba(252, 163, 17, 1), rgba(20, 33, 61, 0.6))' }}>
-            <div className="flex felx-col items-center">
-              <h2 className="font-bold mb-10">Perfil</h2> 
+            <div >
+              <h2 className="font-bold mb-10 flex items-center"> <TbMinusVertical className='mr-2'/>Perfil</h2> 
             </div>
-            <div className='flex items-center justify-center mt-8'>
+            <div className='flex items-center justify-center mt-8 flex-col'>
             <img src="avatar.png" alt="Avatar" className="w-12 h-12 rounded-full mr-2" />
             <span>Nombre</span>
             </div>
@@ -33,10 +35,17 @@ function page() {
                 {/* Otros enlaces */}
               </ul>
             </nav>
-            <div className='flex items-center justify-center mt-28'> salir <FaSignOutAlt className='ml-24'/> </div>
+            <div className='flex items-center justify-center mt-28 cursor-pointer'> salir <FaSignOutAlt className='ml-24'/> </div>
           </div>
+         
           {/* Barra de navegación y sección de administrar elementos */}
           <main className="bg-white-200 w-full p-8">
+          <div className="h-16 py-3 flex justify-end">
+          <input
+            className="h-full px-4 placeholder-gray-700 bg-white border border-gray-300 rounded-md w-80 outline-none pr-10"
+            placeholder="Buscar"
+          />
+        </div>
             <header className="py-4 px-4 mb-8 flex items-center justify-between border-b border-gray-300">
               <h2 className="text-xl font-bold">Lista de productos vendiendo</h2>
               <button className='bg-primary text-center text-white rounded-full px-4 py-2'>crear un anuncio nuevo</button>
