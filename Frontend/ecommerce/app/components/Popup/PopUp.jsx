@@ -1,23 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
 import { useState } from "react";
-import { createPortal } from "react-dom";
 
-function PopUp({ open, title, description }) {
-  const [showPopUp, setShowPopUp] = useState(open);
-  const togglePopUp = () => setShowPopUp((state) => !state);
-  const [documentMounted, setDocumentMounted] = useState(false);
-
-  useEffect(() => {
-    setDocumentMounted(true);
-  }, []);
-
+function PopUp({ open, togglePopUp, title, description }) {
   return (
-    documentMounted &&
-    showPopUp &&
-    createPortal(
-      <div className="bg-black/50 fixed top-0 h-full w-full flex justify-center items-center p-4">
+    open && (
+      <div className="bg-black/50 fixed top-0 left-0 h-full w-full flex justify-center items-center p-4">
         <div className="bg-[#14213D] text-white grid relative gap-y-2.5 text-center p-10 w-full max-w-screen-sm rounded-[20px]">
           <button onClick={togglePopUp} className="absolute right-7 top-6">
             <svg
@@ -60,9 +48,7 @@ function PopUp({ open, title, description }) {
             Volver al inicio
           </Link>
         </div>
-      </div>,
-      document.body,
-      "root-popup"
+      </div>
     )
   );
 }

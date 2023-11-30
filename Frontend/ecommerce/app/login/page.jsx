@@ -38,7 +38,7 @@ const LoginPage = () => {
       //     token,
       //   })
       // );
-      alert("Registro exitoso");
+      // alert("Registro exitoso");
 
       setShowPopUp(true);
     } catch (error) {
@@ -51,6 +51,7 @@ const LoginPage = () => {
       <PopUp
         title={"inicio de sesión exitoso!"}
         description={"Bienvenido a la comunidad de SURshop."}
+        togglePopUp={() => setShowPopUp((prev) => !prev)}
         open={showPopUp}
       />
       <div className="w-5/12 mx-auto font-bold">
