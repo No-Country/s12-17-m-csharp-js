@@ -13,7 +13,7 @@ function page() {
         
         <div className="flex h-screen">
           {/* Sección de cabecera */}
-          <div className="bg-gradient-to-r from-orange-500 to-blue-700  text-Black py-4 px-4 w-1/5">
+          <div className=" text-Black py-4 px-4 w-1/5" style={{ background: 'linear-gradient(to bottom, rgba(252, 163, 17, 1), rgba(20, 33, 61, 0.6))' }}>
             <div className="flex felx-col items-center">
               <h2 className="font-bold mb-10">Perfil</h2> 
             </div>
@@ -35,7 +35,6 @@ function page() {
             </nav>
             <div className='flex items-center justify-center mt-28'> salir <FaSignOutAlt className='ml-24'/> </div>
           </div>
-    
           {/* Barra de navegación y sección de administrar elementos */}
           <main className="bg-white-200 w-full p-8">
             <header className="py-4 px-4 mb-8 flex items-center justify-between border-b border-gray-300">
