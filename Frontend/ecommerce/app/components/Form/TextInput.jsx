@@ -1,4 +1,4 @@
-const TextInput = ({ name, required = false, register, registerName, type, errors, errorsMessage, ...props }) => {
+const TextInput = ({ name, required = false, register, registerName, type = "text", errors, errorsMessage, ...props }) => {
     return (
         <div className="mb-4">
             <label htmlFor="email" className="block mb-2 font-semibold">
