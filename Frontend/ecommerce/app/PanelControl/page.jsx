@@ -4,13 +4,16 @@ import { CgProfile } from "react-icons/cg";
 import { BiPurchaseTag } from "react-icons/bi";
 import { BsBagDash } from "react-icons/bs";
 import { FaSignOutAlt } from "react-icons/fa";
-
+import { IoEyeOutline } from "react-icons/io5";
+import { CiEdit } from "react-icons/ci";
+import { AiTwotoneDelete } from "react-icons/ai";
+import { FaMoneyBills } from "react-icons/fa6";
 function page() {
     return (
         
         <div className="flex h-screen">
           {/* Sección de cabecera */}
-          <div className="bg-gray-800 text-white py-4 px-4 w-1/5">
+          <div className="bg-gradient-to-r from-orange-500 to-blue-700  text-Black py-4 px-4 w-1/5">
             <div className="flex felx-col items-center">
               <h2 className="font-bold mb-10">Perfil</h2> 
             </div>
@@ -22,11 +25,11 @@ function page() {
             <nav className=" flex items-center justify-center mt-16">
               <ul>
                 
-                <li className='flex items-center text-gray-300 hover:text-white py-1 mb-5'> <BsBagDash  className='mr-2'/>Ventas</li>
-                <li className='flex items-center text-gray-300 hover:text-white py-1 mb-5'><BiPurchaseTag className='mr-2'/>Compras</li>
-                <li className='flex items-center text-gray-300 hover:text-white py-1 mb-5'>Subscripciones</li>
-                <li className='flex items-center text-gray-300 hover:text-white py-1 mb-5'><CgProfile className='mr-2' />Mi perfil</li>
-                <li className='flex items-center text-gray-300 hover:text-white py-1 mb-5'> <CiSettings className='mr-2'/> Configuración</li>
+                <li className='flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer'> <BsBagDash  className='mr-2'/>Ventas</li>
+                <li className='flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer'><BiPurchaseTag className='mr-2'/>Compras</li>
+                <li className='flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer'><FaMoneyBills className='mr-2' />Subscripciones</li>
+                <li className='flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer'><CgProfile className='mr-2' />Mi perfil</li>
+                <li className='flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer'> <CiSettings className='mr-2'/> Configuración</li>
                 {/* Otros enlaces */}
               </ul>
             </nav>
@@ -63,10 +66,10 @@ function page() {
                     <td className="px-6 py-4 whitespace-nowrap">50</td>
                     <td className="px-6 py-4 whitespace-nowrap">AB123456</td>
                     <td className="px-6 py-4 whitespace-nowrap">2023-11-27</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="mr-2 text-blue-600 hover:text-blue-900 cursor-pointer">Ver</span>
-                        <span className="mr-2 text-green-600 hover:text-green-900 cursor-pointer">Editar</span>
-                        <span className="text-red-600 hover:text-red-900 cursor-pointer">Eliminar</span>
+                    <td className="px-6 py-4 whitespace-nowrap flex items-center space-x-4">
+                        <span className="mr-2 text-blue-600 hover:text-blue-900 cursor-pointer"><IoEyeOutline /></span>
+                        <span className="mr-2 text-green-600 hover:text-green-900 cursor-pointer"><CiEdit /></span>
+                        <span className="text-red-600 hover:text-red-900 cursor-pointer"><AiTwotoneDelete /></span>
                     </td>
                     </tr>
 
