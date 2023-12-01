@@ -1,5 +1,6 @@
 import CardCarousel from './components/Carrusel/Cardproduct'
 import Carousel from './components/Carrusel/Carousel'
+import CombinedCarousel from './components/Carrusel/Carousel_section1'
 import Categories from './components/Categories/Categories'
 import Promos from './components/Promos/Promos'
 
@@ -8,7 +9,7 @@ export default function Home() {
 
   let secondSlides = ['/specialoffer.png', '/specialoffer2.png']
 
-  let thirdSlides = ['/Ellipse 146.png','/Ellipse 147.png','/carrefour.png','/wallmart.png','/icbfpng','/santander.png']
+  let thirdSlides = ['/Ellipse 146.png','/Ellipse 147.png','/carrefour.png','/wallmart.png','/icbf.png','/santander.png']
   const cardsData = [
     {
       id: 1,
@@ -81,23 +82,24 @@ export default function Home() {
   ];
   return (
     <div>
-      <div className='flex'>
+      <div className='flex mt-20 ml-20'>
         {/* Primer carrusel */}
         <div className='w-[50%] h-70  ml-10 '>
           <Carousel slides={slides} />
         </div>
         {/* Segundo carrusel dividido en dos */}
         <div className='w-[35%]  flex flex-col'>
-          <div className='h-[96%] ml-10 mr-10'>
+          <div className='h-[96%] ml-10 '>
             <Carousel slides={secondSlides} />
           </div>
-          <div className='h-[50%] ml-10 mt-4 mr-10'>
+          <div className='h-[50%] ml-10 mt-4 '>
             {/* Carrusel en la mitad inferior del segundo carrusel */}
-            <Carousel slides={thirdSlides} />
+            <CombinedCarousel slides={thirdSlides}/>
           </div>
         </div>
       </div>
       <div className='mt-20 mr-40 ml-40'><CardCarousel cards={cardsData}/></div>
+      
       <Categories />
       <Promos />
     </div>
