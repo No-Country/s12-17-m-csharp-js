@@ -7,15 +7,12 @@ export default function Home() {
 
   let secondSlides = ['/specialoffer.png', '/specialoffer2.png']
 
-  let thirdSlides = [
-    'https://i.pinimg.com/originals/51/82/ac/5182ac536727d576c78a9320ac62de30.jpg',
-    'https://wallpapercave.com/wp/wp3386769.jpg',
-    'https://wallpaperaccess.com/full/809523.jpg',
-    'https://getwallpapers.com/wallpaper/full/5/c/0/606489.jpg'
-  ]
+  let thirdSlides = ['/Ellipse 146.png',
+  '/Ellipse 147.png',
+  '/carrefour.png',
+  '/wallmart.png','/icbfpng','/santander.png']
   return (
     <div>
-      <main className='h-screen bg-white'></main>
       <div className='flex'>
         {/* Primer carrusel */}
         <div className='w-[50%] h-70  ml-10 '>

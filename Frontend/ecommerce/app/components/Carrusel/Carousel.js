@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { CiCircleChevLeft, CiCircleChevRight } from 'react-icons/ci'
+import { IoIosArrowDropright } from "react-icons/io";
 export default function Carousel({ slides }) {
   let [current, setCurrent] = useState(0)
 
@@ -27,12 +28,12 @@ export default function Carousel({ slides }) {
         })}
       </div>
 
-      <div className='absolute top-0 h-full w-full justify-between items-center flex text-white px-10 text-3xl'>
-        <button onClick={previousSlide} className='rounded-full p-2 bg-white'>
-          <CiCircleChevLeft style={{ fill: 'black' }} />
+      <div className='absolute top-0 h-full w-full justify-between items-center flex text-white  text-3xl overflow-hidden'>
+        <button onClick={previousSlide} className='rounded-full bg-white '>
+          <CiCircleChevLeft className='text-primary'/>
         </button>
-        <button onClick={nextSlide} className='rounded-full p-2 bg-white '>
-          <CiCircleChevRight style={{ fill: 'black' }} />
+        <button onClick={nextSlide} className='rounded-full bg-white '>
+        <CiCircleChevRight  className='text-primary ' />
         </button>
       </div>
 
