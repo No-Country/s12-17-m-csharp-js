@@ -87,6 +87,9 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<IGenericRepository<Marca>, MarcasRepository>();
+builder.Services.AddScoped<IMarcaService, MarcaService>();
+
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 

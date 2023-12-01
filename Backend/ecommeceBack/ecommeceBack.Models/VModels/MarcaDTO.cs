@@ -5,13 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ecommeceBack.Models.Entidades
+namespace ecommeceBack.Models.VModels
 {
-    public class Marca
+    public class MarcaDTO
     {
-        public int Id { get; set; }
-
         public string Nombre { get; set; }
-
     }
 }
