@@ -1,5 +1,6 @@
 import CardCarousel from './components/Carrusel/Cardproduct'
 import Carousel from './components/Carrusel/Carousel'
+import CombinedCarousel from './components/Carrusel/Carousel_section1'
 import Categories from './components/Categories/Categories'
 import Promos from './components/Promos/Promos'
 
@@ -93,11 +94,12 @@ export default function Home() {
           </div>
           <div className='h-[50%] ml-10 mt-4 mr-10'>
             {/* Carrusel en la mitad inferior del segundo carrusel */}
-            <Carousel slides={thirdSlides} />
+            <CombinedCarousel slides={thirdSlides}/>
           </div>
         </div>
       </div>
       <div className='mt-20 mr-40 ml-40'><CardCarousel cards={cardsData}/></div>
+      
       <Categories />
       <Promos />
     </div>
