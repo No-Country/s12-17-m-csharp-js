@@ -1,5 +1,6 @@
 import Carousel from './components/Carrusel/Carousel'
 import Categories from './components/Categories/Categories'
+import Promos from './components/Promos/Promos'
 
 export default function Home() {
   let slides = ['/megasale1.png', '/megasale2.png', '/megasale3.png']
@@ -32,6 +33,7 @@ export default function Home() {
         </div>
       </div>
       <Categories />
+      <Promos />
     </div>
   )
 }
