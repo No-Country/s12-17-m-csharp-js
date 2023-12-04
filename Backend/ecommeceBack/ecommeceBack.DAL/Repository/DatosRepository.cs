@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.DAL.Repository
 {
-    public class DatosRepository : IGenericRepository<Datos>
+    public class DatosRepository /*: IGenericRepository<Datos>*/
     {
         private readonly AplicationDBcontext _dbcontext;
 

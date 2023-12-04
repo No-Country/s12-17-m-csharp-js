@@ -4,6 +4,8 @@ using ecommeceBack.DAL.Contrato;
 using ecommeceBack.DAL.Dbcontext;
 using ecommeceBack.DAL.Repository;
 using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.Utilidades;
+using ecommeceBack.Models.VModels.CategoriaDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -78,17 +80,21 @@ builder.Services.AddSwaggerGen(options =>
 
 });
 
+//Configuracion Automapper
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 //Inyeccion de Dependencia
 
-builder.Services.AddScoped<IGenericRepository<Usuario>, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-builder.Services.AddScoped<IGenericRepository<Marca>, MarcasRepository>();
-builder.Services.AddScoped<IMarcaService, MarcaService>();
+builder.Services.AddScoped<IGenericRepository<CreacionCategoriaDTO,CategoriaDTO,Categoria>,CategoriasRepository>();
+builder.Services.AddScoped<IGenericService<CreacionCategoriaDTO,CategoriaDTO>, CategoriaService>();
+
+//builder.Services.AddScoped<IGenericRepository<Marca>, MarcasRepository>();
+//builder.Services.AddScoped<IMarcaService, MarcaService>();
 
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();

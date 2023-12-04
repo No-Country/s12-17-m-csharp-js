@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.DAL.Repository
 {
-    public class MarcasRepository : IGenericRepository<Marca>
+    public class MarcasRepository 
     {
         private readonly AplicationDBcontext _dbcontext;
 

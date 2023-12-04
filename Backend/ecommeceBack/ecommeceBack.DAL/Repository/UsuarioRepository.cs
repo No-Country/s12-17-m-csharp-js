@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.DAL.Repository
 {
-    public class UsuarioRepository : IGenericRepository<Usuario>, IUsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly UserManager<Usuario> userManager;
         private readonly AplicationDBcontext _dbcontext;
@@ -19,32 +19,6 @@ namespace ecommeceBack.DAL.Repository
             this.userManager = userManager;
 
             this._dbcontext = dbcontext;
-        }
-
-        public Task<bool> Actualizar(Usuario modelo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Eliminar(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> Insertar(Usuario modelo)
-        {
-          
-            throw new NotImplementedException();
-        }
-
-        public Task<Usuario> ObtenerPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IQueryable<Usuario>> ObtenerTodos()
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<bool> Registrar(Usuario modelo, string password)

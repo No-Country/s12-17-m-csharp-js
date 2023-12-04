@@ -22,6 +22,8 @@ namespace ecommeceBack.DAL.Dbcontext
 
         public DbSet<Marca> Marcas {  get; set; }
 
+        public DbSet<Categoria> Categorias { get; set; }
+
         
 
 
