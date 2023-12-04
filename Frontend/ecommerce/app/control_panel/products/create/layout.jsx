@@ -12,7 +12,7 @@ const layout = ({ children }) => {
           <FaArrowLeftLong className="text-2xl" /> Volver
         </Link>
       </div>
-      <div className="relative z-10 max-w-4xl p-8 mx-auto bg-white rounded-md shadow-lg top-24 mb-36">
+      <div className="relative z-10 max-w-4xl p-16 mx-auto bg-white rounded-md shadow-lg top-24 mb-36">
         {children}
       </div>
     </div>
