@@ -1,12 +1,16 @@
 ﻿using ecommeceBack.BLL.contrato;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace ecommeceBack.API.Controllers
 {
@@ -25,6 +29,7 @@ namespace ecommeceBack.API.Controllers
             this.signInManager = signInManager;
             this.tokenService = tokenService;
         }
+
 
         [HttpPost("registro")]
         public async Task<IActionResult> Registro([FromBody]CreacionUsuarioDTO modelo) 
@@ -53,6 +58,36 @@ namespace ecommeceBack.API.Controllers
 
         }
 
+
+        [HttpPost("signin-google")]
+        public IActionResult LoginGoogle()
+        {
+            var authenticationProperties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            };
+
+            return Challenge(authenticationProperties, GoogleDefaults.AuthenticationScheme);
+        }
+
+
+        [HttpGet("GoogleResponse")]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            if (!authenticateResult.Succeeded)
+            {
+                return BadRequest("Failed to authenticate with Google");
+            }
+
+            var userName = authenticateResult.Principal.Identity.Name;
+            var welcomeMessage = $"Welcome, {userName}! You have successfully logged in with Google.";
+
+            var token = tokenService.GenerarToken(userName, 1);
+
+            return Ok(new { message = welcomeMessage, token = token.Result });
+        }
 
     }
 }
