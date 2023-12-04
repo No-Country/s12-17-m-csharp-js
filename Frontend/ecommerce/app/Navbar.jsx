@@ -18,7 +18,7 @@ const Navbar = () => {
         >
           Nombre
         </Link>
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-8 whitespace-nowrap">
           {routes.map((route) => (
             <Link
               key={route.name}

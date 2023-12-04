@@ -8,6 +8,10 @@ export const routes = [
     path: "/products/1",
   },
   {
+    name: "Panel de control",
+    path: "/control_panel"
+  },
+  {
     name: "Ayuda",
     path: "/help",
   },
