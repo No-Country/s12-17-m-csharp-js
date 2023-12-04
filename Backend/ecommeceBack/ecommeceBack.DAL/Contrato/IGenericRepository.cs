@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.DAL.Contrato
 {
-    public interface IGenericRepository<TEntityModel> where TEntityModel : class
+    public interface IGenericRepository<DTOCreacion,DTO, Entidad> 
     {
-        Task<bool> Insertar(TEntityModel modelo);
+        Task<DTO> Insertar(DTOCreacion modelo);
 
-        Task<bool> Actualizar(TEntityModel modelo);
+        Task<DTO> Actualizar(int id, DTOCreacion modelo);
 
         Task<bool> Eliminar(int id);
 
-        Task<TEntityModel> ObtenerPorId(int id);
+        Task<DTO> ObtenerPorId(int id);
 
-        Task<IQueryable<TEntityModel>> ObtenerTodos();
+        Task<IQueryable<Entidad>> ObtenerTodos();
     }
 }
