@@ -1,33 +1,38 @@
-﻿using ecommeceBack.DAL.Contrato;
+﻿using AutoMapper;
+using ecommeceBack.API.Exceptions;
+using ecommeceBack.DAL.Contrato;
 using ecommeceBack.DAL.Dbcontext;
 using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.VModels.MarcasDTO;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ecommeceBack.DAL.Repository
 {
-    public class MarcasRepository 
+    public class MarcasRepository : IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca>
     {
         private readonly AplicationDBcontext _dbcontext;
+        private readonly IMapper _mapper;
 
-        public MarcasRepository(AplicationDBcontext dbcontext)
+        public MarcasRepository(AplicationDBcontext dbcontext, IMapper mapper)
         {
             _dbcontext = dbcontext;
+            _mapper = mapper;
         }
 
-        public async Task<bool> Actualizar(Marca modelo)
+        public async Task<MarcaDTO> Actualizar(int id, CreacionMarcaDTO modelo)
         {
             try
-            {             
-                _dbcontext.Update(modelo);
+            {
+                var marca = await _dbcontext.Marcas.Where(m => m.Id == id ).FirstOrDefaultAsync();
+
+                if (marca == null) throw new NotFoundException();
+
+                marca.Nombre = modelo.Nombre;
+
                 await _dbcontext.SaveChangesAsync();
-                return true;
+                return _mapper.Map<MarcaDTO>(marca);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -38,36 +43,39 @@ namespace ecommeceBack.DAL.Repository
             try
             {
                 var borrada = await _dbcontext.Marcas.Where(m => m.Id == id).ExecuteDeleteAsync();
-                if (borrada == 0) return false;
+                if (borrada == 0) throw new NotFoundException();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
-
-        public async Task<bool> Insertar(Marca modelo)
+        
+        public async Task<MarcaDTO> Insertar(CreacionMarcaDTO modelo)
         {
             try
             {
-                _dbcontext.Add(modelo);
+                var marca = _mapper.Map<Marca>(modelo);
+                _dbcontext.Add(marca);
                 await _dbcontext.SaveChangesAsync();
-                return true;
+                return _mapper.Map<MarcaDTO>(marca);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public async Task<Marca> ObtenerPorId(int id)
+        public async Task<MarcaDTO> ObtenerPorId(int id)
         {
             try
             {
-                return await _dbcontext.Marcas.FirstOrDefaultAsync(p => p.Id == id);               
+                var marca = await _dbcontext.Marcas.FirstOrDefaultAsync(p => p.Id == id);
+                if (marca == null) throw new NotFoundException();
+                return _mapper.Map<MarcaDTO>(marca);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -80,10 +88,11 @@ namespace ecommeceBack.DAL.Repository
                 IQueryable<Marca> queryMarcas = _dbcontext.Marcas;
                 return queryMarcas;               
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
+
     }
 }

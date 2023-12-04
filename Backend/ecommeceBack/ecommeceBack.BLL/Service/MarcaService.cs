@@ -1,51 +1,83 @@
-﻿using ecommeceBack.BLL.contrato;
+﻿using AutoMapper;
+using ecommeceBack.BLL.contrato;
 using ecommeceBack.DAL.Contrato;
 using ecommeceBack.Models.Entidades;
-using ecommeceBack.Models.VModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ecommeceBack.Models.VModels.MarcasDTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace ecommeceBack.BLL.Service
 {
-    public class MarcaService/* : IMarcaService*/
+    public class MarcaService : IGenericService<CreacionMarcaDTO, MarcaDTO>
     {
-        //private readonly IGenericRepository<Marca> _marcaRepo;
+        private readonly IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca> _marcaRepo;
+        private readonly IMapper _mapper;
 
-        //public MarcaService(IGenericRepository<Marca> marcaRepo)
-        //{
-        //    _marcaRepo = marcaRepo;
-        //}
+        public MarcaService(IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca> marcaRepo, IMapper mapper)
+        {
+            _marcaRepo = marcaRepo;
+            _mapper = mapper;
+        }
 
-        //public Task<bool> Actualizar(Marca modelo)
-        //{
-        //    return _marcaRepo.Actualizar(modelo);
-        //}
+        public async Task<MarcaDTO> Actualizar(int id, CreacionMarcaDTO modelo)
+        {
+            try
+            {
+                return await _marcaRepo.Actualizar(id, modelo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //public Task<bool> Eliminar(int id)
-        //{
-        //    return _marcaRepo.Eliminar(id);
-        //}
+        public async Task<bool> Eliminar(int id)
+        {
+            try
+            {
+                return await _marcaRepo.Eliminar(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //public Task<Marca> ObtenerPorId(int id)
-        //{
-        //    return _marcaRepo.ObtenerPorId(id);
-        //}
+        public async Task<MarcaDTO> ObtenerPorId(int id)
+        {
+            try
+            {
+                return await _marcaRepo.ObtenerPorId(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //public Task<IQueryable<Marca>> ObtenerTodos()
-        //{
-        //    return _marcaRepo.ObtenerTodos();
-        //}
+        public async Task<IEnumerable<MarcaDTO>> ObtenerTodos()
+        {
+            try
+            {
+                var queryable = await _marcaRepo.ObtenerTodos();
+                var listMarcas = await queryable.ToListAsync();
+                return _mapper.Map<IEnumerable<MarcaDTO>>(listMarcas);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-        //public Task<bool> Registrar(MarcaDTO modelo)
-        //{
-        //    Marca marca = new Marca()
-        //    {
-        //        Nombre = modelo.Nombre
-        //    };
-        //    return _marcaRepo.Insertar(marca);
-        //}
+        public async Task<MarcaDTO> Registrar(CreacionMarcaDTO modelo)
+        {
+            try
+            {
+                return await _marcaRepo.Insertar(modelo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
