@@ -6,6 +6,8 @@ using ecommeceBack.DAL.Repository;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.Utilidades;
 using ecommeceBack.Models.VModels.CategoriaDTO;
+using ecommeceBack.Models.VModels.DatosDTO;
+using ecommeceBack.Models.VModels.MarcasDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +38,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     opciones.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
+        ValidateAudience = false,        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["llaveJwt"])),
         ClockSkew = TimeSpan.Zero
@@ -99,7 +100,7 @@ builder.Services.AddScoped<IGenericService<CreacionDatosDTO, DatosDTO>, DatosSer
 builder.Services.AddScoped<IDatosService, DatosService>();
 
 builder.Services.AddScoped<IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca>, MarcasRepository>();
-builder.Services.AddScoped<IGenericService<CreacionMarcaDTO,MarcaDTO>, MarcaService>();
+builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaService>();
 
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
