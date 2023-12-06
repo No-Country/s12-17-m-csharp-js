@@ -6,6 +6,7 @@ using ecommeceBack.DAL.Repository;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.Utilidades;
 using ecommeceBack.Models.VModels.CategoriaDTO;
+using ecommeceBack.Models.VModels.DatosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -90,8 +91,13 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+
 builder.Services.AddScoped<IGenericRepository<CreacionCategoriaDTO,CategoriaDTO,Categoria>,CategoriasRepository>();
 builder.Services.AddScoped<IGenericService<CreacionCategoriaDTO,CategoriaDTO>, CategoriaService>();
+//Datos
+builder.Services.AddScoped<IGenericRepository<CreacionDatosDTO, DatosDTO, Datos>, DatosRepository>();
+builder.Services.AddScoped<IGenericService<CreacionDatosDTO, DatosDTO>, DatosService>();
+builder.Services.AddScoped<IDatosService, DatosService>();
 
 //builder.Services.AddScoped<IGenericRepository<Marca>, MarcasRepository>();
 //builder.Services.AddScoped<IMarcaService, MarcaService>();

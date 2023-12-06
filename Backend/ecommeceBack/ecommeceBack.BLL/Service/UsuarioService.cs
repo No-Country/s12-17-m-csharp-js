@@ -44,13 +44,19 @@ namespace ecommeceBack.BLL.Service
         public async Task<bool> Registrar(CreacionUsuarioDTO modelo)
         {
 
+
             Usuario Usuario = new Usuario()
             {
                 UserName = modelo.Email,
                 Email = modelo.Email,
-                FechaCreacion = DateTime.Now
+                FechaCreacion = DateTime.Now,
+                
+               
 
             };
+        
+
+          
 
             return await _registrarRepo.Registrar(Usuario, modelo.Password);
         }

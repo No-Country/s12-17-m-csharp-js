@@ -29,6 +29,7 @@ namespace ecommeceBack.BLL.Service
             {
                 var queryable = await categoriaRepository.ObtenerTodos();
 
+
                 var listCategorias = await queryable.ToListAsync();
 
                 return  mapper.Map<IEnumerable<CategoriaDTO>>(listCategorias);
