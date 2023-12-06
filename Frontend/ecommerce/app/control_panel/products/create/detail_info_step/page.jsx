@@ -4,7 +4,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import TextInput from "../Partials/TextInput";
 import Dropzone from "react-dropzone";
 
-const DetailInfoStepPage = () => {
+const DetailInfoStep = () => {
   return (
     <div>
       <h1 className="text-xl font-medium">
@@ -87,4 +87,4 @@ const DetailInfoStepPage = () => {
     </div>
   );
 };
-export default DetailInfoStepPage;
+export default DetailInfoStep;
