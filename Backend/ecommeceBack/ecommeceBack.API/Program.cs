@@ -6,7 +6,6 @@ using ecommeceBack.DAL.Repository;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.Utilidades;
 using ecommeceBack.Models.VModels.CategoriaDTO;
-using ecommeceBack.Models.VModels.DatosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +30,7 @@ builder.Services.AddDbContext<AplicationDBcontext>(option =>
 
 builder.Services.AddIdentity<Usuario, IdentityRole>(option => { option.Password.RequireNonAlphanumeric = false; option.User.RequireUniqueEmail = true; }).AddEntityFrameworkStores<AplicationDBcontext>().AddDefaultTokenProviders();
 
-//Configuración para validar el token
+//Configuraciï¿½n para validar el token
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opciones =>
 {
     opciones.TokenValidationParameters = new TokenValidationParameters
@@ -99,8 +98,8 @@ builder.Services.AddScoped<IGenericRepository<CreacionDatosDTO, DatosDTO, Datos>
 builder.Services.AddScoped<IGenericService<CreacionDatosDTO, DatosDTO>, DatosService>();
 builder.Services.AddScoped<IDatosService, DatosService>();
 
-//builder.Services.AddScoped<IGenericRepository<Marca>, MarcasRepository>();
-//builder.Services.AddScoped<IMarcaService, MarcaService>();
+builder.Services.AddScoped<IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca>, MarcasRepository>();
+builder.Services.AddScoped<IGenericService<CreacionMarcaDTO,MarcaDTO>, MarcaService>();
 
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();

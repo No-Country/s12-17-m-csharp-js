@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ecommeceBack.Models.VModels
+namespace ecommeceBack.Models.VModels.MarcasDTO
 {
-    public class MarcaDTO
+    public class CreacionMarcaDTO
     {
+        [Required]
+        [MaxLength(45)]
         public string Nombre { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using ecommeceBack.BLL.contrato;
-using ecommeceBack.BLL.Service;
+﻿using ecommeceBack.API.Exceptions;
+using ecommeceBack.BLL.contrato;
 using ecommeceBack.Models.Entidades;
-using ecommeceBack.Models.VModels;
+using ecommeceBack.Models.VModels.MarcasDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommeceBack.API.Controllers
@@ -10,62 +10,95 @@ namespace ecommeceBack.API.Controllers
     [ApiController]
     public class MarcasController : ControllerBase
     {
-        private readonly IMarcaService _marcaService;
+        private readonly IGenericService<CreacionMarcaDTO, MarcaDTO> _marcaService;
 
-        public MarcasController(IMarcaService marcaService)
+        public MarcasController(IGenericService<CreacionMarcaDTO, MarcaDTO> marcaService)
         {
             _marcaService = marcaService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(MarcaDTO modelo)
+        public async Task<ActionResult<MarcaDTO>> Post(CreacionMarcaDTO modelo)
         {
-            bool Resultado = await _marcaService.Registrar(modelo);
-            if (!Resultado)
+            try
             {
-                return BadRequest("No se pudo agregar la marca");
+                var marca = await _marcaService.Registrar(modelo);
+                return Ok(marca);
             }
-
-            return Ok();
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            bool Resultado = await _marcaService.Eliminar(id);
-            if (!Resultado)
+            try
             {
-                return NotFound("No existe una marca con Id "+ id);
+                bool Resultado = await _marcaService.Eliminar(id);
+                return NoContent();
             }
-            return NoContent();
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MarcaDTO>>> GetAll()
         {
-            IQueryable<Marca> queryMarcas = await _marcaService.ObtenerTodos();
-            List<MarcaDTO> marcas = queryMarcas.Select(m=> new MarcaDTO() { Nombre= m.Nombre}).ToList();
-            return Ok(marcas);
+            try
+            {
+                var marcas = await _marcaService.ObtenerTodos();
+                return Ok(marcas);
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Marca>> Get(int id)
         {
-            var marca = await _marcaService.ObtenerPorId(id);
-            if (marca is null) return NotFound();
-            return Ok(marca);
+            try
+            {                
+                var marca = await _marcaService.ObtenerPorId(id);
+                return Ok(marca);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, MarcaDTO marcaDto)
+        public async Task<ActionResult> Put(int id, CreacionMarcaDTO creacionMarcaDto)
         {
-            Marca marca = new Marca()
+            try
             {
-                Id = id,
-                Nombre = marcaDto.Nombre
-            };
-            await _marcaService.Actualizar(marca);
-            return Ok();
+                var marca = await _marcaService.Actualizar(id, creacionMarcaDto);
+                return Ok(marca);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
     }
 }
