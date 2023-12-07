@@ -46,6 +46,8 @@ namespace ecommeceBack.DAL.Repository
 
                 datos.Direccion_Entrega = modelo.Direccion_Entrega;
 
+                _dbcontext.Update(datos);
+
                 await _dbcontext.SaveChangesAsync();
 
                 return mapper.Map<DatosDTO>(datos);

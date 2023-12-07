@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecommeceBack.DAL.Dbcontext;
 
@@ -11,9 +12,11 @@ using ecommeceBack.DAL.Dbcontext;
 namespace ecommeceBack.API.Migrations
 {
     [DbContext(typeof(AplicationDBcontext))]
-    partial class AplicationDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20231207112512_Producto")]
+    partial class Producto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,8 +259,9 @@ namespace ecommeceBack.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .IsRequired()
+                        .HasMaxLength(75)
+                        .HasColumnType("nvarchar(75)");
 
                     b.Property<string>("Estado")
                         .IsRequired()
@@ -281,11 +285,6 @@ namespace ecommeceBack.API.Migrations
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(75)
-                        .HasColumnType("nvarchar(75)");
 
                     b.Property<decimal>("precio")
                         .HasColumnType("decimal(18,2)");

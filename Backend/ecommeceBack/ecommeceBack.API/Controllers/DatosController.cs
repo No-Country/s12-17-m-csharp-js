@@ -43,6 +43,7 @@ namespace ecommeceBack.API.Controllers
                 return StatusCode(500, "Error interno del servidor");
             }
         }
+        
         [HttpGet("BuquedaCompleta")]
         public async Task<ActionResult<IEnumerable<DatosDTO>>> Otenertodo()
         {
