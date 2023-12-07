@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.24.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ecommeceBack.DAL\ecommeceBack.DAL.csproj" />
     <ProjectReference Include="..\ecommeceBack.Models\ecommeceBack.Models.csproj" />
   </ItemGroup>
