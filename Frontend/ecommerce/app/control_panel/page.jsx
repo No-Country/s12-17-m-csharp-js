@@ -9,6 +9,7 @@ import { CiEdit } from "react-icons/ci";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { FaMoneyBills } from "react-icons/fa6";
 import { TbMinusVertical } from "react-icons/tb";
+import Link from 'next/link';
 
 function page() {
     return (
@@ -48,7 +49,7 @@ function page() {
         </div>
             <header className="py-4 px-4 mb-8 flex items-center justify-between border-b border-gray-300">
               <h2 className="text-xl font-bold">Lista de productos vendiendo</h2>
-              <button className='bg-primary text-center text-white rounded-full px-4 py-2'>crear un anuncio nuevo</button>
+              <Link href={"/control_panel/products/create/choose_category_step"} className='bg-primary text-center text-white rounded-full px-4 py-2'>crear un anuncio nuevo</Link>
             </header>
             {/* Contenido de elementos CRUD */}
             <div className="overflow-x-auto">
