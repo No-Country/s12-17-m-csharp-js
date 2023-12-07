@@ -29,17 +29,6 @@ const LoginPage = () => {
       });
       console.log(token);
 
-      // localStorage.setItem(
-      //   "user",
-      //   JSON.stringify({
-      //     user: {
-      //       email: data.email,
-      //     },
-      //     token,
-      //   })
-      // );
-      // alert("Registro exitoso");
-
       setShowPopUp(true);
     } catch (error) {
       console.error(error);
@@ -48,12 +37,13 @@ const LoginPage = () => {
 
   return (
     <Layout>
-      <PopUp
-        title={"inicio de sesión exitoso!"}
-        description={"Bienvenido a la comunidad de SURshop."}
-        togglePopUp={() => setShowPopUp((prev) => !prev)}
-        open={showPopUp}
-      />
+      {showPopUp && (
+        <PopUp
+          title={"Registro Exitoso!"}
+          description={"Revisa tu email para validar tu cuenta."}
+          onClose={() => setShowPopUp(false)}
+        />
+      )}
       <div className="w-5/12 mx-auto font-bold">
         <h1 className="text-4xl" onClick={handleSubmit(onSubmit)}>
           Ingresar

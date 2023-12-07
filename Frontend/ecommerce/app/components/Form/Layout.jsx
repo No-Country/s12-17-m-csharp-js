@@ -1,6 +1,3 @@
-import Button from "./Button";
-import TextInput from "./TextInput";
-
 const Layout = ({ children }) => {
   return (
     <div className="flex h-full">
