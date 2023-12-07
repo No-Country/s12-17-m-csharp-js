@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import TextInput from "../Partials/TextInput";
 import RadioInputGroup from "../Partials/RadioInputGroup";
 
@@ -62,7 +63,13 @@ const DetailInforStep = () => {
 
       <div className="flex justify-end flex-end text-primary spacey-x-2 mt-12 font-semibold">
         <button className="p-4 px-6">Cancelar</button>
-        <button className="p-4 bg-secondary rounded-3xl px-6">Confirmar</button>
+        <Link
+          href="/control_panel/products/create/final_step
+"
+          className="p-4 bg-secondary rounded-3xl px-6"
+        >
+          Confirmar
+        </Link>
       </div>
     </div>
   );
