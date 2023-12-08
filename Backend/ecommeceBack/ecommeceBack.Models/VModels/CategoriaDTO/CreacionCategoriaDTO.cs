@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ecommeceBack.Models.Entidades
+namespace ecommeceBack.Models.VModels.CategoriaDTO
 {
-    public class Marca
+    public class CreacionCategoriaDTO
     {
-        public int Id { get; set; }
-
+        [Required]
+        [MaxLength(45)]
         public string Nombre { get; set; }
-
     }
 }

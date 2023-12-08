@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecommeceBack.DAL.Dbcontext;
 
@@ -11,9 +12,11 @@ using ecommeceBack.DAL.Dbcontext;
 namespace ecommeceBack.API.Migrations
 {
     [DbContext(typeof(AplicationDBcontext))]
-    partial class AplicationDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20231207124408_Producto1")]
+    partial class Producto1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,35 +227,6 @@ namespace ecommeceBack.API.Migrations
                     b.ToTable("Datos");
                 });
 
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("Imagenes");
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Marca", b =>
                 {
                     b.Property<int>("Id")
@@ -451,17 +425,6 @@ namespace ecommeceBack.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
-                {
-                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
-                        .WithMany("Imagenes")
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Producto");
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Datos", "Datos")
@@ -469,11 +432,6 @@ namespace ecommeceBack.API.Migrations
                         .HasForeignKey("DatosId");
 
                     b.Navigation("Datos");
-                });
-
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
-                {
-                    b.Navigation("Imagenes");
                 });
 #pragma warning restore 612, 618
         }

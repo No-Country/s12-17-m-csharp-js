@@ -10,5 +10,9 @@ namespace ecommeceBack.DAL.Contrato
     public interface IUsuarioRepository
     {
         Task<bool> Registrar(Usuario modelo, string password);
+
+        Task<bool> ActualizarIdDatos(int datosId, string email);
+
+
     }
 }

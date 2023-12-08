@@ -1,6 +1,7 @@
 ﻿using ecommeceBack.BLL.contrato;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels;
+using ecommeceBack.Models.VModels.DatosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,22 +19,38 @@ namespace ecommeceBack.API.Controllers
         private readonly IUsuarioService usuarioService;
         private readonly SignInManager<Usuario> signInManager;
         private readonly ITokenService tokenService;
+        private readonly IGenericService<CreacionDatosDTO, DatosDTO> datosService;
 
-        public CuentasController(IUsuarioService usuarioService,SignInManager<Usuario> signInManager, ITokenService tokenService)
+        public CuentasController(IUsuarioService usuarioService,SignInManager<Usuario> signInManager, ITokenService tokenService, IGenericService<CreacionDatosDTO, DatosDTO> datosService)
         {
             this.usuarioService = usuarioService;
             this.signInManager = signInManager;
             this.tokenService = tokenService;
+            this.datosService = datosService;
         }
 
         [HttpPost("registro")]
         public async Task<IActionResult> Registro([FromBody]CreacionUsuarioDTO modelo) 
         {
+           
             bool Resultado = await usuarioService.Registrar(modelo);
            if (!Resultado) 
             { 
+
                 return BadRequest("No se pudo agregar su Usuario");
             }
+
+           
+            CreacionDatosDTO datosbase = new CreacionDatosDTO()
+            {
+                Nombre = modelo.Nombre,
+                Apellido = modelo.Apellido
+            };
+
+            var datosRegistrado = await datosService.Registrar(datosbase);
+
+            //modelo.DatosId = datosRegistrado.Id;
+            var result = await usuarioService.ActualizarIdDatos(datosRegistrado.Id, modelo.Email);
 
             return Ok();
         }
