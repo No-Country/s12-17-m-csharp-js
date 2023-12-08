@@ -83,11 +83,11 @@ namespace ecommeceBack.DAL.Repository
         {
             try 
             {
-                var datos = mapper.Map<DatosDTO>(modelo);
+                var datos = mapper.Map<Datos>(modelo);
                 _dbcontext.Add(datos);
                 await _dbcontext.SaveChangesAsync();
 
-                return mapper.Map<DatosDTO>(modelo);
+                return mapper.Map<DatosDTO>(datos);
             } catch (Exception) 
             { 
                throw; 

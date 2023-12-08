@@ -48,7 +48,7 @@ namespace ecommeceBack.DAL.Repository
 
                 Producto.Unidad = modelo.Unidad;
 
-                Producto.Activo = modelo.Activo;
+                //Producto.Activo = modelo.Activo;
 
                 Producto.Stock_Actual = modelo.Stock_Actual;
 
@@ -84,14 +84,14 @@ namespace ecommeceBack.DAL.Repository
                 return true;
             }catch (Exception) 
             {
-                throw; 
-                    
+                throw;                     
             }
         }
 
         public async Task<ProductoDTO> Insertar(CreacionProductoDTO modelo)
         {
             var Productoadd = mapper.Map<Producto>(modelo);
+            Productoadd.Activo = true;
             _dbcontext.Add(Productoadd);
             await _dbcontext.SaveChangesAsync();
             return mapper.Map<ProductoDTO>(Productoadd);
@@ -101,7 +101,7 @@ namespace ecommeceBack.DAL.Repository
         {
             try
             {
-                var producto = await _dbcontext.Productos.FirstOrDefaultAsync(p => p.Id == id);
+                var producto = await _dbcontext.Productos.Include(p=>p.Imagenes).FirstOrDefaultAsync(p => p.Id == id);
                 if (producto == null) throw new NotFoundException();
                 return mapper.Map<ProductoDTO>(producto);
             }

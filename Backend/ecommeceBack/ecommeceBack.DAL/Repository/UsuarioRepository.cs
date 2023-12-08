@@ -1,7 +1,11 @@
-﻿using ecommeceBack.DAL.Contrato;
+﻿using ecommeceBack.API.Exceptions;
+using ecommeceBack.DAL.Contrato;
 using ecommeceBack.DAL.Dbcontext;
 using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.VModels;
+using ecommeceBack.Models.VModels.MarcasDTO;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +31,7 @@ namespace ecommeceBack.DAL.Repository
             try
             {
                 var resultado = await userManager.CreateAsync(modelo, password);
-                if (!resultado.Succeeded) return false; 
-                
+                if (!resultado.Succeeded) return false;
                 var resultadoRol =   await userManager.AddToRoleAsync(modelo, "usuario");
                 if (!resultadoRol.Succeeded) 
                 { 
@@ -37,6 +40,7 @@ namespace ecommeceBack.DAL.Repository
                  return false;
                 }
                 await trasaction.CommitAsync();
+                
                 return true;
             }
             catch (Exception ex)
@@ -45,7 +49,26 @@ namespace ecommeceBack.DAL.Repository
                 return false;
             }
         }
-    
+
+        public async Task<bool> ActualizarIdDatos(int datosId, string email)
+        {
+            try
+            {
+                var user = await userManager.FindByEmailAsync(email);
+
+                if (user == null) throw new NotFoundException();
+
+                user.DatosId= datosId;
+
+                _dbcontext.Update(user);
+                await _dbcontext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
     }
 

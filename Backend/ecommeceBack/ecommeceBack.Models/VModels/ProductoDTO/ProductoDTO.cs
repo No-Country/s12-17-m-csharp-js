@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.VModels.ImagenDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -41,5 +43,6 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         public string Estado { get; set; }
 
         public decimal precio { get; set; }
+        public List<ImagenDTO.ImagenDTO> Imagenes { get; set; } = new List<ImagenDTO.ImagenDTO>();
     }
 }

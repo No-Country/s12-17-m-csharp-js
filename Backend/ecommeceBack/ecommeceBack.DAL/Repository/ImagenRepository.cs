@@ -36,7 +36,8 @@ namespace ecommeceBack.DAL.Repository
                 { 
                     Nombre = datosImagen.Nombre, 
                     Url= datosImagen.Url, 
-                    Activo=true 
+                    Activo=true,
+                    ProductoId= datosImagen.ProductoId
                 };
                 await _dbcontext.Imagenes.AddAsync(image);
                 await _dbcontext.SaveChangesAsync();

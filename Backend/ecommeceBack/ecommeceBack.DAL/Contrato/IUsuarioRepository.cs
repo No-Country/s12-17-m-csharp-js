@@ -11,7 +11,7 @@ namespace ecommeceBack.DAL.Contrato
     {
         Task<bool> Registrar(Usuario modelo, string password);
 
-       
+        Task<bool> ActualizarIdDatos(int datosId, string email);
 
 
     }

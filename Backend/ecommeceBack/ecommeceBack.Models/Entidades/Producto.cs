@@ -40,6 +40,7 @@ namespace ecommeceBack.Models.Entidades
         public string Estado { get; set; }
 
         public decimal precio { get; set; }
+        public List<Imagen> Imagenes { get; set; } = new List<Imagen>();
 
     }
 }

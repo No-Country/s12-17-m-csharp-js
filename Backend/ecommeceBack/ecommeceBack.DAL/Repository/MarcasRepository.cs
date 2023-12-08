@@ -29,6 +29,7 @@ namespace ecommeceBack.DAL.Repository
 
                 marca.Nombre = modelo.Nombre;
 
+                _dbcontext.Update(marca);
                 await _dbcontext.SaveChangesAsync();
                 return _mapper.Map<MarcaDTO>(marca);
             }

@@ -33,12 +33,12 @@ namespace ecommeceBack.API.Controllers
             }
         }
 
-        [HttpPost("Subir")]
-        public async Task<ActionResult<ImagenDTO>> Create(IFormFile file)
+        [HttpPost("{productoId:int}")]
+        public async Task<ActionResult<ImagenDTO>> Create(IFormFile file, int productoId)
         {
             try
             {
-                var result=  await _imagenService.AgregarImagen(file);
+                var result=  await _imagenService.AgregarImagen(file, productoId);
                 return Ok(result);
             }
             catch (Exception)

@@ -20,7 +20,7 @@ namespace ecommeceBack.BLL.contrato
 
         Task<IQueryable<Usuario>> ObtenerTodos();
 
-        
+        Task<bool> ActualizarIdDatos(int datosId, string email);
 
     }
 }

@@ -49,7 +49,8 @@ namespace ecommeceBack.API.Controllers
 
             var datosRegistrado = await datosService.Registrar(datosbase);
 
-            modelo.DatosId = datosRegistrado.Id;
+            //modelo.DatosId = datosRegistrado.Id;
+            var result = await usuarioService.ActualizarIdDatos(datosRegistrado.Id, modelo.Email);
 
             return Ok();
         }

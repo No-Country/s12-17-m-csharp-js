@@ -10,5 +10,6 @@ namespace ecommeceBack.Models.VModels.ImagenDTO
     {
         public string Nombre { get; set; } = null!;
         public string Url { get; set; } = null!;
+        public int ProductoId { get; set; }
     }
 }

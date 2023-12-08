@@ -12,6 +12,7 @@ namespace ecommeceBack.Models.Entidades
         public string Nombre { get; set; } = null!;
         public string Url { get; set; } = null!;
         public bool Activo { get; set;}
-        // public int IdProducto { get; set; }
+        public int ProductoId { get; set; }
+        public Producto Producto { get; set; }
     }
 }

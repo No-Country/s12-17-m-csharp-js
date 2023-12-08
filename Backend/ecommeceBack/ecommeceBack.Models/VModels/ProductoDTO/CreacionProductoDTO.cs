@@ -31,7 +31,7 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         [MaxLength(45)]
         public string Unidad { get; set; }
 
-        public bool Activo { get; set; }
+        //public bool Activo { get; set; }
 
         public int Stock_Actual { get; set; }
 

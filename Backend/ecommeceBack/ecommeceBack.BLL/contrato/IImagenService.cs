@@ -11,7 +11,7 @@ namespace ecommeceBack.BLL.contrato
 {
     public interface IImagenService
     {
-        Task<ImagenDTO> AgregarImagen(IFormFile file);
+        Task<ImagenDTO> AgregarImagen(IFormFile file, int productoId);
 
     }
 }

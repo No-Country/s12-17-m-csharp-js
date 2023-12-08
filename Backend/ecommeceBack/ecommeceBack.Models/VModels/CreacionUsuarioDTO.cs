@@ -23,6 +23,6 @@ namespace ecommeceBack.Models.VModels
         [Required]
         public string Password { get; set; }
 
-        public int? DatosId { get; set; }
+        //public int? DatosId { get; set; }
     }
 }

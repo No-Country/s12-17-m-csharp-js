@@ -32,7 +32,7 @@ namespace ecommeceBack.BLL.Service
             _cloudinary=new Cloudinary( acc );
         }
 
-        public async Task<ImagenDTO> AgregarImagen(IFormFile file)
+        public async Task<ImagenDTO> AgregarImagen(IFormFile file, int productoId)
         {
             try
             {
@@ -48,7 +48,8 @@ namespace ecommeceBack.BLL.Service
                 var imagenRepo = new CreacionImagenDTO
                 {
                     Nombre = file.FileName,
-                    Url = uploadResult.SecureUrl.AbsoluteUri
+                    Url = uploadResult.SecureUrl.AbsoluteUri,
+                    ProductoId = productoId
                 };
                 var result = await _imagenRepo.Insertar(imagenRepo);
                 return result;
@@ -56,6 +57,7 @@ namespace ecommeceBack.BLL.Service
             catch (Exception) { throw; }
         }
 
+      
         public async Task<IEnumerable<ImagenDTO>> GetAll()
         {
             var imagenes = await _imagenRepo.GetAll();
