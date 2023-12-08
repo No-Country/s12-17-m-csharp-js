@@ -7,6 +7,7 @@ using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.Utilidades;
 using ecommeceBack.Models.VModels.CategoriaDTO;
 using ecommeceBack.Models.VModels.DatosDTO;
+using ecommeceBack.Models.VModels.ImagenDTO;
 using ecommeceBack.Models.VModels.MarcasDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -86,6 +87,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+builder.Services.Configure<CloudinarySetting>(builder.Configuration.GetSection("CloudinarySettings"));
+
 //Inyeccion de Dependencia
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -106,6 +109,8 @@ builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaSer
 builder.Services.AddScoped<IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto>, ProductoRepository>();
 builder.Services.AddScoped<IGenericService<CreacionProductoDTO, ProductoDTO>, ProductoService>();
 
+builder.Services.AddScoped<ImagenRepository>();
+builder.Services.AddScoped<ImagenService>();
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 
