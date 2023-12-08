@@ -25,6 +25,8 @@ namespace ecommeceBack.DAL.Dbcontext
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Imagen> Imagenes { get; set; }
 
+        public DbSet<Producto> Productos { get; set; }
+
         
 
 
