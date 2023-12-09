@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import { MdOutlineFileUpload } from "react-icons/md";
 import TextInput from "../Partials/TextInput";
@@ -79,9 +80,13 @@ const DetailInfoStep = () => {
           </small>
         </div>
         <div className="flex justify-end w-full mt-5">
-          <button className="flex items-center justify-center mb-2 transition duration-300 rounded-full bg-secondary text-primary h-14 w-14 hover:bg-secondary-600">
-            <FaArrowRight className="text-primary" size={20} />
-          </button>
+          <Link
+            href="/control_panel/products/create/pricing_step"
+          >
+            <button className="flex items-center justify-center mb-2 transition duration-300 rounded-full bg-secondary text-primary h-14 w-14 hover:bg-secondary-600">
+              <FaArrowRight className="text-primary" size={20} />
+            </button>
+          </Link>
         </div>
       </div>
     </div>
