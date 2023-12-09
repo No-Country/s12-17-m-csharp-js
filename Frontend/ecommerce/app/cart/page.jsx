@@ -39,7 +39,6 @@ const LoginPage = () => {
                         <tbody>
                             <tr>
                                 <td>
-                                    <Image src={"https://i.pinimg.com/564x/a4/d0/35/a4d035e2cf42bf0cb19c5b487f811faa.jpg"} width={200} height={200} alt="EJEMPLO"/>   Mesa de Comedor Industria
                                 </td>
                                 <td>1000</td>
                                 <td>1000</td>
