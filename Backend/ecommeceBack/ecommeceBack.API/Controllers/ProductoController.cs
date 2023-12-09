@@ -56,13 +56,23 @@ namespace ecommeceBack.API.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<ActionResult<ProductoDTO>> registrar(CreacionProductoDTO modelo)
         {
+            try { 
+            var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
+            var id = claim.Value;
+            modelo.UsuarioId = id;
             var producto = await _productoService.Registrar(modelo);
 
             return Ok(producto);
+            }
+            catch(Exception)
+            {
+                return StatusCode(500, "Error interno del servidor");
+            }
+        
         }
 
         [Authorize]

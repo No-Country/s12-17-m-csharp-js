@@ -20,7 +20,7 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         [MaxLength(250)]
         public string? Descripcion { get; set; }
 
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
 
         public int CategoriaId { get; set; }
 

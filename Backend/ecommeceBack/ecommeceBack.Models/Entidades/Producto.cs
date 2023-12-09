@@ -20,7 +20,7 @@ namespace ecommeceBack.Models.Entidades
         [MaxLength(250)]
         public string? Descripcion { get; set; }
 
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
         
         public int CategoriaId { get; set; }
 
@@ -38,7 +38,7 @@ namespace ecommeceBack.Models.Entidades
 
         [MaxLength(45)]
         public string Estado { get; set; }
-
+        [Precision(18,2)]
         public decimal precio { get; set; }
         public List<Imagen> Imagenes { get; set; } = new List<Imagen>();
 

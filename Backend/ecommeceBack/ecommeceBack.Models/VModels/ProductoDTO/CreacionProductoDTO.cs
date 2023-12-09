@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,31 +14,32 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
 
         [Required(ErrorMessage ="Se requiere el Nombre del Producto")]
         [MaxLength(75)]
-        public string nombre { get; set; }
+        public string nombre { get; set; }= string.Empty;
 
         [MaxLength(250)]
-        public string? Descripcion { get; set; }
+        public string? Descripcion { get; set; } = string.Empty;
 
-        public int UsuarioId { get; set; }
+        public string? UsuarioId { get; set; } = string.Empty;
 
         public int CategoriaId { get; set; }
 
         public int MarcaId { get; set; }
 
         [MaxLength(45)]
-        public string? Modelo { get; set; }
+        public string? Modelo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Se requiere la Unidad del Producto")]
         [MaxLength(45)]
-        public string Unidad { get; set; }
+        public string Unidad { get; set; } = string.Empty;
 
         //public bool Activo { get; set; }
 
         public int Stock_Actual { get; set; }
 
         [MaxLength(45)]
-        public string Estado { get; set; }
+        public string Estado { get; set; } = string.Empty;
 
         public decimal precio { get; set; }
+        //public IFormFile? Imagen { get; set; }
     }
 }
