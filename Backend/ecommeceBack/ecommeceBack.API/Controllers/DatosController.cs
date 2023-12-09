@@ -4,12 +4,14 @@ using ecommeceBack.BLL.Service;
 using ecommeceBack.Models.VModels.DatosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommeceBack.API.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

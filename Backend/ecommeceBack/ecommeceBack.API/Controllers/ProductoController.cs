@@ -5,11 +5,13 @@ using ecommeceBack.Models.VModels.DatosDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommeceBack.API.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductoController : ControllerBase

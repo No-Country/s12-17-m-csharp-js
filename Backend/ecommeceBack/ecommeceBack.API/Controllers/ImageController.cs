@@ -5,9 +5,11 @@ using static System.Net.Mime.MediaTypeNames;
 using ecommeceBack.Models.VModels.ImagenDTO;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.BLL.Service;
+using Microsoft.AspNetCore.Cors;
 
 namespace ecommeceBack.API.Controllers
 {
+    [EnableCors("ReglasCors")]
     [ApiController]
     [Route("[controller]")]
     public class ImageController : Controller

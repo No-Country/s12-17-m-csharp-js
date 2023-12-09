@@ -3,10 +3,12 @@ using ecommeceBack.BLL.contrato;
 using ecommeceBack.Models.VModels.CategoriaDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommeceBack.API.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Route("api/categorias")]
     [ApiController]
     public class CategoriasController : ControllerBase

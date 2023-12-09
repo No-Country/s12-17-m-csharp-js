@@ -2,10 +2,12 @@
 using ecommeceBack.BLL.contrato;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels.MarcasDTO;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommeceBack.API.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Route("api/[controller]")]
     [ApiController]
     public class MarcasController : ControllerBase
