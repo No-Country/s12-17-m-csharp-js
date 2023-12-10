@@ -6,6 +6,7 @@ import { IoIosSearch } from "react-icons/io";
 import { SlOptions } from "react-icons/sl";
 import { routes } from "./constants/routes";
 import { usePathname } from "next/navigation";
+import Dropdown from "./components/Dropdown/dropdown";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -18,6 +19,9 @@ const Navbar = () => {
         >
           Nombre
         </Link>
+        <div>
+          <Dropdown/>
+        </div>
         <div className="flex items-center space-x-8 whitespace-nowrap">
           {routes.map((route) => (
             <Link
