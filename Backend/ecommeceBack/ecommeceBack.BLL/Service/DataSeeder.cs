@@ -31,7 +31,7 @@ namespace ecommeceBack.BLL.Service
             {
                 new CreacionCategoriaDTO(){Nombre="Games" },
                 new CreacionCategoriaDTO(){Nombre="Celulares" },
-                new CreacionCategoriaDTO(){Nombre="Hogar" }
+                new CreacionCategoriaDTO(){Nombre="Muebles" }
             };
             var query = await _categoriaRepo.ObtenerTodos();
             foreach(var categoria in categorias)
