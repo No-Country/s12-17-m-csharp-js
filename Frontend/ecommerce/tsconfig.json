@@ -30,7 +30,9 @@
   "include": [
     "app/**/*",
     ".next/types/**/*.ts",
-    "./.d.ts"
+    "./.d.ts",
+    "middleware.js",
+    "_app.js"
   ],
   "exclude": [
     "node_modules"

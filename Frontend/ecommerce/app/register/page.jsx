@@ -52,6 +52,7 @@ const RegisterPage = () => {
     <Layout>
       {showPopUp && (
         <PopUp
+          redirectTo="/"
           title={"Registro Exitoso!"}
           description={"Revisa tu email para validar tu cuenta."}
           onClose={() => setShowPopUp(false)}

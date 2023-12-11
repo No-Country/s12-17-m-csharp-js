@@ -10,9 +10,5 @@ export const routes = [
   {
     name: "Panel de control",
     path: "/control_panel"
-  }, 
-  {
-    name: "Ayuda",
-    path: "/help",
   },
 ];

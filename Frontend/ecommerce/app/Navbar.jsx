@@ -7,8 +7,13 @@ import { SlOptions } from "react-icons/sl";
 import { routes } from "./constants/routes";
 import { usePathname } from "next/navigation";
 import Dropdown from "./components/Dropdown/dropdown";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
   const pathname = usePathname();
   return (
     <div className="flex items-center justify-between w-full h-16">
@@ -20,7 +25,7 @@ const Navbar = () => {
           Nombre
         </Link>
         <div>
-          <Dropdown/>
+          <Dropdown />
         </div>
         <div className="flex items-center space-x-8 whitespace-nowrap">
           {routes.map((route) => (
@@ -56,28 +61,42 @@ const Navbar = () => {
         <span className="font-medium text-gray-300">|</span>
         <FaRegBell size={24} />
         <IoCartOutline size={32} />
-        <Link
-          href="/login"
-          className={`p-2 font-medium rounded-md transition-all underline underline-offset-[14px] hover:scale-105 hover:decoration-primary
-          ${
-            pathname === "/login"
-              ? "decoration-secondary"
-              : "text-black decoration-white"
-          } `}
-        >
-          Ingresar
-        </Link>
-        <Link
-          href="/register"
-          className={`px-4 py-2 font-semibold rounded-full text-black hover:bg-secondary hover:text-black transition-colors hover:decoration-inherit 
-          ${
-            pathname === "/register"
-              ? "bg-secondary text-black "
-              : "bg-primary text-white "
-          }`}
-        >
-          Registrarse
-        </Link>
+        {session?.user ? (
+          <>
+            <FaRegUserCircle size={26} />
+            <button
+              onClick={() => signOut()}
+              className="px-4 py-2 font-semibold text-white transition-colors rounded-full hover:bg-secondary hover:text-black hover:decoration-inherit bg-primary"
+            >
+              Cerrar sesión
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              href="/login"
+              className={`p-2 font-medium rounded-md transition-all underline underline-offset-[14px] hover:scale-105 hover:decoration-primary
+            ${
+              pathname === "/login"
+                ? "decoration-secondary"
+                : "text-black decoration-white"
+            } `}
+            >
+              Ingresar
+            </Link>
+            <Link
+              href="/register"
+              className={`px-4 py-2 font-semibold rounded-full text-black hover:bg-secondary hover:text-black transition-colors hover:decoration-inherit
+            ${
+              pathname === "/register"
+                ? "bg-secondary text-black "
+                : "bg-primary text-white "
+            }`}
+            >
+              Registrarse
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
