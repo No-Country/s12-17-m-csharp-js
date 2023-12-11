@@ -16,11 +16,34 @@ namespace ecommeceBack.API.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
-        private readonly IGenericService<CreacionProductoDTO, ProductoDTO> _productoService;
+        private readonly IProductosService _productoService;
 
-        public ProductoController(IGenericService<CreacionProductoDTO, ProductoDTO> productoService)
+        public ProductoController(IProductosService productoService)
         {
             _productoService = productoService;
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("misproductos")]
+        public async Task<ActionResult<IEnumerable<ProductoDTO>>> Listar()
+        {
+            try
+            {
+                var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
+                var id = claim.Value;
+                var producto = await _productoService.ObtenerMisProductos(id);
+
+                return Ok(producto);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
 
         [HttpGet("BusquedaXID")]
@@ -77,7 +100,7 @@ namespace ecommeceBack.API.Controllers
         
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         public async Task<ActionResult<ProductoDTO>> Actualizar(int id, CreacionProductoDTO modelo)
         {
@@ -108,6 +131,32 @@ namespace ecommeceBack.API.Controllers
                 return NoContent();
             }
             catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor");
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut("activo")]
+        public async Task<ActionResult<ProductoDTO>> ActivoInactivo(int idProducto)
+        {
+            try
+            {
+                var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
+                var idUser = claim.Value;
+                var producto = await _productoService.ActivoInactivo(idProducto, idUser);
+
+                return Ok(producto);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 return NotFound(ex.Message);
             }

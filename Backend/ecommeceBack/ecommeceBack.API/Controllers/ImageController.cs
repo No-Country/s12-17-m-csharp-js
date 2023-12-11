@@ -11,7 +11,7 @@ namespace ecommeceBack.API.Controllers
 {
     [EnableCors("ReglasCors")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ImageController : Controller
     {
         private readonly ImagenService _imagenService;

@@ -115,8 +115,8 @@ builder.Services.AddScoped<IDatosService, DatosService>();
 builder.Services.AddScoped<IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca>, MarcasRepository>();
 builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaService>();
 //Producto
-builder.Services.AddScoped<IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto>, ProductoRepository>();
-builder.Services.AddScoped<IGenericService<CreacionProductoDTO, ProductoDTO>, ProductoService>();
+builder.Services.AddScoped<IProductRepository, ProductoRepository>();
+builder.Services.AddScoped<IProductosService, ProductoService>();
 
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
@@ -138,7 +138,8 @@ using (var scope = app.Services.CreateScope())
     {
         var dataSeeder = services.GetRequiredService<IDataSeeder>();
         await dataSeeder.CrearRoles();
-        await dataSeeder.CrearUsuarioAdmin(); 
+        await dataSeeder.CrearUsuarioAdmin();
+        await dataSeeder.CrearCategorias();
     }
     catch (Exception)
     {
