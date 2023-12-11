@@ -38,7 +38,7 @@ const registerUser = async ({ first_name, last_name, email, password }) => {
   );
 
   if (!response.ok) {
-    throw new Error("Error at register user");
+    throw new Error("Error while registering user");
   }
 
   return await loginUser({ email, password });

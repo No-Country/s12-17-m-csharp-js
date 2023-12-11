@@ -8,9 +8,9 @@ import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
 import { login_validations } from "../components/Form/Validations";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../utils/api";
 import { useState } from "react";
 import PopUp from "../components/Popup/PopUp";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   const {
@@ -22,16 +22,16 @@ const LoginPage = () => {
   const [showPopUp, setShowPopUp] = useState(false);
 
   const onSubmit = async (data) => {
-    try {
-      const token = await loginUser({
-        email: data.email,
-        password: data.password,
-      });
-      console.log(token);
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
 
+    if (res.error) {
+      console.error(res.error);
+    } else {
       setShowPopUp(true);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -39,7 +39,8 @@ const LoginPage = () => {
     <Layout>
       {showPopUp && (
         <PopUp
-          title={"Registro Exitoso!"}
+          redirectTo="/"
+          title={"Bienvenido"}
           description={"Revisa tu email para validar tu cuenta."}
           onClose={() => setShowPopUp(false)}
         />

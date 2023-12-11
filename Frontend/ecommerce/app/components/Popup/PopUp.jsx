@@ -1,10 +1,36 @@
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-function PopUp({ onClose, title, description }) {
+function PopUp({ onClose, title, description, redirectTo }) {
+  const [progress, setProgress] = useState(0);
+  const router = useRouter();
+
+  const handleOnClose = useCallback(async () => {
+    onClose();
+    router.push(redirectTo);
+  }, [onClose, router, redirectTo]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          clearInterval(interval);
+          handleOnClose();
+        }
+        return Math.min(oldProgress + 0.5, 100);
+      });
+    }, 15);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [handleOnClose]);
+
   return (
-    <div className="bg-black/50 fixed top-0 left-0 h-full w-full flex justify-center items-center p-4">
+    <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full p-4 bg-black/50">
       <div className="bg-[#14213D] text-white grid relative gap-y-2.5 text-center p-10 w-full max-w-screen-sm rounded-[20px]">
-        <button onClick={onClose} className="absolute right-7 top-6">
+        <button onClick={handleOnClose} className="absolute right-7 top-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -41,13 +67,12 @@ function PopUp({ onClose, title, description }) {
         </svg>
         <p className="text-3xl font-bold">{title}</p>
         <p className="text-xl">{description}</p>
-        <Link
-          href="/"
-          onClick={onClose}
-          className="font-medium text-2xl text-secondary"
-        >
-          Volver al inicio
-        </Link>
+        <div className="w-full h-0.5 mt-0 overflow-hidden rounded-full bg-primary bg-opacity-20">
+          <div
+            style={{ width: `${progress}%` }}
+            className="h-full bg-primary"
+          ></div>
+        </div>
       </div>
     </div>
   );
