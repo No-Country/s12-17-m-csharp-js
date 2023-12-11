@@ -17,11 +17,13 @@ namespace ecommeceBack.BLL.Service
     {
         private readonly IProductRepository _productoRepo;
         private readonly IMapper mapper;
+        private readonly ImagenService _imagenService;
 
-        public ProductoService(IProductRepository productoRepo, IMapper mapper)
+        public ProductoService(IProductRepository productoRepo, IMapper mapper, ImagenService imagenService)
         {
             _productoRepo = productoRepo;
             this.mapper = mapper;
+            _imagenService = imagenService;
         }
 
         public async Task<ProductoDTO> Actualizar(int id, CreacionProductoDTO modelo)
@@ -43,7 +45,7 @@ namespace ecommeceBack.BLL.Service
         {
             var query = await _productoRepo.ObtenerTodos();
 
-            var lista = await query.Where(p=>p.Activo).ToListAsync();
+            var lista = await query.Include(p=>p.Imagenes).Include(p => p.Marca).Include(p => p.Categoria).Where(p=>p.Activo).ToListAsync();
             return mapper.Map<IEnumerable<ProductoDTO>>(lista);
         }
 
@@ -55,9 +57,16 @@ namespace ecommeceBack.BLL.Service
             return mapper.Map<IEnumerable<ProductoDTO>>(lista);
         }
 
-        public Task<ProductoDTO> Registrar(CreacionProductoDTO modelo)
+        public async Task<ProductoDTO> Registrar(CreacionProductoDTO modelo)
         {
-            return _productoRepo.Insertar(modelo);
+            var producto = await _productoRepo.Insertar(modelo);
+            
+            await _imagenService.AgregarImagen(modelo.Imagen1, producto.Id);
+            if (modelo.Imagen2 != null) await _imagenService.AgregarImagen(modelo.Imagen2, producto.Id);
+            if (modelo.Imagen3 != null) await _imagenService.AgregarImagen(modelo.Imagen3, producto.Id);
+
+            return producto;
+
         }
 
         public async Task<ProductoDTO> ActivoInactivo(int idProducto, string idUser)

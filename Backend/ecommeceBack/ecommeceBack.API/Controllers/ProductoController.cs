@@ -83,7 +83,7 @@ namespace ecommeceBack.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<ActionResult<ProductoDTO>> registrar(CreacionProductoDTO modelo)
+        public async Task<ActionResult<ProductoDTO>> registrar([FromForm]CreacionProductoDTO modelo)
         {
             try { 
             var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();

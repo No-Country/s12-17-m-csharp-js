@@ -40,6 +40,8 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         public string Estado { get; set; } = string.Empty;
 
         public decimal precio { get; set; }
-        //public IFormFile? Imagen { get; set; }
+        public IFormFile Imagen1 { get; set; }
+        public IFormFile? Imagen2 { get; set; }
+        public IFormFile? Imagen3 { get; set; }
     }
 }
