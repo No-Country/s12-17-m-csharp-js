@@ -1,6 +1,9 @@
 ﻿using ecommeceBack.BLL.contrato;
+using ecommeceBack.DAL.Contrato;
 using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.VModels.CategoriaDTO;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +16,33 @@ namespace ecommeceBack.BLL.Service
     {
         private readonly UserManager<Usuario> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IGenericRepository<CreacionCategoriaDTO, CategoriaDTO, Categoria> _categoriaRepo;
 
-        public DataSeeder(UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager)
+        public DataSeeder(UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager, IGenericRepository<CreacionCategoriaDTO, CategoriaDTO, Categoria> categoriaRepo)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            _categoriaRepo = categoriaRepo;
+        }
+
+        public async Task CrearCategorias()
+        {
+            List<CreacionCategoriaDTO> categorias = new List<CreacionCategoriaDTO>()
+            {
+                new CreacionCategoriaDTO(){Nombre="Games" },
+                new CreacionCategoriaDTO(){Nombre="Celulares" },
+                new CreacionCategoriaDTO(){Nombre="Hogar" }
+            };
+            var query = await _categoriaRepo.ObtenerTodos();
+            foreach(var categoria in categorias)
+            {
+                try
+                {
+                    var existeCategoria = await query.Where(c => c.Nombre == categoria.Nombre).FirstOrDefaultAsync();
+                    if (existeCategoria == null) await _categoriaRepo.Insertar(categoria);
+                }
+                catch(Exception) { throw; }
+            }
         }
 
         public async Task CrearRoles()
@@ -59,7 +84,6 @@ namespace ecommeceBack.BLL.Service
                 if (!resultado.Succeeded) throw new Exception("No se pudo crear el usuario administrador");
 
                 var resultadoRol = await userManager.AddToRoleAsync(nuevoAdmin, "admin");
-
 
             }
             catch (Exception)

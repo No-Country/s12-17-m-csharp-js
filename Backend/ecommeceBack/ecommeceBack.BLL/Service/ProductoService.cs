@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.BLL.Service
 {
-    public class ProductoService : IGenericService<CreacionProductoDTO, ProductoDTO>
+    public class ProductoService : IProductosService
     {
-        private readonly IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto> _productoRepo;
+        private readonly IProductRepository _productoRepo;
         private readonly IMapper mapper;
 
-        public ProductoService(IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto> productoRepo, IMapper mapper)
+        public ProductoService(IProductRepository productoRepo, IMapper mapper)
         {
             _productoRepo = productoRepo;
             this.mapper = mapper;
@@ -43,13 +43,26 @@ namespace ecommeceBack.BLL.Service
         {
             var query = await _productoRepo.ObtenerTodos();
 
-            var lista = await query.ToListAsync();
+            var lista = await query.Where(p=>p.Activo).ToListAsync();
+            return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+        }
+
+        public async Task<IEnumerable<ProductoDTO>> ObtenerMisProductos(string id)
+        {
+            var query = await _productoRepo.ObtenerTodos();
+
+            var lista = await query.Include(p=>p.Imagenes).Where(p=>p.UsuarioId==id).ToListAsync();
             return mapper.Map<IEnumerable<ProductoDTO>>(lista);
         }
 
         public Task<ProductoDTO> Registrar(CreacionProductoDTO modelo)
         {
             return _productoRepo.Insertar(modelo);
+        }
+
+        public async Task<ProductoDTO> ActivoInactivo(int idProducto, string idUser)
+        {
+            return await _productoRepo.ActivoInactivo(idProducto, idUser);
         }
     }
 }
