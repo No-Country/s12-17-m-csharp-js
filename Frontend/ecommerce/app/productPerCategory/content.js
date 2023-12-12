@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import useStore from '../store/useStore';
 
 
 const ProductsPage = () => {
@@ -124,6 +125,12 @@ const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
 };
 
 const ProductCard = ({ product }) => {
+  const addToCart = useStore((state) => state.addToCart);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    alert(`${product.title} añadido al carrito`);
+  };
   return (
     <div className="border border-[#e4e4e4] p-4 h-[300px] relative overflow-hidden group transition">
       <div className='h-full flex flex-col justify-between'>
@@ -140,7 +147,7 @@ const ProductCard = ({ product }) => {
           <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none">
             Comprar
           </button>
-          <button className="text-black px-4 py-2 rounded-md border border-gray-300 ml-4 hover:bg-green-600 focus:outline-none">
+          <button onClick={handleAddToCart} className="text-black px-4 py-2 rounded-md border border-gray-300 ml-4 hover:bg-green-600 focus:outline-none">
             Añadir al carrito
           </button>
         </div>
