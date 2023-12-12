@@ -73,5 +73,19 @@ namespace ecommeceBack.BLL.Service
         {
             return await _productoRepo.ActivoInactivo(idProducto, idUser);
         }
+
+        public async Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro(string? filtro)
+        {
+            var query = await _productoRepo.ObtenerTodos();
+
+            var lista = await query
+                .Include(p => p.Imagenes)
+                .Include(p => p.Marca)
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo)
+                .Where(p=>p.nombre.Contains(filtro))
+                .ToListAsync();
+            return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+        }
     }
 }

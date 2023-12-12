@@ -66,12 +66,14 @@ namespace ecommeceBack.API.Controllers
             }
         }
 
-        [HttpGet("BuquedaCompleta")]
-        public async Task<ActionResult<IEnumerable<ProductoDTO>>> Otenertodo()
+        [HttpGet("Busqueda")]
+        public async Task<ActionResult<IEnumerable<ProductoDTO>>> Otenertodo(string? query)
         {
             try
             {
-                var producto = await _productoService.ObtenerTodos();
+                IEnumerable<ProductoDTO> producto;
+                if (query == null) producto = await _productoService.ObtenerTodos();
+                else producto = await _productoService.ObtenerPorFiltro(query);
                 return Ok(producto);
             }
             catch (Exception)
