@@ -1,5 +1,7 @@
 ﻿using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.VModels.CategoriaDTO;
 using ecommeceBack.Models.VModels.ImagenDTO;
+using ecommeceBack.Models.VModels.MarcasDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,8 +25,10 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         public string UsuarioId { get; set; }
 
         public int CategoriaId { get; set; }
+        public CategoriaDTO.CategoriaDTO Categoria { get; set; }
 
         public int MarcaId { get; set; }
+        public MarcaDTO Marca { get; set; }
 
         
         [MaxLength(45)]

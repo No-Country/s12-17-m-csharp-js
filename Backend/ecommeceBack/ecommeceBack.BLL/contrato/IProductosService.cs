@@ -11,5 +11,6 @@ namespace ecommeceBack.BLL.contrato
     {
         Task<IEnumerable<ProductoDTO>> ObtenerMisProductos(string id);
         Task<ProductoDTO> ActivoInactivo(int idProducto, string idUser);
+        Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro(string? filtro);
     }
 }

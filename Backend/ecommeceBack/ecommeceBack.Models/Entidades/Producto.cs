@@ -21,10 +21,13 @@ namespace ecommeceBack.Models.Entidades
         public string? Descripcion { get; set; }
 
         public string UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
         
         public int CategoriaId { get; set; }
+        public Categoria Categoria { get; set; }
 
         public int MarcaId { get; set; }
+        public Marca Marca { get; set; }
 
         [MaxLength(45)]
         public string? Modelo { get; set; }
