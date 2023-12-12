@@ -64,7 +64,7 @@ const Navbar = () => {
         <FaRegBell size={24} />
         <div >
             <span>{cart.length}</span>
-            <IoCartOutline size={32} />
+            <Link href={"/cart"}><IoCartOutline size={32} /></Link>
         </div>
         {session?.user ? (
           <>

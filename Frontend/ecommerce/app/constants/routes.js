@@ -5,7 +5,7 @@ export const routes = [
   },
   {
     name: "Supermercado",
-    path: "/products/1",
+    path: "/supermarket",
   },
   {
     name: "Panel de control",

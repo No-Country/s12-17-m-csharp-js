@@ -5,7 +5,7 @@ const useStore = create((set) => ({
 
   addToCart: (product) => {
     set((state) => ({
-      cart: [...state.cart, product],
+      cart: [...state.cart, { ...product, quantity: 1 }], // Añadir producto con cantidad
     }));
   },
 
@@ -13,6 +13,34 @@ const useStore = create((set) => ({
     set((state) => ({
       cart: state.cart.filter((product) => product.id !== productId),
     }));
+  },
+
+  incrementQuantity: (productId) => {
+    set((state) => {
+      const updatedCart = state.cart.map((product) => {
+        if (product.id === productId) {
+          return { ...product, quantity: product.quantity + 1 }; // Incrementar cantidad
+        }
+        return product;
+      });
+      return { cart: updatedCart };
+    });
+  },
+
+  decrementQuantity: (productId) => {
+    set((state) => {
+      const updatedCart = state.cart.map((product) => {
+        if (product.id === productId && product.quantity > 1) {
+          return { ...product, quantity: product.quantity - 1 }; // Decrementar cantidad si es mayor que 1
+        }
+        return product;
+      });
+      return { cart: updatedCart };
+    });
+  },
+
+  removeAllFromCart: () => {
+    set({ cart: [] }); // Reinicia el carrito a un array vacío
   },
 
   // Otras acciones del carrito de compras
