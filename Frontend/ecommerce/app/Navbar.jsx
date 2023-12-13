@@ -13,8 +13,12 @@ import { FaRegUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const isLoggedIn = session?.user;
 
   const pathname = usePathname();
+  const filteredRoutes = isLoggedIn
+    ? routes
+    : routes.filter((route) => !route.protected);
   return (
     <div className="flex items-center justify-between w-full h-16">
       <div className="flex items-center justify-between h-full space-x-8">
@@ -28,7 +32,7 @@ const Navbar = () => {
           <Dropdown />
         </div>
         <div className="flex items-center space-x-8 whitespace-nowrap">
-          {routes.map((route) => (
+          {filteredRoutes.map((route) => (
             <Link
               key={route.name}
               href={route.path}
@@ -61,7 +65,7 @@ const Navbar = () => {
         <span className="font-medium text-gray-300">|</span>
         <FaRegBell size={24} />
         <IoCartOutline size={32} />
-        {session?.user ? (
+        {isLoggedIn ? (
           <>
             <FaRegUserCircle size={26} />
             <button

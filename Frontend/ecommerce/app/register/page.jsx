@@ -1,16 +1,17 @@
 "use client";
-import Link from "next/link";
 import Button from "../components/Form/Button";
 import Layout from "../components/Form/Layout";
+import Link from "next/link";
+import PopUp from "../components/Popup/PopUp";
 import SocialButton from "../components/Form/SocialButton";
 import TextInput from "../components/Form/TextInput";
+import userService from "@/services/user-service";
 import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
 import { register_validations } from "../components/Form/Validations";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../utils/api";
 import { useState } from "react";
-import PopUp from "../components/Popup/PopUp";
 
 const RegisterPage = () => {
   const {
@@ -22,6 +23,7 @@ const RegisterPage = () => {
   } = useForm();
 
   const [showPopUp, setShowPopUp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
     if (watch("password") != watch("confirm_password")) {
@@ -31,19 +33,30 @@ const RegisterPage = () => {
           "La confirmación de contraseña no coincide con la contraseña ingresada.",
       });
     } else {
-      console.log(data);
       try {
-        const token = await registerUser({
+        setIsLoading(true);
+        await userService.signUp({
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
-          first_name: data.name,
-          last_name: data.lastname,
           password: data.password,
         });
-        console.log(token);
+
+        const res = await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
+
+        if (res.error) {
+          throw new Error(res.error);
+        }
 
         setShowPopUp(true);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -59,7 +72,8 @@ const RegisterPage = () => {
         />
       )}
       <div className="w-1/2 mx-auto my-16">
-        <h1 className="w-full text-2xl font-medium">
+        {isLoading && <p>Cargando...</p>}
+        <h1 className="w-full text-4xl font-bold text-center">
           Regístrate para ser usuario
         </h1>
 
@@ -68,7 +82,7 @@ const RegisterPage = () => {
             errorsMessage={register_validations[0]}
             errors={errors}
             register={register}
-            registerName="name"
+            registerName="firstName"
             name="Nombres"
             required
           />
@@ -76,7 +90,7 @@ const RegisterPage = () => {
             errorsMessage={register_validations[1]}
             errors={errors}
             register={register}
-            registerName="lastname"
+            registerName="lastName"
             name="Apellidos"
             required
           />
