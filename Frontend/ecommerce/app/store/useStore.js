@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from "zustand";
 
 const useStore = create((set) => ({
   cart: [],
@@ -44,6 +44,9 @@ const useStore = create((set) => ({
   },
 
   // Otras acciones del carrito de compras
+  isInCart: (productId) => {
+    return useStore.getState().cart.some((product) => product.id === productId); // Comprueba si el producto está en el carrito
+  },
 }));
 
 export default useStore;
