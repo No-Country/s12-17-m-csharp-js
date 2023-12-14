@@ -1,5 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import userService from "@/services/user-service";
+import { userService } from "@/services";
 
 export const authOptions = {
   providers: [
@@ -20,6 +20,8 @@ export const authOptions = {
         }
 
         const token = response.data.token;
+        console.log(token);
+
         if (token) {
           return {
             id: "1",
