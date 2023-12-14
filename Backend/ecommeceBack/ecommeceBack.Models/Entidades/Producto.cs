@@ -11,7 +11,7 @@ namespace ecommeceBack.Models.Entidades
 {
     public class Producto
     {
-        
+       
         public int Id { get; set; }
 
         [MaxLength(75)]

@@ -27,8 +27,7 @@ namespace ecommeceBack.DAL.Dbcontext
 
         public DbSet<Producto> Productos { get; set; }
 
-        
-
+        public DbSet<Stock> Stocks { get; set; }
 
 
     }

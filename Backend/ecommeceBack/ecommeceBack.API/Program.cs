@@ -148,12 +148,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//using (var scope = app.Services.CreateScope()) 
-//{
-//    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
-//    Context.Database.Migrate();
-//}
-
+//Db migration
+/*
+using (var scope = app.Services.CreateScope()) 
+{
+    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
+    Context.Database.Migrate();
+}
+*/
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
