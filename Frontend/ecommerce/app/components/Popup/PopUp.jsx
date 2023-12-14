@@ -6,7 +6,7 @@ function PopUp({ onClose, title, description, redirectTo }) {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
 
-  const handleOnClose = useCallback(async () => {
+  const handleOnClose = useCallback(() => {
     onClose();
     router.push(redirectTo);
   }, [onClose, router, redirectTo]);
@@ -16,7 +16,7 @@ function PopUp({ onClose, title, description, redirectTo }) {
       setProgress((oldProgress) => {
         if (oldProgress === 100) {
           clearInterval(interval);
-          handleOnClose();
+          setTimeout(handleOnClose, 0);
         }
         return Math.min(oldProgress + 0.5, 100);
       });
