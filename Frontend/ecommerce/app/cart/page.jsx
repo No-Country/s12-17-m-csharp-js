@@ -32,7 +32,7 @@ const CartPage = () => {
   };
 
   // Calcular el total de la compra
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
 
   return (
     <div>
@@ -52,16 +52,16 @@ const CartPage = () => {
         {cart.map(item => (
           <div key={item.id} className="border border-gray-300 p-2 flex h-[160px] items-center">
             <div className="font-semibold w-2/5 m-2 flex items-center">
-          <img src={item.image} className=' h-20 mx-4'></img>
-            <p >{item.title}</p>
+          <img src={item.imagenes[0].url} className=' h-20 mx-4'></img>
+            <p >{item.nombre}</p>
             </div>
-            <p className=' w-[15%] m-2'>${item.price}</p>
+            <p className=' w-[15%] m-2'>${item.precio}</p>
             <div className="flex justify-between w-1/6">
               <button onClick={() => handleRemoveOne(item.id)} className="bg-[#EAEAEA] text-black border border-black px-2 mx-4 rounded h-7 w-7">-</button>
             <p>{item.quantity}</p>
               <button onClick={() => handleAddOne(item.id)} className="bg-[#EAEAEA] text-black border border-black px-2 mx-4 rounded h-7 w-7">+</button>
             </div>
-           <p className=' w-1/6 ml-8'>${item.quantity * item.price}</p>
+           <p className=' w-1/6 ml-8'>${item.quantity * item.precio}</p>
            <button onClick={() => handleRemoveOneItem(item.id)}> <img src='assets/trash.svg' ></img></button>           
           </div>
         ))}

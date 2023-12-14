@@ -11,7 +11,8 @@ const ProductsPage = () => {
 
   useEffect(() => {
     // Lógica para obtener datos de la base de datos
-    fetch("https://fakestoreapi.com/products")
+    // fetch("https://fakestoreapi.com/products")
+    fetch("https://www.ecommerceback.somee.com/api/Producto/Busqueda")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -30,7 +31,7 @@ const ProductsPage = () => {
   const filteredProducts = useMemo(() => {
     const filterByPrice = (product) => {
       const [minPrice, maxPrice] = priceRange.split("-").map(parseFloat);
-      const productPrice = parseFloat(product.price);
+      const productPrice = parseFloat(product.precio);
       return productPrice >= minPrice && productPrice <= maxPrice;
     };
 
@@ -133,18 +134,18 @@ const ProductCard = ({ product }) => {
       <div className="flex flex-col justify-between h-full">
         <div className="flex items-center justify-center mb-4">
           <div className="w-[200px] mx-auto flex justify-center items-center">
-            <Image
+            <img
               width={200}
               height={200}
-              src={product.image}
-              alt={product.title}
+              src={product.imagenes[0].url}
+              alt={product.nombre}
               className="max-h-[160px] group-hover:scale-110 transition duration-300 w-auto h-auto"
             />
           </div>
         </div>
         <div className="text-center">
-          <h2 className="mb-2 font-semibold text-md">{product.title}</h2>
-          <p className="mt-2 text-blue-500">${product.price}</p>
+          <h2 className="mb-2 font-semibold text-md">{product.nombre}</h2>
+          <p className="mt-2 text-blue-500">${product.precio}</p>
         </div>
         <div className="flex justify-center">
           <button className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
