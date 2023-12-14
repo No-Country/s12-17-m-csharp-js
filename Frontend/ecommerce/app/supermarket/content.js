@@ -117,10 +117,15 @@ const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
 
 const ProductCard = ({ product }) => {
   const isInCart = useStore((state) => state.isInCart(product.id));
-  const toggleProductInCart = useStore((state) => state.toggleProductInCart);
+  const addToCart = useStore((state) => state.addToCart);
+  const removeFromCart = useStore((state) => state.removeFromCart);
 
   const handleCartChange = () => {
-    toggleProductInCart(product);
+    if (isInCart) {
+      removeFromCart(product.id);
+    } else {
+      addToCart(product);
+    }
   };
 
   return (
