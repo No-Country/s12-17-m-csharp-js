@@ -117,11 +117,14 @@ builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaSer
 //Producto
 builder.Services.AddScoped<IProductRepository, ProductoRepository>();
 builder.Services.AddScoped<IProductosService, ProductoService>();
-
+//Imagen
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
-
+//Data Seeder
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+//Stock
+builder.Services.AddScoped<IStockRepository, StockRepository>();    
+
 
 var app = builder.Build();
 
