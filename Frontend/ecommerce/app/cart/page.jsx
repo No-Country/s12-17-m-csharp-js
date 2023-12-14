@@ -2,6 +2,7 @@
 
 import React from 'react';
 import useStore from '../store/useStore';
+import Link from "next/link";
 
 const CartPage = () => {
   const cart = useStore(state => state.cart); // Obtener el estado del carrito
@@ -38,26 +39,29 @@ const CartPage = () => {
       <div className=' bg-gradient-to-b from-[#026048] to-[#FEAF00] h-[456px] absolute w-full'></div>
     <div className="container mx-auto px-4 py-8 relative">
       <h1 className="text-2xl mb-4 text-[#FEAF00]">Carrito de Compras</h1>
-      <h3 className="text-xl mb-4 text-[#FEAF00] flex"><img src='assets/arrow.svg' className='mr-4' ></img> Continuar Comprando</h3>
+      <h3 className="text-xl mb-4 text-[#FEAF00] flex"><Link href={"/supermarket"}><img src='assets/arrow.svg' className='mr-4' ></img></Link>  Continuar Comprando</h3>
       <div className='flex'>
 
       <div className=" min-h-[600px] bg-[#EAEAEA] rounded-[20px] w-[916px] mt-20">
         <div className=' flex text-black text-xl font-bold h-[60px] items-center'>
-          <p className=' w-2/5 ml-3'>Producto</p>
-          <p className=' w-1/6 ml-3'>Precio</p>
+          <p className=' w-2/5 ml-6'>Producto</p>
+          <p className=' w-1/6 ml-1'>Precio</p>
           <p className=' w-1/6 ml-3'>Cantidad</p>
           <p className=' w-1/6 ml-3'>Total</p>
         </div>
         {cart.map(item => (
           <div key={item.id} className="border border-gray-300 p-2 flex h-[160px] items-center">
-            <p className="font-semibold w-2/5 m-2">{item.title}</p>
-            <p className=' w-1/6 m-2'>${item.price}</p>
+            <div className="font-semibold w-2/5 m-2 flex items-center">
+          <img src={item.image} className=' h-20 mx-4'></img>
+            <p >{item.title}</p>
+            </div>
+            <p className=' w-[15%] m-2'>${item.price}</p>
             <div className="flex justify-between w-1/6">
               <button onClick={() => handleRemoveOne(item.id)} className="bg-[#EAEAEA] text-black border border-black px-2 mx-4 rounded h-7 w-7">-</button>
             <p>{item.quantity}</p>
               <button onClick={() => handleAddOne(item.id)} className="bg-[#EAEAEA] text-black border border-black px-2 mx-4 rounded h-7 w-7">+</button>
             </div>
-           <p className=' w-1/6 m-2'>${item.quantity * item.price}</p>
+           <p className=' w-1/6 ml-8'>${item.quantity * item.price}</p>
            <button onClick={() => handleRemoveOneItem(item.id)}> <img src='assets/trash.svg' ></img></button>           
           </div>
         ))}
