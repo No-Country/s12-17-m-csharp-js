@@ -10,8 +10,10 @@ import Dropdown from "./components/Dropdown/dropdown";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { FaRegUserCircle } from "react-icons/fa";
+import useStore from "./store/useStore";
 
 const Navbar = () => {
+  const cart = useStore((state) => state.cart);
   const { data: session } = useSession();
   const isLoggedIn = session?.user;
 
@@ -64,7 +66,16 @@ const Navbar = () => {
         </div>
         <span className="font-medium text-gray-300">|</span>
         <FaRegBell size={24} />
-        <IoCartOutline size={32} />
+        <div className="relative">
+          {cart.length !== 0 && (
+            <span className="absolute flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full -top-1.5 -right-1.5">
+              {cart.length}
+            </span>
+          )}
+          <Link href={"/cart"}>
+            <IoCartOutline size={32} />
+          </Link>
+        </div>
         {isLoggedIn ? (
           <>
             <FaRegUserCircle size={26} />

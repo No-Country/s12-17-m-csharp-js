@@ -1,3 +1,4 @@
+import React from "react";
 import { CiSettings } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { BiPurchaseTag } from "react-icons/bi";
@@ -40,6 +41,7 @@ function page() {
         <nav className=" flex items-center justify-center mt-16">
           <ul>
             <li className="flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer">
+              {" "}
               <BsBagDash className="mr-2" />
               Ventas
             </li>
@@ -56,12 +58,14 @@ function page() {
               Mi perfil
             </li>
             <li className="flex items-center text-white hover:text-green-500 py-1 mb-5 cursor-pointer">
+              {" "}
               <CiSettings className="mr-2" /> Configuración
             </li>
             {/* Otros enlaces */}
           </ul>
         </nav>
         <div className="flex items-center justify-center mt-28 cursor-pointer">
+          {" "}
           salir <FaSignOutAlt className="ml-24" />{" "}
         </div>
       </div>
@@ -77,10 +81,10 @@ function page() {
         <header className="py-4 px-4 mb-8 flex items-center justify-between border-b border-gray-300">
           <h2 className="text-xl font-bold">Lista de productos vendiendo</h2>
           <Link
-            href={"/control_panel/products/create"}
+            href={"/control_panel/products/create/choose_category_step"}
             className="bg-primary text-center text-white rounded-full px-4 py-2"
           >
-            Añadir producto
+            crear un anuncio nuevo
           </Link>
         </header>
         {/* Contenido de elementos CRUD */}
