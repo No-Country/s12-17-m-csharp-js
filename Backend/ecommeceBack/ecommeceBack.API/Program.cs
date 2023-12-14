@@ -123,7 +123,9 @@ builder.Services.AddScoped<ImagenService>();
 //Data Seeder
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 //Stock
-builder.Services.AddScoped<IStockRepository, StockRepository>();    
+builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<IStockService, StockService>();
+
 
 
 var app = builder.Build();
@@ -152,13 +154,13 @@ using (var scope = app.Services.CreateScope())
 }
 
 //Db migration
-/*
+
 using (var scope = app.Services.CreateScope()) 
 {
     var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
     Context.Database.Migrate();
 }
-*/
+
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();

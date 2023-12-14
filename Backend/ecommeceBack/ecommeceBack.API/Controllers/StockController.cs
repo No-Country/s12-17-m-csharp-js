@@ -86,7 +86,7 @@ namespace ecommeceBack.API.Controllers
 
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]
+        [HttpPost("Registrar")]
         public async Task<ActionResult<StockDTO>> Registrar([FromForm]CreacionStockDTO modelo)
         {
             try
