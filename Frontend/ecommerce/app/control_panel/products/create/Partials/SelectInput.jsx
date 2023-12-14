@@ -1,14 +1,12 @@
+import { useFormContext } from "react-hook-form";
 const SelectInput = ({
   label,
   name,
-  register,
-  registerName,
   options = [],
-  errors,
-  // errorMessage,
   isRequired = true,
   ...props
 }) => {
+  const { register } = useFormContext();
   return (
     <div className="space-y-2">
       <label htmlFor={name} className="font-semibold text-lg space-x-2">
@@ -17,7 +15,7 @@ const SelectInput = ({
       </label>
 
       <select
-        {...register(registerName)}
+        {...register(name)}
         name={name}
         className="text-gray-800 px-4 py-3 rounded-md w-full bg-black/10"
         {...props}
@@ -29,8 +27,6 @@ const SelectInput = ({
           </option>
         ))}
       </select>
-
-      <p className="text-[#FF0000] text-sm">{errors[registerName]?.message}</p>
     </div>
   );
 };

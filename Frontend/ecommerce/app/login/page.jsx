@@ -20,9 +20,10 @@ const LoginPage = () => {
 
   const [showPopUp, setShowPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [displayError, setDisplayError] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const onSubmit = async (data) => {
+    setShowError(false);
     setIsLoading(true);
     const res = await signIn("credentials", {
       email: data.email,
@@ -32,7 +33,7 @@ const LoginPage = () => {
 
     if (res.error) {
       console.error(res.error);
-      setDisplayError(true);
+      setShowError(true);
     } else {
       setShowPopUp(true);
     }
@@ -91,6 +92,11 @@ const LoginPage = () => {
           name="Contraseña"
           type="password"
         />
+        {showError && (
+          <span className="text-red-500">
+            Las credenciales ingresadas no son correctas.
+          </span>
+        )}
         <div className="mt-8 mb-4">
           <button className="flex items-center justify-center mb-2 transition duration-300 rounded-full bg-secondary text-primary h-14 w-14 hover:bg-secondary-600">
             <FaArrowRight className="text-primary" size={20} />

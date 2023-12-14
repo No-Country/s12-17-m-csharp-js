@@ -1,17 +1,15 @@
 import IsRequired from "@/app/components/Form/IsRequired";
+import { useFormContext } from "react-hook-form";
 
 const TextInput = ({
   label = "",
+  name,
   isRequired = true,
   placeholder = "",
-  messageValidation = null,
   children = null,
-  register,
-  registerName,
-  errors,
-  // errorMessage,
   ...props
 }) => {
+  const { register } = useFormContext();
   return (
     <div className="space-y-2">
       {label ? (
@@ -22,21 +20,13 @@ const TextInput = ({
         children
       )}
       <input
-        {...register(registerName)}
+        {...register(name)}
         className={`text-gray-800 px-4 py-3 rounded-md w-full bg-black/10 ${props.className}`}
         type="text"
         placeholder={placeholder}
         required={isRequired}
         {...props}
       />
-
-      {errors[registerName] && (
-        <p className="text-sm text-red-500">{errors[registerName].message}</p>
-      )}
-
-      {messageValidation ? (
-        <p className="text-sm text-[#696969]">{messageValidation}</p>
-      ) : null}
     </div>
   );
 };

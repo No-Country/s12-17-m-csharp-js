@@ -24,8 +24,10 @@ const RegisterPage = () => {
 
   const [showPopUp, setShowPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const onSubmit = async (data) => {
+    setShowError(false);
     if (watch("password") != watch("confirm_password")) {
       setError("confirm_password", {
         type: "custom",
@@ -54,6 +56,7 @@ const RegisterPage = () => {
 
         setShowPopUp(true);
       } catch (error) {
+        setShowError(true);
         console.error(error);
       } finally {
         setIsLoading(false);
@@ -76,6 +79,11 @@ const RegisterPage = () => {
         <h1 className="w-full text-4xl font-bold text-center">
           Regístrate para ser usuario
         </h1>
+        {showError && (
+          <p className="mb-4 text-red-500">
+            Ocurrió un error al intentar registrarse.
+          </p>
+        )}
 
         <form className="mt-12" onSubmit={handleSubmit(onSubmit)}>
           <TextInput
