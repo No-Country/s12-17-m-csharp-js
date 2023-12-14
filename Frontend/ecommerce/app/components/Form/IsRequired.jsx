@@ -5,7 +5,7 @@ const IsRequired = ({ children, isRequired }) => {
     <>
       {isRequired ? (
         <span>
-          {children} <span className="text-[#F43F5E] text-xl">*</span>
+          {children} <span className="text-red-500 text-xl">*</span>
         </span>
       ) : (
         <span>{children}</span>

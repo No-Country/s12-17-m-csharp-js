@@ -33,7 +33,7 @@ function Dropdown() {
           <AiOutlineCaretUp className="h-8" />
         )}
         {isOpen && (
-          <div className="flex flex-col items-start bg-white border border-black rounded-lg flex-column absolute left-0 top-0 mt-10 overflow-hidden">
+          <div className="flex flex-col items-start bg-white border border-black rounded-lg flex-column absolute left-0 top-0 mt-10 overflow-hidden z-50">
             <h3 className="hover:text-white hover:scale-105 transition-transform hover:bg-primary text-center w-full px-4">
               Muebles
             </h3>

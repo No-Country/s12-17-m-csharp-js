@@ -5,7 +5,7 @@ import Link from "next/link";
 import PopUp from "../components/Popup/PopUp";
 import SocialButton from "../components/Form/SocialButton";
 import TextInput from "../components/Form/TextInput";
-import userService from "@/services/user-service";
+import userService from "@/services/userService";
 import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
 import { register_validations } from "../components/Form/Validations";
