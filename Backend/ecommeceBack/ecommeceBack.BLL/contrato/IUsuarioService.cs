@@ -1,5 +1,6 @@
 ﻿using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels;
+using ecommeceBack.Models.VModels.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace ecommeceBack.BLL.contrato
         Task<IQueryable<Usuario>> ObtenerTodos();
 
         Task<bool> ActualizarIdDatos(int datosId, string email);
+
+        Task<RespuestaAuth> GetCredencialesAsync(string email);
 
     }
 }

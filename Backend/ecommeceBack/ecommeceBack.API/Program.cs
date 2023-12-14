@@ -122,7 +122,7 @@ builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
 
 //Email
-builder.Services.AddScoped<IEmailService, IEmailService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 

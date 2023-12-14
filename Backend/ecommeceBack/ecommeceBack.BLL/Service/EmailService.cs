@@ -12,7 +12,7 @@ using MailKit.Net.Smtp;
 
 namespace ecommeceBack.BLL.Service
 {
-    internal class EmailService : IEmailService
+    public class EmailService : IEmailService
     {
         private readonly IConfiguration configuration;
         public EmailService(IConfiguration configuration)
