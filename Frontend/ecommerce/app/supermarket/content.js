@@ -1,70 +1,62 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import useStore from '../store/useStore';
-
+"use client";
+import React, { useState, useEffect, useMemo } from "react";
+import useStore from "../store/useStore";
+import Image from "next/image";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [category, setCategory] = useState('');
-  const [condition, setCondition] = useState('');
-  const [priceRange, setPriceRange] = useState('');
+  const [category, setCategory] = useState("");
+  const [condition, setCondition] = useState("");
+  const [priceRange, setPriceRange] = useState("");
 
   useEffect(() => {
     // Lógica para obtener datos de la base de datos
-    fetch('https://fakestoreapi.com/products')
-      .then(response => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
+        console.log(data);
         setProducts(data);
-        setFilteredProducts(data);
       })
-      .catch(error => {
-        console.error('Error fetching products:', error);
+      .catch((error) => {
+        console.error("Error fetching products:", error);
       });
   }, []);
 
-  useEffect(() => {
-    // Aplicar filtros cuando cambien los valores de la barra lateral
-    filterProducts();
-  }, [category, condition, priceRange]);
+  const filteredProducts = useMemo(() => {
+    const filterByPrice = (product) => {
+      const [minPrice, maxPrice] = priceRange.split("-").map(parseFloat);
+      const productPrice = parseFloat(product.price);
+      return productPrice >= minPrice && productPrice <= maxPrice;
+    };
 
-  const filterProducts = () => {
-    let filtered = [...products];
-
-    if (category) {
-      filtered = filtered.filter(product => product.category === category);
-    }
-
-    if (condition) {
-      filtered = filtered.filter(product => product.condition === condition);
-    }
-
-    if (priceRange) {
-      const [minPrice, maxPrice] = priceRange.split('-').map(parseFloat);
-      filtered = filtered.filter(product => {
-        const productPrice = parseFloat(product.price);
-        return productPrice >= minPrice && productPrice <= maxPrice;
-      });
-    }
-
-    setFilteredProducts(filtered);
-  };
+    return products.filter(
+      (p) =>
+        (!category || p.category === category) &&
+        (!condition || p.condition === condition) &&
+        (!priceRange || filterByPrice(p))
+    );
+  }, [products, category, condition, priceRange]);
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container py-8 mx-auto">
       <div className="flex">
         <Sidebar
           setCategory={setCategory}
           setCondition={setCondition}
           setPriceRange={setPriceRange}
         />
-        <div className="grid grid-cols-3 gap-4">
-          {filteredProducts.map(product => (
+        <div className="grid w-full grid-cols-3 gap-4">
+          {products.length === 0 && (
+            <div className="col-span-3 text-xl font-semibold text-center">
+              Cargando...
+            </div>
+          )}
+          {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
@@ -87,31 +79,30 @@ const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
   };
 
   return (
-    <div className="bg-white-200 w-64 mr-4">
+    <div className="mr-4 w-80 bg-white-200">
       <div className="p-4">
-        <h2 className="text-xl font-semibold mb-16 mt-8">Filtrar</h2>
+        <h2 className="mt-8 mb-16 text-xl font-semibold">Filtrar</h2>
 
         <div className="mb-4">
-          <h3 className="font-semibold mb-2">Categoría</h3>
-          <select className="p-2 mb-2" onChange={handleCategoryChange}>
-              <option value="">Todos</option>
-              <option value="jewelery">jewelery</option>
-              <option value="electronics">electronics</option>
+          <h3 className="mb-2 font-semibold">Categoría</h3>
+          <select className="w-full p-2 mb-2" onChange={handleCategoryChange}>
+            <option value="">Todos</option>
+            <option value="jewelery">jewelery</option>
+            <option value="electronics">electronics</option>
           </select>
         </div>
 
         <div className="mb-4">
-          <h3 className="font-semibold mb-2">Condición</h3>
-          <select className="p-2 mb-2" onChange={handleConditionChange}>
-              
+          <h3 className="mb-2 font-semibold">Condición</h3>
+          <select className="w-full p-2 mb-2" onChange={handleConditionChange}>
             {/* Opciones de condición */}
           </select>
         </div>
 
         <div>
-          <h3 className="font-semibold mb-2">Rango de precios</h3>
-          <select className="p-2" onChange={handlePriceRangeChange}>
-          <option value="">Todos</option>
+          <h3 className="mb-2 font-semibold">Rango de precios</h3>
+          <select className="w-full p-2" onChange={handlePriceRangeChange}>
+            <option value="">Todos</option>
             <option value="0-50">$0 - $50</option>
             <option value="50-100">$50 - $100</option>
             <option value="100-200">$100 - $200</option>
@@ -125,30 +116,42 @@ const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
 };
 
 const ProductCard = ({ product }) => {
-  const addToCart = useStore((state) => state.addToCart);
+  const isInCart = useStore((state) => state.isInCart(product.id));
+  const toggleProductInCart = useStore((state) => state.toggleProductInCart);
 
-  const handleAddToCart = () => {
-    addToCart(product);
-    alert(`${product.title} añadido al carrito`);
+  const handleCartChange = () => {
+    toggleProductInCart(product);
   };
+
   return (
-    <div className="border border-[#e4e4e4] p-4 h-[300px] relative overflow-hidden group transition">
-      <div className='h-full flex flex-col justify-between'>
-        <div className='flex justify-center items-center mb-4'>
-          <div className='w-[200px] mx-auto flex justify-center items-center'>
-            <img src={product.image} alt={product.title} className="max-h-[160px] group-hover:scale-110 transition duration-300" />
+    <div className="border border-white p-4 h-[300px] relative overflow-hidden group transition">
+      <div className="flex flex-col justify-between h-full">
+        <div className="flex items-center justify-center mb-4">
+          <div className="w-[200px] mx-auto flex justify-center items-center">
+            <Image
+              width={200}
+              height={200}
+              src={product.image}
+              alt={product.title}
+              className="max-h-[160px] group-hover:scale-110 transition duration-300 w-auto h-auto"
+            />
           </div>
         </div>
-        <div className='text-center'>
-          <h2 className="text-md font-semibold mb-2">{product.title}</h2>
-          <p className="text-blue-500 mt-2">${product.price}</p>
+        <div className="text-center">
+          <h2 className="mb-2 font-semibold text-md">{product.title}</h2>
+          <p className="mt-2 text-blue-500">${product.price}</p>
         </div>
         <div className="flex justify-center">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none">
+          <button className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
             Comprar
           </button>
-          <button onClick={handleAddToCart} className="text-black px-4 py-2 rounded-md border border-gray-300 ml-4 hover:bg-green-600 focus:outline-none">
-            Añadir al carrito
+          <button
+            onClick={handleCartChange}
+            className={`px-4 py-2 ml-4 text-black border border-gray-300 rounded-md focus:outline-none ${
+              isInCart ? "bg-red-500 text-white" : ""
+            }`}
+          >
+            {isInCart ? "Quitar del carrito" : "Añadir al carrito"}
           </button>
         </div>
       </div>
