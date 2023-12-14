@@ -47,14 +47,6 @@ const useStore = create((set) => ({
   isInCart: (productId) => {
     return useStore.getState().cart.some((product) => product.id === productId); // Comprueba si el producto está en el carrito
   },
-
-  toggleProductInCart: (product) => {
-    set((state) =>
-       state.isInCart(product.id)
-        ? state.removeFromCart(product.id)
-        : state.addToCart(product)
-    );
-  },
 }));
 
 export default useStore;
