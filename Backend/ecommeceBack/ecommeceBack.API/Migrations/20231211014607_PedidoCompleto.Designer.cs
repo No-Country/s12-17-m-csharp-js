@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecommeceBack.DAL.Dbcontext;
 
@@ -11,9 +12,11 @@ using ecommeceBack.DAL.Dbcontext;
 namespace ecommeceBack.API.Migrations
 {
     [DbContext(typeof(AplicationDBcontext))]
-    partial class AplicationDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20231211014607_PedidoCompleto")]
+    partial class PedidoCompleto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,40 +227,6 @@ namespace ecommeceBack.API.Migrations
                     b.ToTable("Datos");
                 });
 
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.HistorialStock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime>("FechaStkupdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("InOut")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockActual")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("HistorialStocks");
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
                 {
                     b.Property<int>("Id")
@@ -320,16 +289,14 @@ namespace ecommeceBack.API.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("fecha_inicio")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.Property<string>("usuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasKey("Id");
 
                     b.ToTable("Pedidos");
                 });
@@ -374,7 +341,7 @@ namespace ecommeceBack.API.Migrations
 
                     b.Property<string>("UsuarioId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
                         .IsRequired()
@@ -386,12 +353,6 @@ namespace ecommeceBack.API.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoriaId");
-
-                    b.HasIndex("MarcaId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Productos");
                 });
@@ -430,10 +391,6 @@ namespace ecommeceBack.API.Migrations
                         .HasColumnType("nvarchar(45)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PedidoId");
-
-                    b.HasIndex("ProductoId");
 
                     b.ToTable("Renglones");
                 });
@@ -565,17 +522,6 @@ namespace ecommeceBack.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.HistorialStock", b =>
-                {
-                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Producto");
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
@@ -587,64 +533,6 @@ namespace ecommeceBack.API.Migrations
                     b.Navigation("Producto");
                 });
 
-
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Pedido", b =>
-                {
-                    b.HasOne("ecommeceBack.Models.Entidades.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Renglones_Pedidos", b =>
-                {
-                    b.HasOne("ecommeceBack.Models.Entidades.Pedido", "Pedido")
-                        .WithMany("Renglones_Pedidos")
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pedido");
-
-                    b.Navigation("Producto");
-
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
-                {
-                    b.HasOne("ecommeceBack.Models.Entidades.Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ecommeceBack.Models.Entidades.Marca", "Marca")
-                        .WithMany()
-                        .HasForeignKey("MarcaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ecommeceBack.Models.Entidades.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-
-                    b.Navigation("Marca");
-
-                    b.Navigation("Usuario");
-
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Datos", "Datos")
@@ -652,11 +540,6 @@ namespace ecommeceBack.API.Migrations
                         .HasForeignKey("DatosId");
 
                     b.Navigation("Datos");
-                });
-
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.Pedido", b =>
-                {
-                    b.Navigation("Renglones_Pedidos");
                 });
 
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
