@@ -31,7 +31,7 @@ namespace ecommeceBack.DAL.Repository
 
             try
             {
-                var Stock = await _dbcontext.HistorialStocks.Where(s => s.Id == idProducto).ToListAsync();
+                var Stock = await _dbcontext.HistorialStocks.Where(s => s.ProductoId == idProducto).ToListAsync();
                 
                 return _mapper.Map<List<HistorialStockDTO>>(Stock);
             }
