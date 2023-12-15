@@ -10,6 +10,7 @@ using ecommeceBack.Models.VModels.DatosDTO;
 using ecommeceBack.Models.VModels.ImagenDTO;
 using ecommeceBack.Models.VModels.MarcasDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
+using MercadoPago.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+MercadoPagoConfig.AccessToken = builder.Configuration["KeyMercadoPago"];
 
 builder.Services.AddDbContext<AplicationDBcontext>(option =>
 
@@ -117,6 +120,8 @@ builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaSer
 //Producto
 builder.Services.AddScoped<IProductRepository, ProductoRepository>();
 builder.Services.AddScoped<IProductosService, ProductoService>();
+
+builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
