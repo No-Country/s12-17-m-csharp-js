@@ -23,9 +23,10 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         public string UsuarioId { get; set; }
 
         public int CategoriaId { get; set; }
-
+        public CategoriaDTO.CategoriaDTO Categoria { get; set; }
+        
         public int MarcaId { get; set; }
-
+        public MarcasDTO.MarcaDTO Marca { get; set; }
         
         [MaxLength(45)]
         public string? Modelo { get; set; }

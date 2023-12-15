@@ -23,9 +23,14 @@ namespace ecommeceBack.DAL.Dbcontext
         public DbSet<Marca> Marcas {  get; set; }
 
         public DbSet<Categoria> Categorias { get; set; }
+        
         public DbSet<Imagen> Imagenes { get; set; }
 
         public DbSet<Producto> Productos { get; set; }
+
+        public DbSet<Pedido> Pedidos { get; set; }
+
+        public DbSet<Renglones_Pedidos> Renglones { get; set;}
 
         
 

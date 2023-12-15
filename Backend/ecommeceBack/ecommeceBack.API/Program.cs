@@ -9,7 +9,9 @@ using ecommeceBack.Models.VModels.CategoriaDTO;
 using ecommeceBack.Models.VModels.DatosDTO;
 using ecommeceBack.Models.VModels.ImagenDTO;
 using ecommeceBack.Models.VModels.MarcasDTO;
+using ecommeceBack.Models.VModels.PedidoDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
+using ecommeceBack.Models.VModels.Renglones_PedidosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -117,9 +119,15 @@ builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaSer
 //Producto
 builder.Services.AddScoped<IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto>, ProductoRepository>();
 builder.Services.AddScoped<IGenericService<CreacionProductoDTO, ProductoDTO>, ProductoService>();
-
+//Producto Servicio Cloudinary
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
+//Pedido
+builder.Services.AddScoped<IGenericRepository<CreacionPedidoDTO, PedidoDTO, Pedido>, PedidoRepository>();
+builder.Services.AddScoped<IGenericService<CreacionPedidoDTO, PedidoDTO>, PedidoService>();
+//Renglones Pedido
+builder.Services.AddScoped<IGenericRepository<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO, Renglones_Pedidos>, Renglones_PedidosRepository>();
+builder.Services.AddScoped<IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO>, Renglones_PedidosService>();
 
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 
