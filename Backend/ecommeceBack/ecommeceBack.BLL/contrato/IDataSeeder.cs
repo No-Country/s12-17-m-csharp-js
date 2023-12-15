@@ -11,5 +11,6 @@ namespace ecommeceBack.BLL.contrato
         public Task CrearUsuarioAdmin();
 
         public Task CrearRoles();
+        public Task CrearCategorias();
     }
 }

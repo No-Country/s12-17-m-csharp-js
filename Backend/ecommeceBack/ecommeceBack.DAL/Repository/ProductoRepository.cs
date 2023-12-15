@@ -15,7 +15,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ecommeceBack.DAL.Repository
 {
-    public class ProductoRepository: IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto>
+    public class ProductoRepository: IProductRepository
     {
         private readonly AplicationDBcontext _dbcontext;
         private readonly IMapper mapper;
@@ -118,6 +118,29 @@ namespace ecommeceBack.DAL.Repository
             {
                 IQueryable<Producto> queryProducto = _dbcontext.Productos;
                 return queryProducto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ProductoDTO> ActivoInactivo(int idProducto, string idUser)
+        {
+            try
+            {
+                var Producto = await _dbcontext.Productos.Where(c => c.Id == idProducto).FirstOrDefaultAsync();
+
+                if (Producto == null) throw new NotFoundException();
+                if (Producto.UsuarioId != idUser) throw new UnauthorizedAccessException("No estas autorizado para realizar esta tarea");
+
+                Producto.Activo = !Producto.Activo;
+
+                _dbcontext.Update(Producto);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return mapper.Map<ProductoDTO>(Producto);
             }
             catch (Exception)
             {

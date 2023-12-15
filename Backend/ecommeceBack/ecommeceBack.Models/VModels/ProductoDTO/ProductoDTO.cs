@@ -1,5 +1,7 @@
 ﻿using ecommeceBack.Models.Entidades;
+using ecommeceBack.Models.VModels.CategoriaDTO;
 using ecommeceBack.Models.VModels.ImagenDTO;
+using ecommeceBack.Models.VModels.MarcasDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

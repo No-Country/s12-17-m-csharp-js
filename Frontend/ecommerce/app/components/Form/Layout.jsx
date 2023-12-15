@@ -1,24 +1,18 @@
-import Button from "./Button"
-import TextInput from "./TextInput"
-
-
 const Layout = ({ children }) => {
-    return (
-        <div className="flex h-full">
-            {/* Columna del logo */}
-            <div className="w-1/2 bg-primary flex items-center justify-center">
-                <div className=" flex items-center justify-center h-full">
-                    <h1 >Logo</h1>
-                </div>
-            </div>
-
-            {/* Columna del formulario */}
-            <div className="w-1/2 flex items-center justify-center bg-white ">
-                <form>
-                    {children}
-                </form>
-            </div>
+  return (
+    <div className="flex h-full">
+      {/* Columna del logo */}
+      <div className="flex items-center justify-center w-1/2 bg-primary">
+        <div className="flex items-center justify-center h-full ">
+          <h1>Logo</h1>
         </div>
-    )
-}
-export default Layout
+      </div>
+
+      {/* Columna del formulario */}
+      <div className="w-1/2 flex flex-col items-center justify-center min-h-[calc(100vh-64px)]">
+        {children}
+      </div>
+    </div>
+  );
+};
+export default Layout;

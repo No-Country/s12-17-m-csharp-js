@@ -12,6 +12,7 @@ using ecommeceBack.Models.VModels.MarcasDTO;
 using ecommeceBack.Models.VModels.PedidoDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
 using ecommeceBack.Models.VModels.Renglones_PedidosDTO;
+using MercadoPago.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+MercadoPagoConfig.AccessToken = builder.Configuration["KeyMercadoPago"];
 
 builder.Services.AddDbContext<AplicationDBcontext>(option =>
 
@@ -117,9 +120,12 @@ builder.Services.AddScoped<IDatosService, DatosService>();
 builder.Services.AddScoped<IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca>, MarcasRepository>();
 builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaService>();
 //Producto
-builder.Services.AddScoped<IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto>, ProductoRepository>();
-builder.Services.AddScoped<IGenericService<CreacionProductoDTO, ProductoDTO>, ProductoService>();
-//Producto Servicio Cloudinary
+
+builder.Services.AddScoped<IProductRepository, ProductoRepository>();
+builder.Services.AddScoped<IProductosService, ProductoService>();
+
+builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
+
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
 //Pedido
@@ -129,7 +135,19 @@ builder.Services.AddScoped<IGenericService<CreacionPedidoDTO, PedidoDTO>, Pedido
 builder.Services.AddScoped<IGenericRepository<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO, Renglones_Pedidos>, Renglones_PedidosRepository>();
 builder.Services.AddScoped<IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO>, Renglones_PedidosService>();
 
+//Data Seeder
+
+
+//Email
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+//Stock
+builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<IStockService, StockService>();
+
+
 
 var app = builder.Build();
 
@@ -146,7 +164,8 @@ using (var scope = app.Services.CreateScope())
     {
         var dataSeeder = services.GetRequiredService<IDataSeeder>();
         await dataSeeder.CrearRoles();
-        await dataSeeder.CrearUsuarioAdmin(); 
+        await dataSeeder.CrearUsuarioAdmin();
+        await dataSeeder.CrearCategorias();
     }
     catch (Exception)
     {
@@ -155,11 +174,13 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//using (var scope = app.Services.CreateScope()) 
-//{
-//    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
-//    Context.Database.Migrate();
-//}
+//Db migration
+
+using (var scope = app.Services.CreateScope()) 
+{
+    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
+    Context.Database.Migrate();
+}
 
 
 // Configure the HTTP request pipeline.

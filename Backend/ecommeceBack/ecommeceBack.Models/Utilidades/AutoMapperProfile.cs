@@ -8,6 +8,7 @@ using ecommeceBack.Models.VModels.MarcasDTO;
 using ecommeceBack.Models.VModels.PedidoDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
 using ecommeceBack.Models.VModels.Renglones_PedidosDTO;
+using ecommeceBack.Models.VModels.StockDTO;
 
 namespace ecommeceBack.Models.Utilidades
 {
@@ -41,9 +42,7 @@ namespace ecommeceBack.Models.Utilidades
 
             CreateMap<Renglones_PedidosDTO, Renglones_Pedidos>().ReverseMap();
             
-           
-        
-            
+            CreateMap<HistorialStockDTO, HistorialStock>().ReverseMap();
         }
     }
 }

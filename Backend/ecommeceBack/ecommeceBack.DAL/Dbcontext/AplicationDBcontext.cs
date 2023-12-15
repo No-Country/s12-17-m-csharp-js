@@ -31,10 +31,8 @@ namespace ecommeceBack.DAL.Dbcontext
         public DbSet<Pedido> Pedidos { get; set; }
 
         public DbSet<Renglones_Pedidos> Renglones { get; set;}
-
         
-
-
+        public DbSet<HistorialStock> HistorialStocks { get; set; }
 
     }
 }

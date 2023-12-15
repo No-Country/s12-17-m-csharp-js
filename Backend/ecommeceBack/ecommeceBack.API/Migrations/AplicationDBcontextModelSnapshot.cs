@@ -224,6 +224,40 @@ namespace ecommeceBack.API.Migrations
                     b.ToTable("Datos");
                 });
 
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.HistorialStock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("FechaStkupdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("InOut")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockActual")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("HistorialStocks");
+                });
+
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
                 {
                     b.Property<int>("Id")
@@ -340,7 +374,7 @@ namespace ecommeceBack.API.Migrations
 
                     b.Property<string>("UsuarioId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("nombre")
                         .IsRequired()
@@ -352,6 +386,12 @@ namespace ecommeceBack.API.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("MarcaId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Productos");
                 });
@@ -525,6 +565,17 @@ namespace ecommeceBack.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.HistorialStock", b =>
+                {
+                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
@@ -535,6 +586,7 @@ namespace ecommeceBack.API.Migrations
 
                     b.Navigation("Producto");
                 });
+
 
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Pedido", b =>
                 {
@@ -564,6 +616,33 @@ namespace ecommeceBack.API.Migrations
                     b.Navigation("Pedido");
 
                     b.Navigation("Producto");
+
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
+                {
+                    b.HasOne("ecommeceBack.Models.Entidades.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ecommeceBack.Models.Entidades.Marca", "Marca")
+                        .WithMany()
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ecommeceBack.Models.Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Marca");
+
+                    b.Navigation("Usuario");
+
                 });
 
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>

@@ -2,6 +2,7 @@
 using ecommeceBack.DAL.Contrato;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels;
+using ecommeceBack.Models.VModels.Auth;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace ecommeceBack.BLL.Service
     public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepository _registrarRepo;
+        private readonly ITokenService tokenService;
 
-        public UsuarioService( IUsuarioRepository registrarRepo)
+        public UsuarioService( IUsuarioRepository registrarRepo, ITokenService tokenService)
         {
             _registrarRepo = registrarRepo;
+            this.tokenService = tokenService;
         }
 
         public Task<bool> Actualizar(Usuario modelo)
@@ -56,6 +59,30 @@ namespace ecommeceBack.BLL.Service
         {
             
             return await _registrarRepo.ActualizarIdDatos(datosId, email);
+        }
+
+        public async Task<RespuestaAuth> GetCredencialesAsync(string email)
+        {
+            try
+            {
+                var usuario = await _registrarRepo.GetByEmailAsync(email);
+
+                var token = tokenService.GenerarToken(email, 1);
+
+                return new RespuestaAuth() { 
+                    Email = usuario.Email,
+                    Nombre = usuario.Datos.Nombre,
+                    Apellido = usuario.Datos.Apellido,
+                    Token = token.Result};
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }
