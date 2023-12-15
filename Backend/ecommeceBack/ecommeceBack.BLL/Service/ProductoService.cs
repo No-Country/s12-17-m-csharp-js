@@ -18,12 +18,14 @@ namespace ecommeceBack.BLL.Service
         private readonly IProductRepository _productoRepo;
         private readonly IMapper mapper;
         private readonly ImagenService _imagenService;
+        private readonly IStockService stockService;
 
-        public ProductoService(IProductRepository productoRepo, IMapper mapper, ImagenService imagenService)
+        public ProductoService(IProductRepository productoRepo, IMapper mapper, ImagenService imagenService, IStockService stockService)
         {
             _productoRepo = productoRepo;
             this.mapper = mapper;
             _imagenService = imagenService;
+            this.stockService = stockService;
         }
 
         public async Task<ProductoDTO> Actualizar(int id, CreacionProductoDTO modelo)
@@ -59,8 +61,9 @@ namespace ecommeceBack.BLL.Service
 
         public async Task<ProductoDTO> Registrar(CreacionProductoDTO modelo)
         {
+
             var producto = await _productoRepo.Insertar(modelo);
-            
+            await stockService.InOut(producto.Id, producto.Stock_Actual, "ingreso inicial", true);
             await _imagenService.AgregarImagen(modelo.Imagen1, producto.Id);
             if (modelo.Imagen2 != null) await _imagenService.AgregarImagen(modelo.Imagen2, producto.Id);
             if (modelo.Imagen3 != null) await _imagenService.AgregarImagen(modelo.Imagen3, producto.Id);

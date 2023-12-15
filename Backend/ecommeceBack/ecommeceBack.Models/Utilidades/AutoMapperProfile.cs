@@ -6,6 +6,7 @@ using ecommeceBack.Models.VModels.DatosDTO;
 using ecommeceBack.Models.VModels.ImagenDTO;
 using ecommeceBack.Models.VModels.MarcasDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
+using ecommeceBack.Models.VModels.StockDTO;
 
 namespace ecommeceBack.Models.Utilidades
 {
@@ -22,6 +23,8 @@ namespace ecommeceBack.Models.Utilidades
             CreateMap<ProductoDTO, Producto>().ReverseMap();
             CreateMap<CreacionProductoDTO, Producto>().ReverseMap();
             CreateMap<ImagenDTO, Imagen>().ReverseMap();
+            CreateMap<HistorialStockDTO, HistorialStock>().ReverseMap();
+          
         }
     }
 }
