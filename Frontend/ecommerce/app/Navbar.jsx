@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <div className="flex items-center justify-between w-full h-16">
+    <div className="flex items-center justify-between w-full h-16 max-w-[1920px] mx-auto">
       <div className="flex items-center justify-between h-full space-x-8">
         <Link
           href="/"

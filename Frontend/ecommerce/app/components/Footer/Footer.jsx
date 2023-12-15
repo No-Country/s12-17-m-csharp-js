@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className='text-gray-500 px-4 py-16 grid gap-y-6 max-w-screen-2xl mx-auto'>
+    <footer className='text-gray-500 px-8 py-16 grid gap-y-6 w-full max-w-[1920px] mx-auto border-y-2 mt-8'>
       <ul className='grid gap-y-10 gap-x-20 sm:grid-cols-2 lg:grid-cols-5'>
         <li className='grid gap-y-6 h-fit'>
           <h6 className='text-3xl font-bold text-black'>SURSHOP</h6>
