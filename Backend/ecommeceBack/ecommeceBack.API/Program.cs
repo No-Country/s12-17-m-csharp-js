@@ -117,14 +117,23 @@ builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaSer
 //Producto
 builder.Services.AddScoped<IProductRepository, ProductoRepository>();
 builder.Services.AddScoped<IProductosService, ProductoService>();
-
+//Imagen
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
+
+//Data Seeder
+=======
 
 //Email
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+//Stock
+builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<IStockService, StockService>();
+
+
 
 var app = builder.Build();
 
@@ -151,11 +160,13 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//using (var scope = app.Services.CreateScope()) 
-//{
-//    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
-//    Context.Database.Migrate();
-//}
+//Db migration
+
+using (var scope = app.Services.CreateScope()) 
+{
+    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
+    Context.Database.Migrate();
+}
 
 
 // Configure the HTTP request pipeline.

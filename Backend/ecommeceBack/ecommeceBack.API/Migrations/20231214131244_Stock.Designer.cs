@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecommeceBack.DAL.Dbcontext;
 
@@ -11,9 +12,11 @@ using ecommeceBack.DAL.Dbcontext;
 namespace ecommeceBack.API.Migrations
 {
     [DbContext(typeof(AplicationDBcontext))]
-    partial class AplicationDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20231214131244_Stock")]
+    partial class Stock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,40 +227,6 @@ namespace ecommeceBack.API.Migrations
                     b.ToTable("Datos");
                 });
 
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.HistorialStock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime>("FechaStkupdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("InOut")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockActual")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("HistorialStocks");
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
                 {
                     b.Property<int>("Id")
@@ -364,6 +333,40 @@ namespace ecommeceBack.API.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Productos");
+                });
+
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Stock", b =>
+                {
+                    b.Property<int>("StockID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockID"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("Entrada")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaStkupdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Salida")
+                        .HasColumnType("int");
+
+                    b.HasKey("StockID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Stocks");
                 });
 
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>
@@ -493,17 +496,6 @@ namespace ecommeceBack.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ecommeceBack.Models.Entidades.HistorialStock", b =>
-                {
-                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Producto");
-                });
-
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Imagen", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
@@ -540,6 +532,17 @@ namespace ecommeceBack.API.Migrations
                     b.Navigation("Marca");
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Stock", b =>
+                {
+                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>
