@@ -70,6 +70,25 @@ namespace ecommeceBack.DAL.Repository
             }
         }
 
+        public async Task<Usuario> GetByEmailAsync(string email)
+        {
+            try
+            {
+                var user = await _dbcontext.Users.Where(user => user.Email == email).Include(user => user.Datos).FirstOrDefaultAsync();
+
+                if(user == null) throw new NotFoundException();
+
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+
     }
 
      

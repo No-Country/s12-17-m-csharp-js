@@ -120,7 +120,14 @@ builder.Services.AddScoped<IProductosService, ProductoService>();
 //Imagen
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
+
 //Data Seeder
+=======
+
+//Email
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 //Stock
 builder.Services.AddScoped<IStockRepository, StockRepository>();

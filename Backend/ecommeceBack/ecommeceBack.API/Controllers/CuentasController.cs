@@ -1,6 +1,7 @@
 ﻿using ecommeceBack.BLL.contrato;
 using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels;
+using ecommeceBack.Models.VModels.Auth;
 using ecommeceBack.Models.VModels.DatosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -33,43 +34,67 @@ namespace ecommeceBack.API.Controllers
         }
 
         [HttpPost("registro")]
-        public async Task<IActionResult> Registro([FromBody]CreacionUsuarioDTO modelo) 
+        public async Task<ActionResult<RespuestaAuth>> Registro([FromBody]CreacionUsuarioDTO modelo) 
         {
-           
-            bool Resultado = await usuarioService.Registrar(modelo);
-           if (!Resultado) 
-            { 
-
-                return BadRequest("No se pudo agregar su Usuario");
-            }
-
-           
-            CreacionDatosDTO datosbase = new CreacionDatosDTO()
+            try
             {
+                bool Resultado = await usuarioService.Registrar(modelo);
+               if (!Resultado) 
+                { 
+
+                    return BadRequest("No se pudo agregar su Usuario");
+                }
+
+           
+                CreacionDatosDTO datosbase = new CreacionDatosDTO()
+                {
+                    Nombre = modelo.Nombre,
+                    Apellido = modelo.Apellido
+                };
+
+                var datosRegistrado = await datosService.Registrar(datosbase);
+
+                //modelo.DatosId = datosRegistrado.Id;
+                var result = await usuarioService.ActualizarIdDatos(datosRegistrado.Id, modelo.Email);
+
+                var token = tokenService.GenerarToken(modelo.Email, 1);
+
+                RespuestaAuth respuestaAuth = new() { 
+                Email= modelo.Email,
                 Nombre = modelo.Nombre,
-                Apellido = modelo.Apellido
-            };
+                Apellido = modelo.Apellido,
+                Token = token.Result
+                };
 
-            var datosRegistrado = await datosService.Registrar(datosbase);
+                return Ok(respuestaAuth);
 
-            //modelo.DatosId = datosRegistrado.Id;
-            var result = await usuarioService.ActualizarIdDatos(datosRegistrado.Id, modelo.Email);
+            }
+            catch (Exception)
+            {
 
-            return Ok();
+                return StatusCode(500, "Error interno del servidor");
+            }
         }
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] CredencialesUsuario credencialesUsuario)
+        public async Task<ActionResult<RespuestaAuth>> Login([FromBody] CredencialesUsuario credencialesUsuario)
         {
-            var result = await signInManager.PasswordSignInAsync(credencialesUsuario.Email, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: false);
+            try
+            {
+                var result = await signInManager.PasswordSignInAsync(credencialesUsuario.Email, credencialesUsuario.Password, isPersistent: false, lockoutOnFailure: false);
 
-            if (!result.Succeeded) return BadRequest("Credenciales incorrectas");
+                if (!result.Succeeded) return BadRequest("Credenciales incorrectas");
             
-            var token = tokenService.GenerarToken(credencialesUsuario.Email, 1);
 
+                return Ok(await usuarioService.GetCredencialesAsync(credencialesUsuario.Email));
+            }
+            catch (Exception)
+            {
 
-            return Ok(new{ token = token.Result });
+                return StatusCode(500, "Error interno del servidor");
+            }
+
 
         }
 

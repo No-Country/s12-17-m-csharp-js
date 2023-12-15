@@ -13,6 +13,8 @@ namespace ecommeceBack.DAL.Contrato
 
         Task<bool> ActualizarIdDatos(int datosId, string email);
 
+        Task<Usuario> GetByEmailAsync(string email);
+
 
     }
 }
