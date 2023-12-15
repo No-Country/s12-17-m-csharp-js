@@ -9,12 +9,11 @@ using ecommeceBack.Models.VModels.StockDTO;
 
 namespace ecommeceBack.DAL.Contrato
 {
-    public interface IStockRepository : IGenericRepository<CreacionStockDTO, StockDTO, Stock>
-    {
-        Task<StockDTO> Entrada(int idProducto, StockentradaDTO stockentrada);
-        Task<StockDTO> Salida(int idProducto, StocksalidaDTO stocksalida);
+    public interface IStockRepository {
 
-        Task<StockDTO> BusquedaPorProductoCantidad(int idProducto);
+         Task<List<HistorialStockDTO>> BusquedaPorIdProducto(int idProducto);
+
+        Task<HistorialStockDTO> InOut(int idProducto, int cantidad, string descripcion, bool inOut);
 
 
     }

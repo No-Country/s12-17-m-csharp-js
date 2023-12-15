@@ -9,26 +9,25 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.Models.Entidades
 {
-    public class Stock
+    public class HistorialStock
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StockID { get; set; }
+               
+        public int Id { get; set; }
 
         [MaxLength(250)]
         public string? Descripcion { get; set; }
 
-        public int Entrada { get; set; }
+        //in 1 out 0
+        public bool InOut { get; set; }
 
-        public int Id { get; set; }
-    
-        public int Salida { get; set; }
+        public int ProductoId { get; set; }
 
+        public int StockActual { get; set; }
         public int Cantidad { get; set; }
 
         public DateTime FechaStkupdate { get; set; } = DateTime.Now;
 
-        [ForeignKey("Id")]
+     
         public virtual Producto Producto { get; set; } 
 
 

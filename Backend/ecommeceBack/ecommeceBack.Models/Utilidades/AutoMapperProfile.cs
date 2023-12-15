@@ -23,10 +23,8 @@ namespace ecommeceBack.Models.Utilidades
             CreateMap<ProductoDTO, Producto>().ReverseMap();
             CreateMap<CreacionProductoDTO, Producto>().ReverseMap();
             CreateMap<ImagenDTO, Imagen>().ReverseMap();
-            CreateMap<StockDTO, Stock>().ReverseMap();
-            CreateMap<StockentradaDTO, Stock>().ReverseMap();
-            CreateMap<StocksalidaDTO, Stock>().ReverseMap();
-            CreateMap<StockUpdateDTO, Stock>().ReverseMap();
+            CreateMap<HistorialStockDTO, HistorialStock>().ReverseMap();
+          
         }
     }
 }

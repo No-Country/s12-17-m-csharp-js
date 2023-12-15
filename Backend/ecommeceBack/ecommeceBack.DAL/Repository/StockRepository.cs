@@ -25,44 +25,15 @@ namespace ecommeceBack.DAL.Repository
             _mapper = mapper;
         }
 
-        public async Task<StockDTO> Actualizar(int id, CreacionStockDTO modelo)
+     
+        public async Task<List<HistorialStockDTO>> BusquedaPorIdProducto(int idProducto)
         {
 
             try
             {
-                var Stock = await _dbcontext.Stocks.Where(s => s.Id == id).FirstOrDefaultAsync();
-
-                if (Stock == null) throw new NotFoundException();
-               
-                Stock.Descripcion = modelo.Descripcion;
-
-                Stock.Id = modelo.Id;
-
-                Stock.Cantidad = modelo.Cantidad;                       
-
-                _dbcontext.Update(Stock);
-
-                await _dbcontext.SaveChangesAsync();
-
-
-                return _mapper.Map<StockDTO>(Stock);
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-
-        public async Task<StockDTO> BusquedaPorProductoCantidad(int idProducto)
-        {
-
-            try
-            {
-                var stock = await _dbcontext.Stocks.Include(s => s.Id).FirstOrDefaultAsync(s => s.Id == idProducto);
-                if (stock == null) throw new NotFoundException();
-                return _mapper.Map<StockDTO>(stock);
+                var Stock = await _dbcontext.HistorialStocks.Where(s => s.Id == idProducto).ToListAsync();
+                
+                return _mapper.Map<List<HistorialStockDTO>>(Stock);
             }
             catch (Exception)
             {
@@ -70,110 +41,70 @@ namespace ecommeceBack.DAL.Repository
             }
         }
         //elimina por id de producto
-        public async Task<bool> Eliminar(int idProducto)
+     
+        public async Task<HistorialStockDTO> InOut(int idProducto, int cantidad, string descripcion, bool inOut )
         {
             try
             {
-                var StockD = await _dbcontext.Stocks.Where(s => s.Id == idProducto).FirstOrDefaultAsync(s => s.Id == idProducto);
-
-                if (StockD == null) throw new NotFoundException();
-
-                _dbcontext.Remove(StockD);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            
-        }
-
-        public async Task<StockDTO> Entrada(int idProducto, StockentradaDTO stockentrada)
-        {
-            try
-            {
-                var Stock = await _dbcontext.Stocks.Where(s => s.Id == idProducto).FirstOrDefaultAsync(s => s.Id == idProducto);
-
-                if (Stock == null) throw new NotFoundException();
-
-                Stock.Cantidad += stockentrada.Entrada;            
-
-                _dbcontext.Update(Stock);
-
-                await _dbcontext.SaveChangesAsync();
+                var Stock = await _dbcontext.HistorialStocks.Where(s => s.Id == idProducto).OrderByDescending(s=> s.FechaStkupdate).FirstOrDefaultAsync();
+                var HistorialStock = new HistorialStock();
+                HistorialStock.ProductoId = idProducto;
 
 
-                return _mapper.Map<StockDTO>(Stock);
+                if (Stock == null)
+                {
+                    if (inOut == false) {
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+                        throw new BadRequestException("No se puede quitar stock por que no tiene");
 
-        public async Task<StockDTO> Insertar(CreacionStockDTO modelo)
-        {
-            var Stockadd = _mapper.Map<Stock>(modelo);
-            _dbcontext.Add(Stockadd);
-            await _dbcontext.SaveChangesAsync();
-            return _mapper.Map<StockDTO>(Stockadd);
-        }
-
-        public async Task<StockDTO> ObtenerPorId(int id)
-        {
-            try
-            {
-                var stock = await _dbcontext.Stocks.Include(s => s.StockID).FirstOrDefaultAsync(s => s.Id == id);
-                if (stock == null) throw new NotFoundException();
-                return _mapper.Map<StockDTO>(stock);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public async Task<IQueryable<Stock>> ObtenerTodos()
-        {
-            try
-            {
-                IQueryable<Stock> queryStock = _dbcontext.Stocks;
-                return queryStock;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public async Task<StockDTO> Salida(int idProducto,StocksalidaDTO stocksalida)
-        {
-            try
-            {
-                var Stock = await _dbcontext.Stocks.Where(s => s.Id == idProducto).FirstOrDefaultAsync(s => s.Id == idProducto);
-
-                if (Stock == null) throw new NotFoundException();
-
-                Stock.Cantidad -= stocksalida.Salida;
-
-                _dbcontext.Update(Stock);
-
-                await _dbcontext.SaveChangesAsync();
+                    }                 
 
 
-                return _mapper.Map<StockDTO>(Stock);
+                    HistorialStock.InOut = inOut;
+
+                    HistorialStock.Cantidad = cantidad;
+                    
+                    HistorialStock.Descripcion  = descripcion;
+
+                    HistorialStock.StockActual = cantidad;
+
+
+                }
+                else
+                {
+
+                    HistorialStock.Cantidad = cantidad;
+                    HistorialStock.Descripcion = descripcion;
+                    HistorialStock.InOut = inOut;
+
+                    if (inOut == true)
+                    {
+
+                        HistorialStock.StockActual = Stock.StockActual + cantidad;
+
+                    }
+                    else
+                    {
+
+                        HistorialStock.StockActual = Stock.StockActual - cantidad;
+
+                    }
+
+
+                }
+
+                _dbcontext.Add(HistorialStock);
+
+               await _dbcontext.SaveChangesAsync();
+
+                return _mapper.Map<HistorialStockDTO>(HistorialStock);
 
             }
             catch (Exception)
             {
                 throw;
             }
-
-            
-        }
+        }      
+          
     }
 }

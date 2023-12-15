@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace ecommeceBack.BLL.contrato
 {
-    public interface IStockService : IGenericService<CreacionStockDTO, StockDTO>
+    public interface IStockService 
     {
-        Task<StockDTO> ObtenerStockPorIdProducto(int idProducto);
-        
-        Task<StockDTO> Entrada(int IdProducto, StockentradaDTO stockentrada);
+        Task<List<HistorialStockDTO>> ObtenerStockPorIdProducto(int idProducto);
 
-        Task<StockDTO> Salida(int IdProducto, StocksalidaDTO stocksalida);
+        Task<HistorialStockDTO> InOut(int IdProducto, int cantidad, string descripcion, bool InOut);
 
 
     }

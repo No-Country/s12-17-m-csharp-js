@@ -25,48 +25,23 @@ namespace ecommeceBack.BLL.Service
             this.mapper = mapper;
 
         }
-        public async Task<StockDTO> Actualizar(int id, CreacionStockDTO modelo)
+      
+
+        public async Task<HistorialStockDTO> InOut(int IdProducto, int cantidad, string descripcion, bool InOut)
         {
-            return await _stockRepo.Actualizar(id, modelo);
+            return await _stockRepo.InOut(IdProducto, cantidad, descripcion, InOut);
         }
 
-        public async Task<bool> Eliminar(int id)
+
+
+
+        public async Task<List<HistorialStockDTO>> ObtenerStockPorIdProducto(int idProducto)
         {
-            return await _stockRepo.Eliminar(id);
+            return await _stockRepo.BusquedaPorIdProducto(idProducto);
         }
 
-        public async Task<StockDTO> Entrada(int IdProducto, StockentradaDTO stockentrada)
-        {
-            return await _stockRepo.Entrada(IdProducto, stockentrada);
-        }
+          
 
-        public async Task<StockDTO> ObtenerPorId(int id)
-        {
-            return await _stockRepo.ObtenerPorId(id);
-        }
 
-        public async Task<StockDTO> ObtenerStockPorIdProducto(int idProducto)
-        {
-            return await _stockRepo.BusquedaPorProductoCantidad(idProducto);
-        }
-
-        public async Task<IEnumerable<StockDTO>> ObtenerTodos()
-        {
-
-            var query = await _stockRepo.ObtenerTodos();
-
-            var lista = await query.ToListAsync();
-            return mapper.Map<IEnumerable<StockDTO>>(lista);
-        }
-
-        public async Task<StockDTO> Registrar(CreacionStockDTO modelo)
-        {
-            return await _stockRepo.Insertar(modelo);
-        }
-
-        public async Task<StockDTO> Salida(int IdProducto, StocksalidaDTO stocksalida)
-        {
-            return await _stockRepo.Salida(IdProducto, stocksalida);
-        }
     }
 }
