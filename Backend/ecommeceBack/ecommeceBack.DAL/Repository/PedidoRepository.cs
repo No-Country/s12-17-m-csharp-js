@@ -43,6 +43,11 @@ namespace ecommeceBack.DAL.Repository
                 pedido.Total = modelo.Total;
 
                 pedido.EstadoPedido = modelo.EstadoPedido;
+                if(modelo.IdTransaccionPago != null && modelo.IdTransaccionPago != 0)
+                {
+                    pedido.IdTransaccionPago = modelo.IdTransaccionPago;
+
+                }
 
                 _dbcontext.Update(pedido);
 

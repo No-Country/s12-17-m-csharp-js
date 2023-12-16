@@ -20,5 +20,7 @@ namespace ecommeceBack.Models.VModels.PedidoDTO
 
         [MaxLength(45)]
         public string? EstadoPedido { get; set; }
+
+        public long? IdTransaccionPago { get; set; }
     }
 }

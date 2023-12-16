@@ -26,5 +26,7 @@ namespace ecommeceBack.Models.Entidades
         public string? EstadoPedido {  get; set; }
 
         public List<Renglones_Pedidos> Renglones_Pedidos { get; set; } = new List<Renglones_Pedidos>();
+
+        public long? IdTransaccionPago { get; set; }
     }
 }

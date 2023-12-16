@@ -130,7 +130,7 @@ builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
 //Pedido
 builder.Services.AddScoped<IGenericRepository<CreacionPedidoDTO, PedidoDTO, Pedido>, PedidoRepository>();
-builder.Services.AddScoped<IGenericService<CreacionPedidoDTO, PedidoDTO>, PedidoService>();
+builder.Services.AddScoped<IPedidoService, PedidoService>();
 //Renglones Pedido
 builder.Services.AddScoped<IGenericRepository<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO, Renglones_Pedidos>, Renglones_PedidosRepository>();
 builder.Services.AddScoped<IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO>, Renglones_PedidosService>();

@@ -101,7 +101,7 @@ namespace ecommeceBack.DAL.Repository
         {
             try
             {
-                var producto = await _dbcontext.Productos.Include(p=>p.Imagenes).FirstOrDefaultAsync(p => p.Id == id);
+                var producto = await _dbcontext.Productos.Where(p => p.Activo == true).Include(p=>p.Imagenes).FirstOrDefaultAsync(p => p.Id == id);
                 if (producto == null) throw new NotFoundException();
                 return mapper.Map<ProductoDTO>(producto);
             }
@@ -147,5 +147,28 @@ namespace ecommeceBack.DAL.Repository
                 throw;
             }
         }
+
+        public async Task RestarStock(int idProducto, int cantidad)
+        {
+            try
+            {
+                var producto = await _dbcontext.Productos.Where(p => p.Activo == true && p.Id == idProducto).FirstOrDefaultAsync();
+
+                if(producto == null) throw new NotFoundException("No existe el producto con el id especificado");
+
+                producto.Stock_Actual -= cantidad;
+
+                await _dbcontext.SaveChangesAsync();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
     }
 }

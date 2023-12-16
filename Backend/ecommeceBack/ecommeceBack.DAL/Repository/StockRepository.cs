@@ -46,7 +46,7 @@ namespace ecommeceBack.DAL.Repository
         {
             try
             {
-                var Stock = await _dbcontext.HistorialStocks.Where(s => s.Id == idProducto).OrderByDescending(s=> s.FechaStkupdate).FirstOrDefaultAsync();
+                var Stock = await _dbcontext.HistorialStocks.Where(s => s.ProductoId == idProducto).OrderByDescending(s=> s.FechaStkupdate).FirstOrDefaultAsync();
                 var HistorialStock = new HistorialStock();
                 HistorialStock.ProductoId = idProducto;
 
