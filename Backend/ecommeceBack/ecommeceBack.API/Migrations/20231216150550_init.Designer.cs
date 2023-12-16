@@ -12,8 +12,8 @@ using ecommeceBack.DAL.Dbcontext;
 namespace ecommeceBack.API.Migrations
 {
     [DbContext(typeof(AplicationDBcontext))]
-    [Migration("20231215141322_Stock-Feature")]
-    partial class StockFeature
+    [Migration("20231216150550_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,6 +307,39 @@ namespace ecommeceBack.API.Migrations
                     b.ToTable("Marcas");
                 });
 
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Pedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EstadoPedido")
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<long?>("IdTransaccionPago")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("fecha_inicio")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Pedidos");
+                });
+
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
                 {
                     b.Property<int>("Id")
@@ -367,6 +400,48 @@ namespace ecommeceBack.API.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Productos");
+                });
+
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Renglones_Pedidos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PedidoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("precio")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("renglon")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("totalrenglon")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("unidad")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("Renglones");
                 });
 
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>
@@ -518,6 +593,17 @@ namespace ecommeceBack.API.Migrations
                     b.Navigation("Producto");
                 });
 
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Pedido", b =>
+                {
+                    b.HasOne("ecommeceBack.Models.Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Categoria", "Categoria")
@@ -545,6 +631,25 @@ namespace ecommeceBack.API.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Renglones_Pedidos", b =>
+                {
+                    b.HasOne("ecommeceBack.Models.Entidades.Pedido", "Pedido")
+                        .WithMany("Renglones_Pedidos")
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ecommeceBack.Models.Entidades.Producto", "Producto")
+                        .WithMany("Renglones_Pedidos")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Usuario", b =>
                 {
                     b.HasOne("ecommeceBack.Models.Entidades.Datos", "Datos")
@@ -554,9 +659,16 @@ namespace ecommeceBack.API.Migrations
                     b.Navigation("Datos");
                 });
 
+            modelBuilder.Entity("ecommeceBack.Models.Entidades.Pedido", b =>
+                {
+                    b.Navigation("Renglones_Pedidos");
+                });
+
             modelBuilder.Entity("ecommeceBack.Models.Entidades.Producto", b =>
                 {
                     b.Navigation("Imagenes");
+
+                    b.Navigation("Renglones_Pedidos");
                 });
 #pragma warning restore 612, 618
         }
