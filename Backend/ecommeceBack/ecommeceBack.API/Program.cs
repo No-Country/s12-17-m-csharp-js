@@ -176,11 +176,11 @@ using (var scope = app.Services.CreateScope())
 
 //Db migration
 
-using (var scope = app.Services.CreateScope()) 
-{
-    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
-    Context.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope()) 
+//{
+//    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
+//    Context.Database.Migrate();
+//}
 
 
 // Configure the HTTP request pipeline.

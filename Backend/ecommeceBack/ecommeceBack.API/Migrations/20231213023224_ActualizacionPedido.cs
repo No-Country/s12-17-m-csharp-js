@@ -60,7 +60,7 @@ namespace ecommeceBack.API.Migrations
                 column: "ProductoId",
                 principalTable: "Productos",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />
