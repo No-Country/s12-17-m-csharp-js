@@ -2,6 +2,7 @@
 using ecommeceBack.BLL.contrato;
 using ecommeceBack.BLL.Service;
 using ecommeceBack.Models.VModels.DatosDTO;
+using ecommeceBack.Models.VModels.MercadoPago;
 using ecommeceBack.Models.VModels.PedidoDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
 using ecommeceBack.Models.VModels.Renglones_PedidosDTO;
@@ -20,11 +21,11 @@ namespace ecommeceBack.API.Controllers
     [ApiController]
     public class PedidosController : ControllerBase
     {
-        private readonly IGenericService<CreacionPedidoDTO, PedidoDTO> _pedidoService;
+        private readonly IPedidoService _pedidoService;
         private readonly IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO> _renglonService;
 
 
-        public PedidosController(IGenericService<CreacionPedidoDTO, PedidoDTO> pedidoService, IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO> renglonService)
+        public PedidosController(IPedidoService pedidoService, IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO> renglonService)
         {
             _pedidoService = pedidoService;
             _renglonService = renglonService;
@@ -53,55 +54,32 @@ namespace ecommeceBack.API.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<ActionResult<PedidoDTO>>Registrar(List<CreacionRenglones_PedidosDTO> renglones) 
+        public async Task<ActionResult<PedidoDTO>>Registrar( RequestMercadoPago requestMercadoPago) 
         {
-            var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
-            var id = claim.Value;
-            
-
-            var pedido = new CreacionPedidoDTO()
-            { 
-                usuarioId = id,
-
-                fecha_inicio = DateTime.Now,
-
-                EstadoPedido = "Sin Procesar",
-
-                Total = 0,
-            };
-
-            var pedidoCreado = await _pedidoService.Registrar(pedido);
-
-            int indice = 1; 
-            decimal total = 0;
-            foreach (var renglon in renglones) 
+            try
             {
-                renglon.renglon = indice;
-                renglon.PedidoId = pedidoCreado.Id;
-                renglon.totalrenglon = renglon.precio * renglon.cantidad;
-                total += renglon.totalrenglon;
-                await _renglonService.Registrar(renglon);
-                indice++;
+                var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
+                var id = claim.Value;
 
+                var emailClaim = HttpContext.User.Claims.Where(c => c.Type == "mail").FirstOrDefault();
+                var email = emailClaim.Value;
+
+
+                var pedidoFinal = await _pedidoService.Registrar(id, email, requestMercadoPago);
+
+
+                return Ok(pedidoFinal);
 
             }
-
-
-
-            CreacionPedidoDTO creacionpedido = new CreacionPedidoDTO()
+            catch(BadRequestException ex)
             {
-                Total = total,
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
 
-                EstadoPedido = pedidoCreado.EstadoPedido,
-
-                fecha_inicio = pedidoCreado.fecha_inicio,
-
-                usuarioId = pedidoCreado.usuarioId
-
-            };
-            var pedidofinal = await _pedidoService.Actualizar(pedidoCreado.Id, creacionpedido);
-
-            return Ok(pedidofinal);
+                return StatusCode(500, "Error interno del servidor");
+            }
 
         }
 

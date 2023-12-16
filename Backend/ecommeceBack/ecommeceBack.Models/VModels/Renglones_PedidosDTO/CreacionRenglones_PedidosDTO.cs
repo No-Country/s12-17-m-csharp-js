@@ -23,9 +23,6 @@ namespace ecommeceBack.Models.VModels.Renglones_PedidosDTO
         public string unidad { get; set; }
 
         [Precision(18, 2)]
-        public decimal precio { get; set; }
-
-        [Precision(18, 2)]
         public decimal totalrenglon { get; set; }
     }
 }

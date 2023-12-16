@@ -8,6 +8,7 @@ namespace ecommeceBack.BLL.contrato
 {
     public interface IEmailService
     {
-        Task<bool> EnviarEmailAsync(string emailDestinatario, string asunto, string mensaje, string ? urlPdf, string ? nombrePdf);
+        Task<bool> EnviarEmailAsync(string emailDestinatario, string asunto, string mensaje);
+        Task<bool> EnviarEmailAsync(string emailDestinatario, string asunto, string mensaje, string? urlPdf, string? nombrePdf);
     }
 }

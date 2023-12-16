@@ -90,5 +90,10 @@ namespace ecommeceBack.BLL.Service
                 .ToListAsync();
             return mapper.Map<IEnumerable<ProductoDTO>>(lista);
         }
+
+        public async Task RestarStock(int idProducto, int cantidad)
+        {
+            await _productoRepo.RestarStock(idProducto, cantidad);
+        }
     }
 }

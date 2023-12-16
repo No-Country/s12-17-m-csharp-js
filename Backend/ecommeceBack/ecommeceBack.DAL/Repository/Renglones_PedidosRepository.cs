@@ -48,7 +48,6 @@ namespace ecommeceBack.DAL.Repository
 
                 renglon.unidad = modelo.unidad;
 
-                renglon.precio = modelo.precio;
 
                 renglon.totalrenglon = modelo.totalrenglon;
 
