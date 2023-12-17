@@ -3,15 +3,16 @@
 import React from 'react';
 import useStore from '../store/useStore';
 import Link from "next/link";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-import { initMercadoPago } from '@mercadopago/sdk-react'
-import { CardPayment } from '@mercadopago/sdk-react';
-initMercadoPago('TEST-82b567dc-56fd-47b9-905f-f408d62ef452', {
-  locale: 'es-AR'
-});
 
 const CartPage = () => {
   const cart = useStore(state => state.cart); // Obtener el estado del carrito
+  const router = useRouter()
+  
+  const{data } = useSession()
+  console.log("data",data);
 
   const handleAddOne = productId => {
     useStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
@@ -35,68 +36,13 @@ const CartPage = () => {
   const handleCheckout = () => {
     // Lógica para continuar con el proceso de compra
     // Redireccionar a la página de checkout u otro lugar
-    
+    router.push('/cart/pay')
   };
 
   // Calcular el total de la compra
   const total = cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
 
-  const initialization = {
-    amount: 100,
-    payer: {
-      email: '<PAYER_EMAIL_HERE>',
-    },
-   };
-   
-   
-   const onSubmit = async (formData) => {
-    alert('Estamos procesando tu pago')
-    // callback llamado al hacer clic en el botón enviar datos
-    return new Promise((resolve, reject) => {
-      fetch('https://localhost:7051/api/mercadopago', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          // recibir el resultado del pago
-          resolve();
-        })
-        .catch((error) => {
-          // manejar la respuesta de error al intentar crear el pago
-          reject();
-        });
-    });
-   };
-   
-   
-   const onError = async (error) => {
-    // callback llamado para todos los casos de error de Brick
-    console.log(error);
-   };
-   
-   
-   const onReady = async () => {
-    /*
-      Callback llamado cuando Brick está listo.
-      Aquí puedes ocultar cargamentos de su sitio, por ejemplo.
-    */
-   };
-
-   const customization = {
-    visual: {
-        
-          style: {
-            customVariables: {
-              theme: 'dark', // | 'dark' | 'bootstrap' | 'flat'
-            }
-          }
-        
-    }
-};
+  
 
   
 
@@ -108,7 +54,7 @@ const CartPage = () => {
       <h3 className="text-xl mb-4 text-[#FEAF00] flex"><Link href={"/supermarket"}><img src='assets/arrow.svg' className='mr-4' ></img></Link>  Continuar Comprando</h3>
       <div className='flex'>
 
-      <div className=" min-h-[600px] bg-[#EAEAEA] rounded-[20px] w-[916px] mt-20">
+      <div className=" min-h-[600px] bg-[#EAEAEA] rounded-[20px] w-[916px] mt-20 shadow-md">
         <div className=' flex text-black text-xl font-bold h-[60px] items-center'>
           <p className=' w-2/5 ml-6'>Producto</p>
           <p className=' w-1/6 ml-1'>Precio</p>
@@ -118,7 +64,10 @@ const CartPage = () => {
         {cart.map(item => (
           <div key={item.id} className="border border-gray-300 p-2 flex h-[160px] items-center">
             <div className="font-semibold w-2/5 m-2 flex items-center">
-          <img src={item.imagenes[0].url} className=' h-20 mx-4'></img>
+            <div className='w-20 h-20 bg-white flex justify-center items-center mx-4 border rounded-xl'>
+
+<img src={item.imagenes[0].url} className=' w-full h-full object-contain mx-4'></img>
+    </div>
             <p >{item.nombre}</p>
             </div>
             <p className=' w-[15%] m-2'>${item.precio}</p>
@@ -146,16 +95,8 @@ const CartPage = () => {
       <div className="flex justify-between mt-8">
       </div>
     </div>
-<div className=''>
 
-    <CardPayment
-   initialization={initialization}
-   onSubmit={onSubmit}
-   onReady={onReady}
-   onError={onError}
-   customization={customization}
-/>
-</div>
+    
 
         </div>
   );
