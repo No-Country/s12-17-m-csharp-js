@@ -67,13 +67,11 @@ namespace ecommeceBack.API.Controllers
         }
 
         [HttpGet("Busqueda")]
-        public async Task<ActionResult<IEnumerable<ProductoDTO>>> Otenertodo(string? query)
+        public async Task<ActionResult<IEnumerable<ProductoDTO>>> Otenertodo(string? nombre, int? idCategoria, int? idMarca, string? estado)
         {
             try
             {
-                IEnumerable<ProductoDTO> producto;
-                if (query == null) producto = await _productoService.ObtenerTodos();
-                else producto = await _productoService.ObtenerPorFiltro(query);
+                var producto = await _productoService.ObtenerPorFiltro(nombre,idCategoria, idMarca, estado);
                 return Ok(producto);
             }
             catch (Exception)
