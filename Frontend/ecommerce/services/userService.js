@@ -1,4 +1,4 @@
-import apiClient from "./api-client";
+import apiClient from "./apiClient";
 
 class UserService {
   signIn({ email, password }) {
