@@ -13,7 +13,7 @@ class CategoryService {
       .catch((error) => {
         throw new Error(
           "An error occurred while trying to get all categories: " +
-            error.message
+            error.message,
         );
       });
   }
@@ -30,7 +30,7 @@ class CategoryService {
       .catch((error) => {
         throw new Error(
           "An error occurred while trying to get category by id: " +
-            error.message
+            error.message,
         );
       });
   }

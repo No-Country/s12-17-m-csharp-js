@@ -57,7 +57,7 @@ class ProductService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to add product: " + error.message
+          "An error occurred while trying to add product: " + error.message,
         );
       });
   }
@@ -115,7 +115,8 @@ class ProductService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to get all products: " + error.message
+          "An error occurred while trying to get all products: " +
+            error.message,
         );
       });
   }
@@ -145,7 +146,8 @@ class ProductService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to get all products: " + error.message
+          "An error occurred while trying to get all products: " +
+            error.message,
         );
       });
   }

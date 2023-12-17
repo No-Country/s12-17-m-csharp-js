@@ -20,19 +20,24 @@ export const authOptions = {
         }
 
         const token = response.data.token;
-        console.log(token);
-
         if (token) {
-          return {
-            id: "1",
-            name: "Test User",
-            email: credentials.email,
-          };
+          const user = response.data;
+          user.email = credentials.email;
+          return user;
         }
         return null;
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      session.user = token;
+      return session;
+    },
+  },
   pages: {
     signIn: "/login",
   },

@@ -15,7 +15,9 @@ const apiClient = axios.create({
 });
 
 getToken().then((token) => {
-  apiClient.defaults.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    apiClient.defaults.headers.Authorization = `Bearer ${token}`;
+  }
 });
 
 export default apiClient;

@@ -1,4 +1,4 @@
-import IsRequired from "@/app/components/Form/IsRequired";
+import IsRequired from "@/app/(auth)/Partials/IsRequired";
 import { useFormContext } from "react-hook-form";
 
 const TextInput = ({
@@ -13,7 +13,7 @@ const TextInput = ({
   return (
     <div className="space-y-2">
       {label ? (
-        <p className="font-semibold text-lg">
+        <p className="text-lg font-semibold">
           <IsRequired isRequired={isRequired}>{label}</IsRequired>
         </p>
       ) : (
@@ -21,7 +21,7 @@ const TextInput = ({
       )}
       <input
         {...register(name)}
-        className={`text-gray-800 px-4 py-3 rounded-md w-full bg-black/10 ${props.className}`}
+        className={`w-full rounded-md bg-black/10 px-4 py-3 text-gray-800 ${props.className}`}
         type="text"
         placeholder={placeholder}
         required={isRequired}

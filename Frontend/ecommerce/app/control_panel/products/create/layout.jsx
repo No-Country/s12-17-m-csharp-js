@@ -4,15 +4,15 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 const layout = ({ children }) => {
   return (
     <div className="relative min-h-screen px-8">
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary to-secondary">
+      <div className="absolute left-0 top-0 h-64 w-full bg-gradient-to-b from-primary to-secondary">
         <Link
           href="/control_panel"
-          className="flex items-center text-white font-medium gap-2 mt-8 ml-8"
+          className="ml-8 mt-8 flex items-center gap-2 font-medium text-white"
         >
           <FaArrowLeftLong className="text-2xl" /> Volver
         </Link>
       </div>
-      <div className="relative z-10 max-w-4xl p-16 mx-auto bg-white rounded-md shadow-lg top-24 mb-36">
+      <div className="relative top-24 z-10 mx-auto mb-36 max-w-4xl rounded-md bg-white p-16 shadow-lg">
         {children}
       </div>
     </div>

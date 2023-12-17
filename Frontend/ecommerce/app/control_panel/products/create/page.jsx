@@ -8,7 +8,7 @@ import {
   SelectInput,
   RadioInputGroup,
 } from "./Partials";
-import ImageUploader from "@/app/components/Form/ImageUploader";
+import ImageUploader from "@/app/(auth)/Partials/ImageUploader";
 
 const CreateProduct = () => {
   const [brandOptions, setBrandOptions] = useState([]);
@@ -20,7 +20,7 @@ const CreateProduct = () => {
         brands.map((brand) => ({
           value: brand.id,
           label: brand.name,
-        }))
+        })),
       );
     });
 
@@ -29,7 +29,7 @@ const CreateProduct = () => {
         categories.map((category) => ({
           value: category.id,
           label: category.name,
-        }))
+        })),
       );
     });
   }, []);
@@ -59,7 +59,7 @@ const CreateProduct = () => {
     <FormProvider {...methods}>
       <form id="productForm" onSubmit={methods.handleSubmit(onSubmit)}>
         <h1 className="text-4xl font-bold">Composición del producto</h1>
-        <div className="grid grid-cols-1 gap-6 mt-10">
+        <div className="mt-10 grid grid-cols-1 gap-6">
           <TextInput
             label="Nombre"
             name="name"
@@ -106,10 +106,10 @@ const CreateProduct = () => {
             setImages={setImages}
           />
         </div>
-        <div className="flex justify-end w-full mt-8">
+        <div className="mt-8 flex w-full justify-end">
           <button
             type="submit"
-            className="flex items-center justify-center p-4 mb-2 font-semibold transition-transform rounded-lg bg-secondary text-primary hover:scale-105"
+            className="mb-2 flex items-center justify-center rounded-lg bg-secondary p-4 font-semibold text-primary transition-transform hover:scale-105"
           >
             Añadir producto
           </button>

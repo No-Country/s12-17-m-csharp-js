@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+cd Frontend/ecommerce
+echo "Running prettier 🎨"
+echo "Formatting files:"
+npx prettier --write . | grep -v "unchanged" | xargs -I{} echo "- {}"
+npm run lint --fix .

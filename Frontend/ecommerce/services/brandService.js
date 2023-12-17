@@ -12,7 +12,7 @@ class BrandService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to get all brands: " + error.message
+          "An error occurred while trying to get all brands: " + error.message,
         );
       });
   }
