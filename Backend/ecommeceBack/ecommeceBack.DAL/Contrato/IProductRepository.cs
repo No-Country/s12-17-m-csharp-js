@@ -11,5 +11,7 @@ namespace ecommeceBack.DAL.Contrato
     public interface IProductRepository : IGenericRepository<CreacionProductoDTO, ProductoDTO, Producto>
     {
         Task<ProductoDTO> ActivoInactivo(int idProducto, string idUser);
+
+        Task RestarStock(int idProducto, int cantidad);
     }
 }

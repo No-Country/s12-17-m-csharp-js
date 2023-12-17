@@ -44,6 +44,7 @@ namespace ecommeceBack.Models.Entidades
         [Precision(18,2)]
         public decimal precio { get; set; }
         public List<Imagen> Imagenes { get; set; } = new List<Imagen>();
+        public List<Renglones_Pedidos> Renglones_Pedidos { get; set; } = new List<Renglones_Pedidos>();
 
     }
 }

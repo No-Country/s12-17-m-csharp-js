@@ -19,7 +19,51 @@ namespace ecommeceBack.BLL.Service
         {
             this.configuration = configuration;
         }
-        public async Task<bool> EnviarEmailAsync(string emailDestinatario, string asunto, string mensaje, string? urlPdf, string? nombrePdf)
+        public async Task<bool> EnviarEmailAsync(string emailDestinatario, string asunto, string mensaje)
+        {
+
+            try
+            {
+                var email = new MimeMessage();
+
+                email.From.Add(new MailboxAddress("SurShop", configuration["Email:UserName"]));
+
+
+                email.To.Add(MailboxAddress.Parse(emailDestinatario));
+
+                email.Subject = asunto;
+
+                email.Body = new TextPart(TextFormat.Html)
+                {
+                    Text = mensaje
+                };
+
+
+                using (var smtp = new SmtpClient())
+                {
+
+                    await smtp.ConnectAsync(configuration["Email:Host"], int.Parse(configuration["Email:Port"]!), SecureSocketOptions.StartTls);
+
+                    await smtp.AuthenticateAsync(configuration["Email:UserName"], configuration["Email:PassWord"]);
+
+                    await smtp.SendAsync(email);
+
+                    await smtp.DisconnectAsync(true);
+                } ;
+
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+
+        }
+
+        public async Task<bool> EnviarEmailAsync(string emailDestinatario, string asunto, string mensaje, string? urlPdf = null, string? nombrePdf = null)
         {
 
             try
@@ -40,7 +84,7 @@ namespace ecommeceBack.BLL.Service
 
 
                 // Descargar el archivo PDF desde la URL
-                if(urlPdf != null)
+                if (urlPdf != null)
                 {
 
                     using (var httpClient = new HttpClient())
@@ -71,7 +115,7 @@ namespace ecommeceBack.BLL.Service
                     await smtp.SendAsync(email);
 
                     await smtp.DisconnectAsync(true);
-                } ;
+                };
 
 
                 return true;

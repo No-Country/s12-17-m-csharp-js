@@ -9,7 +9,9 @@ using ecommeceBack.Models.VModels.CategoriaDTO;
 using ecommeceBack.Models.VModels.DatosDTO;
 using ecommeceBack.Models.VModels.ImagenDTO;
 using ecommeceBack.Models.VModels.MarcasDTO;
+using ecommeceBack.Models.VModels.PedidoDTO;
 using ecommeceBack.Models.VModels.ProductoDTO;
+using ecommeceBack.Models.VModels.Renglones_PedidosDTO;
 using MercadoPago.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -118,6 +120,7 @@ builder.Services.AddScoped<IDatosService, DatosService>();
 builder.Services.AddScoped<IGenericRepository<CreacionMarcaDTO, MarcaDTO, Marca>, MarcasRepository>();
 builder.Services.AddScoped<IGenericService<CreacionMarcaDTO, MarcaDTO>, MarcaService>();
 //Producto
+
 builder.Services.AddScoped<IProductRepository, ProductoRepository>();
 builder.Services.AddScoped<IProductosService, ProductoService>();
 
@@ -125,6 +128,12 @@ builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 
 builder.Services.AddScoped<ImagenRepository>();
 builder.Services.AddScoped<ImagenService>();
+//Pedido
+builder.Services.AddScoped<IGenericRepository<CreacionPedidoDTO, PedidoDTO, Pedido>, PedidoRepository>();
+builder.Services.AddScoped<IPedidoService, PedidoService>();
+//Renglones Pedido
+builder.Services.AddScoped<IGenericRepository<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO, Renglones_Pedidos>, Renglones_PedidosRepository>();
+builder.Services.AddScoped<IGenericService<CreacionRenglones_PedidosDTO, Renglones_PedidosDTO>, Renglones_PedidosService>();
 
 //Data Seeder
 
@@ -167,11 +176,11 @@ using (var scope = app.Services.CreateScope())
 
 //Db migration
 
-using (var scope = app.Services.CreateScope()) 
-{
-    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
-    Context.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope()) 
+//{
+//    var Context = scope.ServiceProvider.GetRequiredService<AplicationDBcontext>();
+//    Context.Database.Migrate();
+//}
 
 
 // Configure the HTTP request pipeline.
