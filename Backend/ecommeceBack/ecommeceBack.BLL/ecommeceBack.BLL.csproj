@@ -7,13 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ecommeceBack.DAL\ecommeceBack.DAL.csproj" />
-    <ProjectReference Include="..\ecommeceBack.Models\ecommeceBack.Models.csproj" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.24.0" />
+    <PackageReference Include="MailKit" Version="4.3.0" />
+    <PackageReference Include="mercadopago-sdk" Version="2.3.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="contrato\" />
-    <Folder Include="Service\" />
+    <ProjectReference Include="..\ecommeceBack.DAL\ecommeceBack.DAL.csproj" />
+    <ProjectReference Include="..\ecommeceBack.Models\ecommeceBack.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,9 +3,16 @@
 import React from 'react';
 import useStore from '../store/useStore';
 import Link from "next/link";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
 
 const CartPage = () => {
   const cart = useStore(state => state.cart); // Obtener el estado del carrito
+  const router = useRouter()
+  
+  const{data } = useSession()
+  console.log("data",data);
 
   const handleAddOne = productId => {
     useStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
@@ -29,10 +36,15 @@ const CartPage = () => {
   const handleCheckout = () => {
     // Lógica para continuar con el proceso de compra
     // Redireccionar a la página de checkout u otro lugar
+    router.push('/cart/pay')
   };
 
   // Calcular el total de la compra
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
+
+  
+
+  
 
   return (
     <div>
@@ -42,7 +54,7 @@ const CartPage = () => {
       <h3 className="text-xl mb-4 text-[#FEAF00] flex"><Link href={"/supermarket"}><img src='assets/arrow.svg' className='mr-4' ></img></Link>  Continuar Comprando</h3>
       <div className='flex'>
 
-      <div className=" min-h-[600px] bg-[#EAEAEA] rounded-[20px] w-[916px] mt-20">
+      <div className=" min-h-[600px] bg-[#EAEAEA] rounded-[20px] w-[916px] mt-20 shadow-md">
         <div className=' flex text-black text-xl font-bold h-[60px] items-center'>
           <p className=' w-2/5 ml-6'>Producto</p>
           <p className=' w-1/6 ml-1'>Precio</p>
@@ -52,16 +64,19 @@ const CartPage = () => {
         {cart.map(item => (
           <div key={item.id} className="border border-gray-300 p-2 flex h-[160px] items-center">
             <div className="font-semibold w-2/5 m-2 flex items-center">
-          <img src={item.image} className=' h-20 mx-4'></img>
-            <p >{item.title}</p>
+            <div className='w-20 h-20 bg-white flex justify-center items-center mx-4 border rounded-xl'>
+
+<img src={item.imagenes[0].url} className=' w-full h-full object-contain mx-4'></img>
+    </div>
+            <p >{item.nombre}</p>
             </div>
-            <p className=' w-[15%] m-2'>${item.price}</p>
+            <p className=' w-[15%] m-2'>${item.precio}</p>
             <div className="flex justify-between w-1/6">
               <button onClick={() => handleRemoveOne(item.id)} className="bg-[#EAEAEA] text-black border border-black px-2 mx-4 rounded h-7 w-7">-</button>
             <p>{item.quantity}</p>
               <button onClick={() => handleAddOne(item.id)} className="bg-[#EAEAEA] text-black border border-black px-2 mx-4 rounded h-7 w-7">+</button>
             </div>
-           <p className=' w-1/6 ml-8'>${item.quantity * item.price}</p>
+           <p className=' w-1/6 ml-8'>${item.quantity * item.precio}</p>
            <button onClick={() => handleRemoveOneItem(item.id)}> <img src='assets/trash.svg' ></img></button>           
           </div>
         ))}
@@ -80,6 +95,9 @@ const CartPage = () => {
       <div className="flex justify-between mt-8">
       </div>
     </div>
+
+    
+
         </div>
   );
 };

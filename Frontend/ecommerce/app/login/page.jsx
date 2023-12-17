@@ -1,16 +1,15 @@
 "use client";
-
 import Layout from "../components/Form/Layout";
-import TextInput from "../components/Form/TextInput";
+import PopUp from "../components/Popup/PopUp";
 import SocialButton from "../components/Form/SocialButton";
+import TextInput from "../components/Form/TextInput";
 import { FaArrowRight } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { MdFacebook } from "react-icons/md";
 import { login_validations } from "../components/Form/Validations";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import PopUp from "../components/Popup/PopUp";
-import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   const {
@@ -20,8 +19,11 @@ const LoginPage = () => {
   } = useForm();
 
   const [showPopUp, setShowPopUp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [displayError, setDisplayError] = useState(false);
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -30,9 +32,11 @@ const LoginPage = () => {
 
     if (res.error) {
       console.error(res.error);
+      setDisplayError(true);
     } else {
       setShowPopUp(true);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -46,6 +50,7 @@ const LoginPage = () => {
         />
       )}
       <div className="w-5/12 mx-auto font-bold">
+        {isLoading && <p>Cargando...</p>}
         <h1 className="text-4xl" onClick={handleSubmit(onSubmit)}>
           Ingresar
         </h1>

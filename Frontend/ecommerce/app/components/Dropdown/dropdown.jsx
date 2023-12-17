@@ -1,10 +1,27 @@
-import { useState } from "react";
+"use client";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // If clicked outside of dropdown, close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <>
+    <div ref={dropdownRef}>
       <button
         className="flex items-center justify-center relative"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -23,11 +40,13 @@ function Dropdown() {
             <h3 className="border-t border-gray-700 hover:text-white hover:scale-105 transition-transform hover:bg-primary text-center w-full px-4">
               Celulares
             </h3>
-            <h3 className="border-t border-gray-700 hover:text-white hover:scale-105 transition-transform hover:bg-primary text-center w-full px-4">Game</h3>
+            <h3 className="border-t border-gray-700 hover:text-white hover:scale-105 transition-transform hover:bg-primary text-center w-full px-4">
+              Game
+            </h3>
           </div>
         )}
       </button>
-    </>
+    </div>
   );
 }
 export default Dropdown;

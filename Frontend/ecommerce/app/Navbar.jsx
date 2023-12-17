@@ -15,8 +15,12 @@ import useStore from "./store/useStore";
 const Navbar = () => {
   const cart = useStore((state) => state.cart);
   const { data: session } = useSession();
+  const isLoggedIn = session?.user;
 
   const pathname = usePathname();
+  const filteredRoutes = isLoggedIn
+    ? routes
+    : routes.filter((route) => !route.protected);
   return (
     <div className="flex items-center justify-between w-full h-16">
       <div className="flex items-center justify-between h-full space-x-8">
@@ -30,7 +34,7 @@ const Navbar = () => {
           <Dropdown />
         </div>
         <div className="flex items-center space-x-8 whitespace-nowrap">
-          {routes.map((route) => (
+          {filteredRoutes.map((route) => (
             <Link
               key={route.name}
               href={route.path}
@@ -72,7 +76,7 @@ const Navbar = () => {
             <IoCartOutline size={32} />
           </Link>
         </div>
-        {session?.user ? (
+        {isLoggedIn ? (
           <>
             <FaRegUserCircle size={26} />
             <button
