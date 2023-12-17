@@ -11,6 +11,7 @@
     "prepare": "cd ../.. && husky install Frontend/ecommerce/.husky"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^0.0.15",
     "axios": "^1.6.2",
     "filepond": "^4.30.5",
     "filepond-plugin-image-exif-orientation": "^1.0.11",

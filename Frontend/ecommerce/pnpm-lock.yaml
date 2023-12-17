@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  "@mercadopago/sdk-react":
+    specifier: ^0.0.15
+    version: 0.0.15(react-dom@18.2.0)(react@18.2.0)
   axios:
     specifier: ^1.6.2
     version: 1.6.2
@@ -83,7 +86,7 @@ devDependencies:
     specifier: ^3.13.0
     version: 3.13.0(tailwindcss@3.3.6)
   husky:
-    specifier: ^8.0.3
+    specifier: ^8.0.0
     version: 8.0.3
   postcss:
     specifier: ^8.4.32
@@ -583,6 +586,27 @@ packages:
       "@jridgewell/resolve-uri": 3.1.1
       "@jridgewell/sourcemap-codec": 1.4.15
     dev: true
+
+  /@mercadopago/sdk-js@0.0.3:
+    resolution:
+      {
+        integrity: sha512-kO48DNLHdfFAp3on12nuKdqNlEmw1x3+nM6wLd04BdWOXoFcAhkNMQV3AyUIanXdO/bB/dENakdacLT29297EQ==,
+      }
+    dev: false
+
+  /@mercadopago/sdk-react@0.0.15(react-dom@18.2.0)(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-ju0+p9nglNVBhnYSkmHGa8BEqqpaC9rWIcY7PrgvfevpSRf82w3tICWxbYm00l+cEfqF/RZSvOBJwuVHW3Diww==,
+      }
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      "@mercadopago/sdk-js": 0.0.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@next/env@14.0.4:
     resolution:

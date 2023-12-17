@@ -1,11 +1,17 @@
 "use client";
 
 import React from "react";
-import useStore from "../../store/useStore";
+import useStore from "@/store/useStore";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CartPage = () => {
   const cart = useStore((state) => state.cart); // Obtener el estado del carrito
+  const router = useRouter();
+
+  const { data } = useSession();
+  console.log("data", data);
 
   const handleAddOne = (productId) => {
     useStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
@@ -29,10 +35,14 @@ const CartPage = () => {
   const handleCheckout = () => {
     // Lógica para continuar con el proceso de compra
     // Redireccionar a la página de checkout u otro lugar
+    router.push("/cart/pay");
   };
 
   // Calcular el total de la compra
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce(
+    (acc, item) => acc + item.precio * item.quantity,
+    0,
+  );
 
   return (
     <div>
@@ -46,7 +56,7 @@ const CartPage = () => {
           Continuar Comprando
         </h3>
         <div className="flex">
-          <div className=" mt-20 min-h-[600px] w-[916px] rounded-[20px] bg-[#EAEAEA]">
+          <div className=" mt-20 min-h-[600px] w-[916px] rounded-[20px] bg-[#EAEAEA] shadow-md">
             <div className=" flex h-[60px] items-center text-xl font-bold text-black">
               <p className=" ml-6 w-2/5">Producto</p>
               <p className=" ml-1 w-1/6">Precio</p>
@@ -59,10 +69,15 @@ const CartPage = () => {
                 className="flex h-[160px] items-center border border-gray-300 p-2"
               >
                 <div className="m-2 flex w-2/5 items-center font-semibold">
-                  <img src={item.image} className=" mx-4 h-20" alt=""></img>
-                  <p>{item.title}</p>
+                  <div className="mx-4 flex h-20 w-20 items-center justify-center rounded-xl border bg-white">
+                    <img
+                      src={item.imagenes[0].url}
+                      className=" mx-4 h-full w-full object-contain"
+                    ></img>
+                  </div>
+                  <p>{item.nombre}</p>
                 </div>
-                <p className=" m-2 w-[15%]">${item.price}</p>
+                <p className=" m-2 w-[15%]">${item.precio}</p>
                 <div className="flex w-1/6 justify-between">
                   <button
                     onClick={() => handleRemoveOne(item.id)}
@@ -78,10 +93,10 @@ const CartPage = () => {
                     +
                   </button>
                 </div>
-                <p className=" ml-8 w-1/6">${item.quantity * item.price}</p>
+                <p className=" ml-8 w-1/6">${item.quantity * item.precio}</p>
                 <button onClick={() => handleRemoveOneItem(item.id)}>
                   {" "}
-                  <img src="assets/trash.svg" alt=""></img>
+                  <img src="assets/trash.svg"></img>
                 </button>
               </div>
             ))}
@@ -91,7 +106,6 @@ const CartPage = () => {
               <p className="font-semibold">Total:</p>
               <p className="font-semibold">${Math.round(total * 100) / 100}</p>
             </div>
-            {/* <button onClick={handleRemoveAll} className="bg-black text-white px-4 py-2 ">Eliminar Todos</button> */}
             <button
               onClick={handleCheckout}
               className="mx-auto flex h-[46px] w-[90%] items-center justify-center bg-black text-white"

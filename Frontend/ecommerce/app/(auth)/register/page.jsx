@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import PopUp from "@/app/components/Popup/PopUp";
+import PopUp from "@/components/Popup/PopUp";
 import userService from "@/services/userService";
 import { FaGoogle } from "react-icons/fa";
 import { FormProvider, useForm } from "react-hook-form";
