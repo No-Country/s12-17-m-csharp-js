@@ -93,9 +93,9 @@ class ProductService {
 
   getAllProducts() {
     return apiClient
-      .get("/producto/busqueda")
+      .get("/producto/busqueda?regXPagina=10&paginaActual=1")
       .then((response) => {
-        return response.data.map(async (product) => ({
+        return response.data.productos.map((product) => ({
           id: product.id,
           name: product.nombre,
           description: product.descripcion,
