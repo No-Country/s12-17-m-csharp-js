@@ -2,14 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import { CardPayment, initMercadoPago } from "@mercadopago/sdk-react";
-import useStore from "@/store/useStore";
+import { cartStore } from "@/store";
 
 initMercadoPago("TEST-82b567dc-56fd-47b9-905f-f408d62ef452", {
   locale: "es-AR",
 });
 
 const PayPage = () => {
-  const cart = useStore((state) => state.cart); // Obtener el estado del carrito
+  const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
 
   const initialization = {
     amount: 100,

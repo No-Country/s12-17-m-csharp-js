@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import PopUp from "@/components/Popup/PopUp";
+import PopUp from "@/components/PopUp";
 import userService from "@/services/userService";
 import { FaGoogle } from "react-icons/fa";
 import { FormProvider, useForm } from "react-hook-form";
@@ -28,7 +28,7 @@ const RegisterPage = () => {
     } else {
       try {
         setIsLoading(true);
-        await userService.signUp({
+        const user = await userService.signUp({
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
@@ -38,6 +38,7 @@ const RegisterPage = () => {
         const res = await signIn("credentials", {
           email: data.email,
           password: data.password,
+          token: user.token,
           redirect: false,
         });
 

@@ -5,10 +5,16 @@ class CategoryService {
     return apiClient
       .get("/categorias")
       .then((response) => {
-        return response.data.map((category) => ({
-          id: category.id,
-          name: category.nombre,
-        }));
+        return (
+          response.data
+            // Turn properties into their english equivalent
+            .map((category) => ({
+              id: category.id,
+              name: category.nombre,
+            }))
+            // Sort categories alphabetically
+            .sort((a, b) => a.name.localeCompare(b.name))
+        );
       })
       .catch((error) => {
         throw new Error(
