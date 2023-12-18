@@ -30,7 +30,7 @@ namespace ecommeceBack.DAL.Repository
         {
             try 
             {
-                var Producto = await _dbcontext.Productos.Where(c=> c.Id== id).FirstOrDefaultAsync();
+                var Producto = await _dbcontext.Productos.Where(c=> c.Id== id && c.Activo==true).FirstOrDefaultAsync();
 
                 if (Producto == null) throw new NotFoundException();
 
@@ -101,7 +101,12 @@ namespace ecommeceBack.DAL.Repository
         {
             try
             {
-                var producto = await _dbcontext.Productos.Where(p => p.Activo == true).Include(p=>p.Imagenes).FirstOrDefaultAsync(p => p.Id == id);
+                var producto = await _dbcontext.Productos
+                    .Where(p => p.Activo == true)
+                    .Include(p=>p.Imagenes)
+                    .Include(p=> p.Marca)
+                    .Include(p=>p.Categoria)
+                    .FirstOrDefaultAsync(p => p.Id == id);
                 if (producto == null) throw new NotFoundException();
                 return mapper.Map<ProductoDTO>(producto);
             }

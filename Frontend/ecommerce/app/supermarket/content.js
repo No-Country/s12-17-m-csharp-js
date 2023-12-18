@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import useStore from "../store/useStore";
 import Image from "next/image";
+import ecommerceService from '../../services/ecommerce-service'
+import { useSession } from "next-auth/react";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,24 +11,30 @@ const ProductsPage = () => {
   const [condition, setCondition] = useState("");
   const [priceRange, setPriceRange] = useState("");
 
+  // const { data } = useSession();
+  // console.log(data.user.token);
   useEffect(() => {
     // Lógica para obtener datos de la base de datos
     // fetch("https://fakestoreapi.com/products")
-    fetch("https://www.ecommerceback.somee.com/api/Producto/Busqueda")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setProducts(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
-  }, []);
+     fetch("https://www.ecommerceback.somee.com/api/Producto/Busqueda")
+       .then((response) => {
+         if (!response.ok) {
+           throw new Error("Network response was not ok");
+         }
+         return response.json();
+       })
+       .then((data) => {
+         setProducts(data);
+       })
+       .catch((error) => {
+         console.error("Error fetching products:", error);
+       });
+  
+  // ecommerceService.getProducts()
+  // .then((data) => {
+  //   setProducts(data.data);
+  // })
+}, []);
 
   const filteredProducts = useMemo(() => {
     const filterByPrice = (product) => {

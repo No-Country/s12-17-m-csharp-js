@@ -45,30 +45,52 @@ namespace ecommeceBack.BLL.Service
 
         public async Task<IEnumerable<ProductoDTO>> ObtenerTodos()
         {
-            var query = await _productoRepo.ObtenerTodos();
+            try
+            {
+                var query = await _productoRepo.ObtenerTodos();
 
-            var lista = await query.Include(p=>p.Imagenes).Include(p => p.Marca).Include(p => p.Categoria).Where(p=>p.Activo).ToListAsync();
-            return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+                var lista = await query
+                    .Include(p=>p.Imagenes)
+                    .Include(p => p.Marca)
+                    .Include(p => p.Categoria)
+                    .Where(p=>p.Activo)
+                    .ToListAsync();
+                return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<IEnumerable<ProductoDTO>> ObtenerMisProductos(string id)
         {
-            var query = await _productoRepo.ObtenerTodos();
+            try
+            {
+                var query = await _productoRepo.ObtenerTodos();
 
-            var lista = await query.Include(p=>p.Imagenes).Where(p=>p.UsuarioId==id).ToListAsync();
-            return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+                var lista = await query
+                    .Include(p=>p.Imagenes)
+                    .Where(p=>p.UsuarioId==id)
+                    .ToListAsync();
+                return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+            }
+            catch(Exception) { throw; }
         }
 
         public async Task<ProductoDTO> Registrar(CreacionProductoDTO modelo)
         {
+            try
+            {
+                var producto = await _productoRepo.Insertar(modelo);
+                await stockService.InOut(producto.Id, producto.Stock_Actual, "ingreso inicial", true);
+                await _imagenService.AgregarImagen(modelo.Imagen1, producto.Id);
+                if (modelo.Imagen2 != null) await _imagenService.AgregarImagen(modelo.Imagen2, producto.Id);
+                if (modelo.Imagen3 != null) await _imagenService.AgregarImagen(modelo.Imagen3, producto.Id);
 
-            var producto = await _productoRepo.Insertar(modelo);
-            await stockService.InOut(producto.Id, producto.Stock_Actual, "ingreso inicial", true);
-            await _imagenService.AgregarImagen(modelo.Imagen1, producto.Id);
-            if (modelo.Imagen2 != null) await _imagenService.AgregarImagen(modelo.Imagen2, producto.Id);
-            if (modelo.Imagen3 != null) await _imagenService.AgregarImagen(modelo.Imagen3, producto.Id);
-
-            return producto;
+                return producto;
+            }
+            catch(Exception) { throw; }
 
         }
 
@@ -77,23 +99,38 @@ namespace ecommeceBack.BLL.Service
             return await _productoRepo.ActivoInactivo(idProducto, idUser);
         }
 
-        public async Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro(string? filtro)
+        public async Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro(string? nombre, int? idCategoria, int? idMarca, string? estado)
         {
-            var query = await _productoRepo.ObtenerTodos();
+            try
+            {
+                var query = await _productoRepo.ObtenerTodos();
 
-            var lista = await query
-                .Include(p => p.Imagenes)
-                .Include(p => p.Marca)
-                .Include(p => p.Categoria)
-                .Where(p => p.Activo)
-                .Where(p=>p.nombre.Contains(filtro))
-                .ToListAsync();
-            return mapper.Map<IEnumerable<ProductoDTO>>(lista);
+                var lista = query
+                    .Include(p => p.Imagenes)
+                    .Include(p => p.Marca)
+                    .Include(p => p.Categoria)
+                    .Where(p => p.Activo);
+
+                if (nombre != null) lista = lista.Where(p => p.nombre.Contains(nombre));
+                if (idCategoria != null) lista = lista.Where(p => p.CategoriaId == idCategoria);
+                if (idMarca != null) lista = lista.Where(p => p.MarcaId == idMarca);
+                if (estado != null)
+                {
+                    if (estado.ToLower() == "nuevo") lista = lista.Where(p => p.Estado.ToLower() == "nuevo");
+                    else if(estado.ToLower() =="usado") lista = lista.Where(p => p.Estado.ToLower() == "usado");
+                }
+
+                var search = await lista.ToListAsync();
+
+                return mapper.Map<IEnumerable<ProductoDTO>>(search);
+            }
+            catch(Exception) { throw; }
         }
 
         public async Task RestarStock(int idProducto, int cantidad)
         {
             await _productoRepo.RestarStock(idProducto, cantidad);
         }
+
     }
 }
