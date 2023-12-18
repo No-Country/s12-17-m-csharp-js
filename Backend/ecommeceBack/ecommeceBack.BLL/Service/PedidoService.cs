@@ -110,7 +110,7 @@ namespace ecommeceBack.BLL.Service
 
                     }
 
-                    //var idTransaccion = await _mercadoPagoService.GenerarPagoAsync(requestMercadoPago);
+                    var idTransaccion = await _mercadoPagoService.GenerarPagoAsync(requestMercadoPago);
 
                     await transaction.CommitAsync();
 
@@ -124,7 +124,7 @@ namespace ecommeceBack.BLL.Service
 
                         usuarioId = pedidoCreado.usuarioId,
 
-                       // IdTransaccionPago = idTransaccion
+                       IdTransaccionPago = idTransaccion
 
                     };
 

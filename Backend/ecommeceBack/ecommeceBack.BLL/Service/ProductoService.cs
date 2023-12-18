@@ -99,28 +99,28 @@ namespace ecommeceBack.BLL.Service
             return await _productoRepo.ActivoInactivo(idProducto, idUser);
         }
 
-        public async Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro(string? nombre, int? idCategoria, int? idMarca, string? estado)
+        public async Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro( int regXPagina, int paginaActual, string? nombre, int? idCategoria, int? idMarca, string? estado)
         {
             try
             {
                 var query = await _productoRepo.ObtenerTodos();
 
-                var lista = query
+                query = query
                     .Include(p => p.Imagenes)
                     .Include(p => p.Marca)
                     .Include(p => p.Categoria)
                     .Where(p => p.Activo);
 
-                if (nombre != null) lista = lista.Where(p => p.nombre.Contains(nombre));
-                if (idCategoria != null) lista = lista.Where(p => p.CategoriaId == idCategoria);
-                if (idMarca != null) lista = lista.Where(p => p.MarcaId == idMarca);
+                if (nombre != null) query = query.Where(p => p.nombre.Contains(nombre));
+                if (idCategoria != null) query = query.Where(p => p.CategoriaId == idCategoria);
+                if (idMarca != null) query = query.Where(p => p.MarcaId == idMarca);
                 if (estado != null)
                 {
-                    if (estado.ToLower() == "nuevo") lista = lista.Where(p => p.Estado.ToLower() == "nuevo");
-                    else if(estado.ToLower() =="usado") lista = lista.Where(p => p.Estado.ToLower() == "usado");
+                    if (estado.ToLower() == "nuevo") query = query.Where(p => p.Estado.ToLower() == "nuevo");
+                    else if(estado.ToLower() =="usado") query = query.Where(p => p.Estado.ToLower() == "usado");
                 }
 
-                var search = await lista.ToListAsync();
+                var search = await query.Skip((paginaActual - 1) * regXPagina).Take(regXPagina).ToListAsync();
 
                 return mapper.Map<IEnumerable<ProductoDTO>>(search);
             }
