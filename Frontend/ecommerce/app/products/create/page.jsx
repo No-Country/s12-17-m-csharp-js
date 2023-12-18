@@ -9,11 +9,14 @@ import {
   RadioInputGroup,
 } from "./Partials";
 import ImageUploader from "@/app/(auth)/Partials/ImageUploader";
+import PopUp from "@/app/Popup/PopUp";
 
 const CreateProduct = () => {
   const [brandOptions, setBrandOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [images, setImages] = useState([]);
+  const [showPopUp, setShowPopUp] = useState(false);
+
   useEffect(() => {
     brandService.getAllBrands().then((brands) => {
       setBrandOptions(
@@ -57,6 +60,14 @@ const CreateProduct = () => {
 
   return (
     <FormProvider {...methods}>
+      {showPopUp && (
+        <PopUp
+          redirectTo="/products/my-products"
+          title={"Bienvenido"}
+          description={"Bienvenido a la comunidad de SURSHOP."}
+          onClose={() => setShowPopUp(false)}
+        />
+      )}
       <form id="productForm" onSubmit={methods.handleSubmit(onSubmit)}>
         <h1 className="text-4xl font-bold">Composición del producto</h1>
         <div className="mt-10 grid grid-cols-1 gap-6">

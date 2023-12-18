@@ -20,7 +20,7 @@ const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
   };
 
   return (
-    <div className="w-56 lg:w-72">
+    <div className="w-[calc(100%+3rem)] lg:w-72">
       <span className="flex justify-between">
         <h2 className="text-xl font-semibold">Filtros</h2>
         <button

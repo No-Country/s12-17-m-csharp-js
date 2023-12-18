@@ -1,5 +1,4 @@
 "use client";
-import useStore from "@/store/useStore";
 import { useState, useEffect, useMemo } from "react";
 import { productService } from "@/services";
 import { ProductCard, Sidebar } from "./Partials";
@@ -36,24 +35,8 @@ const ProductsPage = () => {
     );
   }, [products, category, condition, priceRange]);
 
-  // const isInCart = useStore((state) => state.isInCart);
-  // const addToCart = useStore((state) => state.addToCart);
-  // const removeFromCart = useStore((state) => state.removeFromCart);
-  const { cart, addToCart, removeFromCart } = useStore((state) => state);
-
-  const isInCart = (id) => cart.some((product) => product.id === id);
-
-  const onCartChange = (product) => {
-    console.log(product);
-    if (isInCart) {
-      removeFromCart(product.id);
-    } else {
-      addToCart(product);
-    }
-  };
-
   return (
-    <div className="mx-12 mt-12 flex gap-10">
+    <div className="mx-5 mt-5 flex gap-20 lg:mx-12 lg:mt-12">
       <div className="hidden md:block">
         <Sidebar
           setCategory={setCategory}
@@ -61,21 +44,17 @@ const ProductsPage = () => {
           setPriceRange={setPriceRange}
         />
       </div>
-      <div className="grid w-full grid-cols-1 justify-center gap-8 lg:grid-cols-2 2xl:grid-cols-3">
-        {products.length === 0 && (
-          <div className="col-span-3 text-center text-xl font-semibold">
-            Cargando...
-          </div>
-        )}
-        {filteredProducts.map((product) => (
-          <ProductCard
-            handleCartChange={onCartChange}
-            isInCart={isInCart(product.id)}
-            key={product.id}
-            product={product}
-          />
-        ))}
-      </div>
+      {products.length !== 0 ? (
+        <div className="3xl:grid-cols-4 mx-auto grid w-full grid-cols-1 justify-center gap-8 xl:grid-cols-2 2xl:grid-cols-3">
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <div className="col-span-3 min-h-screen bg-white text-center text-xl font-semibold">
+          Cargando productos...
+        </div>
+      )}
     </div>
   );
 };

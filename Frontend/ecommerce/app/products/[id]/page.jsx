@@ -5,7 +5,6 @@ import { ProductInfo, ProductImages } from "./Partials";
 import {
   PRODUCT_BREADCRUM_ITEMS,
   PRODUCT_INFORMATION,
-  PRODUCT_TABS,
   PRODUCT_CARDS,
 } from "@/constants/product";
 
@@ -72,12 +71,6 @@ const ProductDetail = ({ params }) => {
 
       <Tabs>
         <Tabs.Content title="Descripción">{product.description}</Tabs.Content>
-        <Tabs.Content title="Calificaciones">
-          {PRODUCT_TABS.reviews}
-        </Tabs.Content>
-        <Tabs.Content title="Preguntas y Respuestas">
-          {PRODUCT_TABS.questions}
-        </Tabs.Content>
       </Tabs>
 
       <hr className="mt-24 border-gray-200" />
