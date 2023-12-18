@@ -1,4 +1,4 @@
-import apiClient from "./api-client";
+import apiClient from "./apiClient";
 
 class UserService {
   signIn({ email, password }) {
@@ -9,7 +9,7 @@ class UserService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to sign in: " + error.message
+          "An error occurred while trying to sign in: " + error.message,
         );
       });
   }
@@ -24,7 +24,7 @@ class UserService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to sign up: " + error.message
+          "An error occurred while trying to sign up: " + error.message,
         );
       });
   }

@@ -1,25 +1,23 @@
+import { useFormContext } from "react-hook-form";
 const SelectInput = ({
   label,
   name,
-  register,
-  registerName,
   options = [],
-  errors,
-  // errorMessage,
   isRequired = true,
   ...props
 }) => {
+  const { register } = useFormContext();
   return (
     <div className="space-y-2">
-      <label htmlFor={name} className="font-semibold text-lg space-x-2">
+      <label htmlFor={name} className="space-x-2 text-lg font-semibold">
         <span>{label}</span>
-        {isRequired && <span className="text-red-500 text-xl">*</span>}
+        {isRequired && <span className="text-xl text-red-500">*</span>}
       </label>
 
       <select
-        {...register(registerName)}
+        {...register(name)}
         name={name}
-        className="text-gray-800 px-4 py-3 rounded-md w-full bg-black/10"
+        className="w-full rounded-md bg-black/10 px-4 py-3 text-gray-800"
         {...props}
       >
         <option value="" hidden defaultChecked={true}></option>
@@ -29,8 +27,6 @@ const SelectInput = ({
           </option>
         ))}
       </select>
-
-      <p className="text-[#FF0000] text-sm">{errors[registerName]?.message}</p>
     </div>
   );
 };

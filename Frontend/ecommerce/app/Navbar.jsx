@@ -1,16 +1,16 @@
 "use client";
+import Dropdown from "@/components/Dropdown";
+import Image from "next/image";
 import Link from "next/link";
-import { FaRegBell } from "react-icons/fa";
+import useStore from "../store/useStore";
+import { FaRegBell, FaRegUserCircle } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
+import { Logo } from "@/public/assets/img";
 import { SlOptions } from "react-icons/sl";
-import { routes } from "./constants/routes";
+import { routes } from "../constants/routes";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import Dropdown from "./components/Dropdown/dropdown";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
-import { FaRegUserCircle } from "react-icons/fa";
-import useStore from "./store/useStore";
 
 const Navbar = () => {
   const cart = useStore((state) => state.cart);
@@ -21,14 +21,20 @@ const Navbar = () => {
   const filteredRoutes = isLoggedIn
     ? routes
     : routes.filter((route) => !route.protected);
+
   return (
-    <div className="flex items-center justify-between w-full h-16">
-      <div className="flex items-center justify-between h-full space-x-8">
+    <div className="flex h-16 w-full items-center justify-between">
+      <div className="flex h-full items-center justify-between space-x-8">
         <Link
           href="/"
-          className="flex items-center justify-end h-full pr-4 font-semibold text-white bg-secondary w-36"
+          className="h-full bg-secondary px-4 font-semibold text-white"
         >
-          Nombre
+          <Image
+            style={{ height: "100%", width: "auto", padding: "0.375rem 0" }}
+            src={Logo}
+            alt="Logo"
+            priority={true}
+          />
         </Link>
         <div>
           <Dropdown />
@@ -38,7 +44,7 @@ const Navbar = () => {
             <Link
               key={route.name}
               href={route.path}
-              className={`cursor-pointer underline underline-offset-[14px] hover:decoration-primary hover:scale-105 transition-all
+              className={`cursor-pointer underline underline-offset-[14px] transition-all hover:scale-105 hover:decoration-primary
                ${
                  pathname === route.path
                    ? "decoration-secondary"
@@ -53,14 +59,14 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between w-6/12 h-full mx-8">
+      <div className="mx-8 flex h-full w-6/12 items-center justify-between">
         <div className="relative h-full py-3">
           <input
-            className="h-full px-4 placeholder-gray-700 bg-gray-200 rounded-md w-80 outline-gray-500"
+            className="h-full w-80 rounded-md bg-gray-200 px-4 outline-gray-500 placeholder:text-gray-700"
             placeholder="Buscar"
           />
           <IoIosSearch
-            className="absolute top-5 right-2 text-primary"
+            className="absolute right-2 top-5 text-primary"
             size={25}
           />
         </div>
@@ -68,7 +74,7 @@ const Navbar = () => {
         <FaRegBell size={24} />
         <div className="relative">
           {cart.length !== 0 && (
-            <span className="absolute flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full -top-1.5 -right-1.5">
+            <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white">
               {cart.length}
             </span>
           )}
@@ -81,7 +87,7 @@ const Navbar = () => {
             <FaRegUserCircle size={26} />
             <button
               onClick={() => signOut()}
-              className="px-4 py-2 font-semibold text-white transition-colors rounded-full hover:bg-secondary hover:text-black hover:decoration-inherit bg-primary"
+              className="rounded-full bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-secondary hover:text-black hover:decoration-inherit"
             >
               Cerrar sesión
             </button>
@@ -90,7 +96,7 @@ const Navbar = () => {
           <>
             <Link
               href="/login"
-              className={`p-2 font-medium rounded-md transition-all underline underline-offset-[14px] hover:scale-105 hover:decoration-primary
+              className={`rounded-md p-2 font-medium underline underline-offset-[14px] transition-all hover:scale-105 hover:decoration-primary
             ${
               pathname === "/login"
                 ? "decoration-secondary"
@@ -101,7 +107,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/register"
-              className={`px-4 py-2 font-semibold rounded-full text-black hover:bg-secondary hover:text-black transition-colors hover:decoration-inherit
+              className={`rounded-full px-4 py-2 font-semibold text-black transition-colors hover:bg-secondary hover:text-black hover:decoration-inherit
             ${
               pathname === "/register"
                 ? "bg-secondary text-black "
