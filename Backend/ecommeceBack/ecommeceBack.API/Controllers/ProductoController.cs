@@ -67,7 +67,7 @@ namespace ecommeceBack.API.Controllers
         }
 
         [HttpGet("Busqueda")]
-        public async Task<ActionResult<IEnumerable<ProductoDTO>>> Otenertodo(int regXPagina, int paginaActual, string? nombre, int? idCategoria, int? idMarca, string? estado)
+        public async Task<ActionResult<PaginasProductosDTO>> Otenertodo(int regXPagina, int paginaActual, string? nombre, int? idCategoria, int? idMarca, string? estado)
         {
             try
             {

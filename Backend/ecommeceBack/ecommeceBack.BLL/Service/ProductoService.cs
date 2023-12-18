@@ -99,7 +99,7 @@ namespace ecommeceBack.BLL.Service
             return await _productoRepo.ActivoInactivo(idProducto, idUser);
         }
 
-        public async Task<IEnumerable<ProductoDTO>> ObtenerPorFiltro( int regXPagina, int paginaActual, string? nombre, int? idCategoria, int? idMarca, string? estado)
+        public async Task<PaginasProductosDTO> ObtenerPorFiltro( int regXPagina, int paginaActual, string? nombre, int? idCategoria, int? idMarca, string? estado)
         {
             try
             {
@@ -120,9 +120,18 @@ namespace ecommeceBack.BLL.Service
                     else if(estado.ToLower() =="usado") query = query.Where(p => p.Estado.ToLower() == "usado");
                 }
 
+                var cantidadPaginas = Math.Ceiling((decimal)await query.CountAsync()/regXPagina);
+
                 var search = await query.Skip((paginaActual - 1) * regXPagina).Take(regXPagina).ToListAsync();
 
-                return mapper.Map<IEnumerable<ProductoDTO>>(search);
+
+                var paginasProductos = new PaginasProductosDTO()
+                {
+                    Productos = mapper.Map<List<ProductoDTO>>(search),
+                    Paginas = Convert.ToInt32(cantidadPaginas)
+                };
+
+                return paginasProductos;
             }
             catch(Exception) { throw; }
         }
