@@ -1,15 +1,10 @@
 function Footer() {
   return (
-    <div className="w-full bg-secondary">
+    <div className="mt-14 w-full bg-secondary">
       <footer className="mx-auto grid max-w-7xl gap-y-6 px-8 py-16 text-black">
         <ul className="grid gap-x-20 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
           <li className="grid h-fit gap-y-6">
             <h6 className="text-3xl font-bold text-black">SURSHOP</h6>
-            <small>
-              Somos una empresa dedicada a agilizar la distribución de
-              productos, facilitando a las personas la obtención rápida de sus
-              artículos deseados.
-            </small>
             <ul className="flex items-center gap-x-5">
               <li>
                 <svg

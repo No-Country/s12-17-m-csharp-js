@@ -6,12 +6,21 @@ import { productService } from "@/services";
 
 function ControlPanel() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    productService.getUserProducts().then((products) => {
-      setProducts(products);
-      console.log(products);
-    });
+    productService
+      .getUserProducts()
+      .then((products) => {
+        setProducts(products);
+        setIsLoading(false);
+        console.log(products);
+      })
+      .catch((error) => {
+        console.log("An error ocurred while fetching products");
+        console.error(error);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -37,8 +46,10 @@ function ControlPanel() {
       <div className="overflow-x-auto">
         {products.length !== 0 ? (
           <ProductsTable products={products} />
-        ) : (
+        ) : isLoading ? (
           <span>Cargando productos...</span>
+        ) : (
+          <span>No tienes productos</span>
         )}
       </div>
     </div>

@@ -9,4 +9,4 @@ echo "Running prettier 🎨"
 echo "Formatting files:"
 npx prettier --write . | grep -v "unchanged" | xargs -I{} echo "- {}"
 
-npm run lint --fix .
+npx next lint --fix . 

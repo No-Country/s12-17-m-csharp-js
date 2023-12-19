@@ -29,13 +29,16 @@ const Navbar = () => {
     categoryService
       .getAllCategories()
       .then((categories) => {
-        setCategories(categories);
+        const updatedCategories = categories.map((category) => {
+          return { ...category, route: `/products?category=${category.id}` };
+        });
+        setCategories(updatedCategories);
       })
       .catch((error) => console.error(error));
   }, []);
 
   return (
-    <div className="flex h-16 w-full items-center justify-between">
+    <div className="flex h-16 w-full items-center justify-between shadow-sm">
       <div className="flex h-full items-center justify-between space-x-8">
         <Link
           href="/"
@@ -48,34 +51,31 @@ const Navbar = () => {
             priority={true}
           />
         </Link>
-
-        <Dropdown
-          // options={[
-          //   { id: 1, name: "Categorias", route: "/products?category=1" },
-          //   { id: 2, name: "Productos", route: "/products?category=2" },
-          //   { id: 3, name: "Usuarios", route: "/users?category=3" },
-          // ]}
-          options={categories}
-        />
-
         <div className="flex items-center space-x-8 whitespace-nowrap">
           {filteredRoutes.map((route) => (
             <Link
               key={route.name}
               href={route.path}
               className={`cursor-pointer underline underline-offset-[14px] transition-all hover:scale-105 hover:decoration-primary
-               ${
-                 pathname === route.path
-                   ? "decoration-secondary"
-                   : "decoration-white"
-               }`}
+                 ${
+                   pathname === route.path
+                     ? "decoration-secondary"
+                     : "decoration-white"
+                 }`}
             >
               {route.name}
             </Link>
           ))}
         </div>
+        <Dropdown title="Categorías" options={categories} />
+        <Dropdown
+          title="Panel de control"
+          options={[
+            { name: "Mis productos", route: "/products/user-products" },
+            { name: "Mis compras", route: "/orders" },
+          ]}
+        />
       </div>
-
       <div className="mx-4 flex h-full items-center justify-end gap-8">
         {pathname === "/supermarket" && (
           <div className="relative h-full py-3">
@@ -114,22 +114,22 @@ const Navbar = () => {
             <Link
               href="/login"
               className={`rounded-md p-2 font-medium underline underline-offset-[14px] transition-all hover:scale-105 hover:decoration-primary
-            ${
-              pathname === "/login"
-                ? "decoration-secondary"
-                : "text-black decoration-white"
-            } `}
+              ${
+                pathname === "/login"
+                  ? "decoration-secondary"
+                  : "text-black decoration-white"
+              } `}
             >
               Ingresar
             </Link>
             <Link
               href="/register"
               className={`rounded-full px-4 py-2 font-semibold text-black transition-colors hover:bg-secondary hover:text-black hover:decoration-inherit
-            ${
-              pathname === "/register"
-                ? "bg-secondary text-black "
-                : "bg-primary text-white "
-            }`}
+              ${
+                pathname === "/register"
+                  ? "bg-secondary text-black "
+                  : "bg-primary text-white "
+              }`}
             >
               Registrarse
             </Link>

@@ -21,7 +21,7 @@ export default function Home() {
         {/* Segundo carrusel dividido en dos */}
         <div className="flex w-[35%] flex-col justify-between">
           <Carousel slides={SECOND_SLIDES} />
-          <div className="h-[50%] bg-red-500">
+          <div className="h-[50%]">
             {/* Carrusel en la mitad inferior del segundo carrusel */}
             <CombinedCarousel slides={THIRD_SLIDES} />
           </div>
