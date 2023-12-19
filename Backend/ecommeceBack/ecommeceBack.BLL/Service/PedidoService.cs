@@ -147,6 +147,18 @@ namespace ecommeceBack.BLL.Service
 
         }
 
-      
+
+        public async Task<IEnumerable<PedidoDTO>> misPedidos(string userId) 
+        {
+            var query = await _pedidoRepo.ObtenerTodos();
+
+            var lista = await query
+                .Include(p=>p.Renglones_Pedidos)
+                    .ThenInclude(r=>r.Producto)
+                        .ThenInclude(p=>p.Imagenes)
+                .Where(p=>p.UsuarioId==userId)
+                .ToListAsync();
+            return mapper.Map<IEnumerable<PedidoDTO>>(lista);
+        }
     }
 }

@@ -53,6 +53,29 @@ namespace ecommeceBack.API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("MisPedidos")]
+        public async Task<ActionResult<List<PedidoDTO>>> Listar()
+        {
+            try
+            {
+                var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
+                var id = claim.Value;
+                var pedidos = await _pedidoService.misPedidos(id);
+
+                return Ok(pedidos);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500, "Error interno del servidor");
+            }
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<ActionResult<PedidoDTO>>Registrar( RequestMercadoPago requestMercadoPago) 
         {
