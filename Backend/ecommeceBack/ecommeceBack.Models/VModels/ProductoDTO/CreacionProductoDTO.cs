@@ -43,5 +43,6 @@ namespace ecommeceBack.Models.VModels.ProductoDTO
         public IFormFile Imagen1 { get; set; }
         public IFormFile? Imagen2 { get; set; }
         public IFormFile? Imagen3 { get; set; }
+        public IFormFile? Imagen4 { get; set; }
     }
 }

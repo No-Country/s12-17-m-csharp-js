@@ -87,6 +87,7 @@ namespace ecommeceBack.BLL.Service
                 await _imagenService.AgregarImagen(modelo.Imagen1, producto.Id);
                 if (modelo.Imagen2 != null) await _imagenService.AgregarImagen(modelo.Imagen2, producto.Id);
                 if (modelo.Imagen3 != null) await _imagenService.AgregarImagen(modelo.Imagen3, producto.Id);
+                if (modelo.Imagen4 != null) await _imagenService.AgregarImagen(modelo.Imagen4, producto.Id);
 
                 return producto;
             }
