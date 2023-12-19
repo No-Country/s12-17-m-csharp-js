@@ -23,7 +23,7 @@ const CreateProduct = () => {
         brands.map((brand) => ({
           value: brand.id,
           label: brand.name,
-        })),
+        }))
       );
     });
 
@@ -32,7 +32,7 @@ const CreateProduct = () => {
         categories.map((category) => ({
           value: category.id,
           label: category.name,
-        })),
+        }))
       );
     });
   }, []);

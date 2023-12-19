@@ -11,7 +11,7 @@ registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
   FilePondPluginImagePreview,
-  FilePondPluginImageCrop,
+  FilePondPluginImageCrop
 );
 
 const ImageUploader = ({
