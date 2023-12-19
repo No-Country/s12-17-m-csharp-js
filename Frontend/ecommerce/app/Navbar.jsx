@@ -72,7 +72,7 @@ const Navbar = () => {
           title="Panel de control"
           options={[
             { name: "Mis productos", route: "/products/user-products" },
-            { name: "Mis compras", route: "/orders" },
+            { name: "Mis compras", route: "/products/user-orders" },
           ]}
         />
       </div>
