@@ -1,12 +1,11 @@
 ﻿using ecommeceBack.API.Exceptions;
 using ecommeceBack.BLL.contrato;
-using ecommeceBack.BLL.Service;
+using ecommeceBack.Models.Entidades;
 using ecommeceBack.Models.VModels.DatosDTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommeceBack.API.Controllers
@@ -19,11 +18,13 @@ namespace ecommeceBack.API.Controllers
     {
         private readonly IGenericService<CreacionDatosDTO, DatosDTO> _datosService;
         private readonly IDatosService _datosService1;
+        private readonly UserManager<Usuario> _userManager;
 
-        public DatosController(IGenericService<CreacionDatosDTO, DatosDTO> datosService, IDatosService datosService1)
+        public DatosController(IGenericService<CreacionDatosDTO, DatosDTO> datosService, IDatosService datosService1,UserManager<Usuario> userManager)
         {
             _datosService = datosService;
             _datosService1 = datosService1;
+            _userManager = userManager;
         }
 
         [HttpGet("BusquedaXID")]
@@ -123,5 +124,28 @@ namespace ecommeceBack.API.Controllers
             }
         }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet("MisDatos")]
+    public async Task<ActionResult<DatosDTO>> ListarporID()
+    {
+        try
+        {
+            var claim = HttpContext.User.Claims.Where(c => c.Type == "id").FirstOrDefault();
+            var user = await _userManager.FindByIdAsync(claim.Value);                
+            var datos = await _datosService.ObtenerPorId((int)user.DatosId);
+
+            return Ok(datos);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception)
+        {
+
+            return StatusCode(500, "Error interno del servidor");
+        }
     }
+    }
+
 }
