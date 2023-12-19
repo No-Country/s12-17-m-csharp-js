@@ -5,8 +5,8 @@ export const routes = [
     protected: false,
   },
   {
-    name: "Supermercado",
-    path: "/supermarket",
+    name: "Productos",
+    path: "/products",
     protected: false,
   },
   {

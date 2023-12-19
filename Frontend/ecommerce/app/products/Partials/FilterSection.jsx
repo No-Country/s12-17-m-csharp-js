@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import FilterField from "./FilterField";
 
-const FilterSection = ({ title, options, name, onChange, inputType }) => {
+const FilterSection = ({ title, options, name, ...props }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleOpen = () => {
@@ -30,19 +30,18 @@ const FilterSection = ({ title, options, name, onChange, inputType }) => {
           <div className="mt-4">
             <FilterField
               name={name}
-              type={inputType}
+              type="radio"
               value=""
-              onChange={onChange}
               label="Todos"
+              defaultChecked={true}
             />
           </div>
           {options.map((option, index) => (
             <FilterField
               key={index}
               name={name}
-              type={inputType}
+              type="radio"
               value={option.value}
-              onChange={onChange}
               label={option.label}
             />
           ))}

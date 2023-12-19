@@ -1,4 +1,3 @@
-import { categoryService } from ".";
 import apiClient from "./apiClient";
 
 class ProductService {
@@ -43,6 +42,7 @@ class ProductService {
       Imagen1: images[0],
       Imagen2: images[1],
       Imagen3: images[2],
+      Imagen4: images[3],
     };
 
     Object.entries(data).forEach(([key, value]) => {
@@ -63,54 +63,72 @@ class ProductService {
   }
 
   getProductById(id) {
-    return apiClient
-      .get("/producto/busquedaxid?id=" + id)
-      .then(async (response) => {
-        const product = response.data;
-        const category = (
-          await categoryService.getCategoryById(product.categoriaId === 1 || 2)
-        ).name;
+    return apiClient.get("/producto/busquedaxid?id=" + id).then((response) => {
+      const product = response.data;
 
-        return {
-          id: product.id,
-          name: product.nombre,
-          description: product.descripcion,
-          userId: product.usuarioId,
-          category,
-          categoryId: product.categoriaId,
-          brand: product.marca,
-          brandId: product.marcaId,
-          model: product.modelo,
-          unit: product.unidad,
-          active: product.activo,
-          currentStock: product.stock_Actual,
-          productCondition: product.estado,
-          price: product.precio,
-          images: product.imagenes.map((image) => image.url),
-        };
-      });
+      return {
+        id: product.id,
+        name: product.nombre,
+        description: product.descripcion,
+        userId: product.usuarioId,
+        category: {
+          id: product.categoria.id,
+          name: product.categoria.nombre,
+        },
+        brand: {
+          id: product.marca.id,
+          name: product.marca.nombre,
+        },
+        model: product.modelo,
+        unit: product.unidad,
+        active: product.activo,
+        currentStock: product.stock_Actual,
+        productCondition: product.estado,
+        price: product.precio,
+        images: product.imagenes,
+      };
+    });
   }
 
-  getAllProducts() {
+  getAllProducts({
+    itemsPerPage = "10",
+    pageNumber = "1",
+    categoryId = "",
+    brandId = "",
+    productConditon = "",
+  } = {}) {
     return apiClient
-      .get("/producto/busqueda")
+      .get(
+        [
+          "/Producto/Busqueda",
+          `?regXPagina=${itemsPerPage}`,
+          `&paginaActual=${pageNumber}`,
+          `&idCategoria=${categoryId}`,
+          `&idMarca=${brandId}`,
+          `&estado=${productConditon}`,
+        ].join(""),
+      )
       .then((response) => {
-        return response.data.map((product) => ({
+        return response.data.productos.map((product) => ({
           id: product.id,
           name: product.nombre,
           description: product.descripcion,
           userId: product.usuarioId,
-          category: product.categoria,
-          categoryId: product.categoriaId,
-          brand: product.marca,
-          brandId: product.marcaId,
+          category: {
+            id: product.categoria.id,
+            name: product.categoria.nombre,
+          },
+          brand: {
+            id: product.marca.id,
+            name: product.marca.nombre,
+          },
           model: product.modelo,
           unit: product.unidad,
           active: product.activo,
           currentStock: product.stock_Actual,
           productCondition: product.estado,
           price: product.precio,
-          images: product.imagenes.map((image) => image.url),
+          images: product.imagenes,
         }));
       })
       .catch((error) => {
@@ -130,11 +148,14 @@ class ProductService {
           name: product.nombre,
           description: product.descripcion,
           userId: product.usuarioId,
-          // category: product.categoria ? product.categoria : "Gaming",
-          category: "Gaming",
-          categoryId: product.categoriaId,
-          brand: product.marca,
-          brandId: product.marcaId,
+          category: {
+            id: product.categoria.id,
+            name: product.categoria.nombre,
+          },
+          brand: {
+            id: product.marca.id,
+            name: product.marca.nombre,
+          },
           model: product.modelo,
           unit: product.unidad,
           active: product.activo,
@@ -150,6 +171,15 @@ class ProductService {
             error.message,
         );
       });
+  }
+
+  deactivateProduct(id) {
+    return apiClient.put("/producto/desactivar?id=" + id).catch((error) => {
+      throw new Error(
+        "An error occurred while trying to deactivate product: " +
+          error.message,
+      );
+    });
   }
 }
 

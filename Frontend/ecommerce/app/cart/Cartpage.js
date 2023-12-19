@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import useStore from "../../store/useStore";
+import cartStore from "../../store/cartStore";
 
 const CartPage = () => {
-  const cart = useStore((state) => state.cart); // Obtener el estado del carrito
+  const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
 
   const handleAddOne = (productId) => {
     // Lógica para agregar un producto al carrito (incrementar cantidad)

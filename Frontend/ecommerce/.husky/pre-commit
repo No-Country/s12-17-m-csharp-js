@@ -1,17 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
+echo "Running pre-commit hook"
 
-# Get the absolute paths of the staged files before changing the directory
-staged_files=$(git diff --cached --name-only --relative | xargs -I{} realpath {})
+echo "Running ESLint 🧹"
 
 cd Frontend/ecommerce
 echo "Running prettier 🎨"
 echo "Formatting files:"
 npx prettier --write . | grep -v "unchanged" | xargs -I{} echo "- {}"
 
-npm run lint --fix .
-
-# Re-add the staged files after running ESLint
-for file in $staged_files; do
-  git add "$file"
-done
+npx next lint --fix . 

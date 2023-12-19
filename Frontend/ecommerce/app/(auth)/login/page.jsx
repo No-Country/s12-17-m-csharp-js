@@ -1,5 +1,5 @@
 "use client";
-import PopUp from "@/components/Popup/PopUp";
+import PopUp from "@/components/PopUp";
 import { FaArrowRight, FaGoogle } from "react-icons/fa";
 import { Layout, SocialButton, TextInput } from "../Partials";
 import { MdFacebook } from "react-icons/md";
@@ -7,6 +7,7 @@ import { loginValidations } from "../Partials/Validations";
 import { signIn } from "next-auth/react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
+import { userService } from "@/services";
 
 const LoginPage = () => {
   const { ...methods } = useForm();
@@ -19,10 +20,16 @@ const LoginPage = () => {
     console.log("Form submitted");
     console.log(data);
     setShowError(false);
-    setIsLoading(true);
+    const user = await userService.signIn({
+      email: data.email,
+      password: data.password,
+    });
+    console.log(user);
+
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
+      token: user.token,
       redirect: false,
     });
 

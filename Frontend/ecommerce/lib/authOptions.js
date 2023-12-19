@@ -1,5 +1,4 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { userService } from "@/services";
 
 export const authOptions = {
   providers: [
@@ -8,21 +7,17 @@ export const authOptions = {
       credentials: {
         email: { label: "Email", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
+        token: { label: "Token", type: "hidden" },
       },
       async authorize(credentials, req) {
-        const response = await userService.signIn({
-          email: credentials.email,
-          password: credentials.password,
-        });
-
-        if (!response || !response.data) {
-          throw new Error("An error occurred while trying to sign in");
-        }
-
-        const token = response.data.token;
+        const token = credentials.token;
         if (token) {
-          const user = response.data;
-          user.email = credentials.email;
+          const user = {
+            id: "1",
+            email: credentials.email,
+            password: credentials.password,
+            token: credentials.token,
+          };
           return user;
         }
         return null;

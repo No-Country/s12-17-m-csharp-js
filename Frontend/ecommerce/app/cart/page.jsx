@@ -1,35 +1,35 @@
 "use client";
 
 import React from "react";
-import useStore from "@/store/useStore";
+import { cartStore } from "@/store";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const CartPage = () => {
-  const cart = useStore((state) => state.cart); // Obtener el estado del carrito
+  const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
   const router = useRouter();
 
   const { data } = useSession();
   console.log("data", data);
 
   const handleAddOne = (productId) => {
-    useStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
+    cartStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
   };
 
   const handleRemoveOne = (productId) => {
-    useStore.getState().decrementQuantity(productId); // Decrementar cantidad de producto en el carrito
+    cartStore.getState().decrementQuantity(productId); // Decrementar cantidad de producto en el carrito
   };
 
   // const handleRemoveAll = () => {
   //   // Lógica para eliminar todos los productos del carrito
-  //   // Puedes utilizar la función removeFromCart del useStore si está definida
-  //   useStore.getState().removeAllFromCart();
+  //   // Puedes utilizar la función removeFromCart del cartStore si está definida
+  //   cartStore.getState().removeAllFromCart();
   // };
 
   const handleRemoveOneItem = (productId) => {
     // Lógica para eliminar uno de los productos del carrito
-    useStore.getState().removeFromCart(productId);
+    cartStore.getState().removeFromCart(productId);
   };
 
   const handleCheckout = () => {

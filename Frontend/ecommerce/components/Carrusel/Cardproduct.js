@@ -39,16 +39,17 @@ const CardCarousel = ({ cards }) => {
             }}
           >
             {card && (
-              <div className="flex h-full flex-col justify-between rounded-lg bg-white p-6 shadow-md">
+              <div className="flex h-full flex-col justify-between rounded-lg border border-slate-300 bg-white p-6 shadow-lg">
                 {/* Use Image component from Next.js to optimize images */}
                 <span className="space-y-3">
                   <Image
+                    className="min-h-[160px] min-w-[160] rounded-md object-cover"
                     src={card.image}
                     alt={card.title}
                     width="600"
                     height="600"
-                    className="w-full rounded-md"
                   />
+                  <hr className="h-1.5 w-full text-slate-300" />
                   <h2 className="line-clamp-2 text-xl font-semibold">
                     {card.title}
                   </h2>

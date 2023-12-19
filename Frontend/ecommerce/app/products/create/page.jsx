@@ -9,11 +9,14 @@ import {
   RadioInputGroup,
 } from "./Partials";
 import ImageUploader from "@/app/(auth)/Partials/ImageUploader";
+import PopUp from "@/components/PopUp";
 
 const CreateProduct = () => {
   const [brandOptions, setBrandOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [images, setImages] = useState([]);
+  const [showPopUp, setShowPopUp] = useState(false);
+
   useEffect(() => {
     brandService.getAllBrands().then((brands) => {
       setBrandOptions(
@@ -50,6 +53,9 @@ const CreateProduct = () => {
         price: data.price,
         images,
       })
+      .then(() => {
+        setShowPopUp(true);
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -57,6 +63,14 @@ const CreateProduct = () => {
 
   return (
     <FormProvider {...methods}>
+      {showPopUp && (
+        <PopUp
+          redirectTo="/products/user-products"
+          title="¡Producto creado!"
+          description="!El producto se ha creado con éxito!"
+          onClose={() => setShowPopUp(false)}
+        />
+      )}
       <form id="productForm" onSubmit={methods.handleSubmit(onSubmit)}>
         <h1 className="text-4xl font-bold">Composición del producto</h1>
         <div className="mt-10 grid grid-cols-1 gap-6">

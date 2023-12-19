@@ -6,6 +6,11 @@ const TabContext = createContext({
 });
 
 const Tabs = ({ children, ...props }) => {
+  // Ensure children is always an array
+  if (!Array.isArray(children)) {
+    children = [children];
+  }
+
   const [activeTab, setActiveTab] = useState(children[0].props.title);
   return (
     <TabContext.Provider value={{ activeTab, setActiveTab }}>
