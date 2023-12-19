@@ -20,5 +20,7 @@ namespace ecommeceBack.BLL.contrato
         Task<PedidoDTO> ObtenerPorId(int id);
 
         Task<IEnumerable<PedidoDTO>> ObtenerTodos();
+
+        Task<IEnumerable<PedidoDTO>> misPedidos(string userId);
     }
 }
