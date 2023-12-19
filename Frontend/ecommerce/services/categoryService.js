@@ -40,6 +40,31 @@ class CategoryService {
         );
       });
   }
+
+  getCategoryByName(categoryName) {
+    return apiClient
+      .get("/categorias")
+      .then((response) => {
+        const category = response.data.find((categorias) => {
+          return categorias.nombre.toLowerCase() === categoryName.toLowerCase();
+        });
+
+        if (category) {
+          return {
+            id: category.id,
+            name: category.nombre,
+          };
+        }
+
+        return null;
+      })
+      .catch((error) => {
+        throw new Error(
+          "An error occurred while trying to get category by name: " +
+            error.message,
+        );
+      });
+  }
 }
 
 const brandService = new CategoryService();

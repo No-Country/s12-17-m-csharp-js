@@ -9,7 +9,7 @@ import {
   RadioInputGroup,
 } from "./Partials";
 import ImageUploader from "@/app/(auth)/Partials/ImageUploader";
-import PopUp from "@/app/Popup/PopUp";
+import PopUp from "@/components/PopUp";
 
 const CreateProduct = () => {
   const [brandOptions, setBrandOptions] = useState([]);
@@ -53,6 +53,9 @@ const CreateProduct = () => {
         price: data.price,
         images,
       })
+      .then(() => {
+        setShowPopUp(true);
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -62,9 +65,9 @@ const CreateProduct = () => {
     <FormProvider {...methods}>
       {showPopUp && (
         <PopUp
-          redirectTo="/products/my-products"
-          title={"Bienvenido"}
-          description={"Bienvenido a la comunidad de SURSHOP."}
+          redirectTo="/products/user-products"
+          title="¡Producto creado!"
+          description="!El producto se ha creado con éxito!"
           onClose={() => setShowPopUp(false)}
         />
       )}

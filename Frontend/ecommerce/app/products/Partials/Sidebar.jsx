@@ -1,23 +1,12 @@
 import React from "react";
 import FilterSection from "./FilterSection";
-import { FILTERS } from "@/constants/productFilters";
+import { FormProvider, useForm } from "react-hook-form";
 
-const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-  const handleConditionChange = (event) => {
-    setCondition(event.target.value);
-  };
-  const handlePriceChange = (event) => {
-    setPriceRange(event.target.value);
-  };
+const Sidebar = () => {
+  const { ...methods } = useForm();
 
-  const filterHandlers = {
-    category: handleCategoryChange,
-    condition: handleConditionChange,
-    price: handlePriceChange,
-  };
+  const allFieldValues = methods.watch();
+  console.log(allFieldValues);
 
   return (
     <div className="w-[calc(100%+3rem)] lg:w-72">
@@ -25,25 +14,45 @@ const Sidebar = ({ setCategory, setCondition, setPriceRange }) => {
         <h2 className="text-xl font-semibold">Filtros</h2>
         <button
           onClick={() => {
-            setCategory("");
-            setCondition("");
-            setPriceRange("");
+            methods.reset();
           }}
           className="rounded-3xl border border-slate-300 px-4 py-2 text-xs text-gray-600 transition-transform hover:scale-105 hover:text-gray-800"
         >
           Limpiar todo
         </button>
       </span>
-      <div className="mt-4 rounded-lg border border-slate-200 p-4 pb-6">
-        {FILTERS.map((filter, index) => (
-          <React.Fragment key={index}>
-            <FilterSection {...filter} onChange={filterHandlers[filter.name]} />
-            {index < FILTERS.length - 1 && (
-              <hr className="my-6 border border-slate-200" />
-            )}
-          </React.Fragment>
-        ))}
-      </div>
+      <FormProvider {...methods}>
+        <form className="mt-4 rounded-lg border border-slate-200 p-4 pb-6">
+          <FilterSection
+            name="category"
+            title="Categoría"
+            options={[
+              { label: "Muebles", value: "1" },
+              { label: "Gaming", value: "2" },
+              { label: "Celulares", value: "3" },
+            ]}
+          />
+          <hr className="my-6 border border-slate-200" />
+          <FilterSection
+            name="condition"
+            title="Condición"
+            options={[
+              { label: "Nuevo", value: "Nuevo" },
+              { label: "Usado", value: "Usado" },
+            ]}
+          />
+          <hr className="my-6 border border-slate-200" />
+          <FilterSection
+            name="brand"
+            title="Marca"
+            options={[
+              { label: "Samsung", value: "1" },
+              { label: "Apple", value: "2" },
+              { label: "Huawei", value: "3" },
+            ]}
+          />
+        </form>
+      </FormProvider>
     </div>
   );
 };

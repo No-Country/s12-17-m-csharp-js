@@ -16,11 +16,12 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="grid w-full grid-cols-1 gap-x-4 rounded-xl border border-slate-200 shadow-sm shadow-slate-300 transition-shadow hover:shadow-xl sm:grid-cols-2 xl:grid-cols-1">
+    <div className="grid h-fit w-full grid-cols-1 gap-x-4 rounded-xl border border-slate-200 shadow-sm shadow-slate-300 transition-shadow hover:shadow-xl sm:grid-cols-2 xl:grid-cols-1">
       <div className="min-w-full">
         <Link href={"/products/" + product.id}>
           <Image
-            className="mx-auto max-h-[260px] max-w-[300px] object-cover p-4 lg:px-0 lg:py-5"
+            className="mx-auto max-h-[260px] min-h-[260px] min-w-[260px] max-w-[260px] rounded-t-xl
+             object-cover p-4 lg:px-0 lg:py-5"
             width={260}
             height={260}
             src={product.images[0].url}
