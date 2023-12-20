@@ -6,7 +6,7 @@ import { productService } from "@/services";
 
 function ControlPanel() {
   const [products, setProducts] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     productService
@@ -14,12 +14,12 @@ function ControlPanel() {
       .then((products) => {
         console.log(products);
         setProducts(products);
-        // setIsLoading(false);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log("An error occurred while trying to get user products");
         console.error(error);
-        // setIsLoading(false);
+        setIsLoading(false);
       });
   }, []);
 
@@ -44,16 +44,16 @@ function ControlPanel() {
       <hr className="mt-3 bg-slate-300" />
 
       <div className="mt-4 overflow-x-auto text-lg">
-        {/* {isLoading ? (
+        {isLoading ? (
           <span>Cargando productos...</span>
         ) : products.length === 0 ? (
           <span>
             No tienes productos. Haz clic en &quot;Añadir producto&quot; para
             crear uno.
           </span>
-        ) : ( */}
-        <ProductsTable products={products} />
-        {/* )} */}
+        ) : (
+          <ProductsTable products={products} />
+        )}
       </div>
     </div>
   );

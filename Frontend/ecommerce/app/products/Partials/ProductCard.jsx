@@ -1,10 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import cartStore from "@/store/cartStore";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { getToken } from "@/services/apiClient";
 
 const ProductCard = ({ product }) => {
   const { addToCart, removeFromCart, isInCart } = cartStore((state) => state);
   const isProductInCart = isInCart(product.id);
+
+  const [token, setToken] = useState(null);
+  const router = useRouter();
+  getToken().then((tok) => {
+    if (tok) setToken(tok);
+  });
 
   const handleCartChange = (product) => {
     if (isProductInCart) {
@@ -12,6 +21,13 @@ const ProductCard = ({ product }) => {
     } else {
       addToCart(product);
     }
+  };
+
+  const handleBuy = () => {
+    if (token) {
+      !isProductInCart && addToCart(product);
+      router.push("/cart/pay");
+    } else router.push("/login");
   };
 
   return (
@@ -43,8 +59,11 @@ const ProductCard = ({ product }) => {
             .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
         </p>
         <div className="mt-3 flex flex-col items-center gap-3 text-sm font-medium lg:text-base xl:flex-row">
-          <button className="w-full rounded-3xl bg-info/90 py-2 text-white transition-all hover:scale-105 hover:bg-info">
-            Comprar
+          <button
+            onClick={handleBuy}
+            className="w-full rounded-3xl bg-info/90 py-2 text-white transition-all hover:scale-105 hover:bg-info"
+          >
+            {token !== null ? "Comprar" : "Iniciar sesión"}
           </button>
           <button
             onClick={() => handleCartChange(product)}

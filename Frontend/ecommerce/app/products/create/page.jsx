@@ -16,6 +16,7 @@ const CreateProduct = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [images, setImages] = useState([]);
   const [showPopUp, setShowPopUp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     brandService.getAllBrands().then((brands) => {
@@ -40,6 +41,7 @@ const CreateProduct = () => {
   const { ...methods } = useForm();
 
   const onSubmit = (data) => {
+    setIsLoading(true);
     productService
       .addProduct({
         name: data.name,
@@ -58,7 +60,8 @@ const CreateProduct = () => {
       })
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -126,8 +129,9 @@ const CreateProduct = () => {
           <button
             type="submit"
             className="mb-2 flex items-center justify-center rounded-lg bg-secondary p-4 font-semibold text-primary transition-transform hover:scale-105"
+            disabled={isLoading}
           >
-            Añadir producto
+            {isLoading ? "Procesando" : "Añadir producto"}
           </button>
         </div>
       </form>
