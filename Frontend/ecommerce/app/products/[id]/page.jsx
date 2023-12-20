@@ -70,6 +70,7 @@ const ProductDetail = ({ params }) => {
             price={product.price}
             productCondition={product.productCondition}
             currentStock={product.currentStock}
+            product={product}
           />
         </div>
         <HiOutlineChevronDoubleDown className="mx-auto h-6 w-6 animate-bounce text-gray-500" />
