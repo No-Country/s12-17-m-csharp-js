@@ -1,4 +1,3 @@
-import StarRating from "@/components/StarRating";
 import Image from "next/image";
 import Link from "next/link";
 import cartStore from "@/store/cartStore";
@@ -37,19 +36,12 @@ const ProductCard = ({ product }) => {
             {product.name}
           </h2>
         </Link>
-        <div className="mt-2 flex-col justify-between space-y-1 lg:flex-row">
-          <p className="animate-pulse font-medium">
-            $
-            {parseFloat(product.price)
-              .toFixed(2)
-              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
-          </p>
-          <span className="flex items-center space-x-3">
-            <StarRating rating={3} />
-            <span className="text-slate-400 text-opacity-90">(121)</span>
-          </span>
-        </div>
-
+        <p className="animate-pulse font-medium">
+          $
+          {parseFloat(product.price)
+            .toFixed(2)
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+        </p>
         <div className="mt-3 flex flex-col items-center gap-3 text-sm font-medium lg:text-base xl:flex-row">
           <button className="w-full rounded-3xl bg-info/90 py-2 text-white transition-all hover:scale-105 hover:bg-info">
             Comprar
