@@ -1,13 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cartStore } from "@/store";
+import { getToken } from "@/services/apiClient";
 
 const CartPage = () => {
   const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
   const router = useRouter();
+  const [token, setToken] = useState(null);
+  getToken().then((tok) => {
+    if (tok) setToken(tok);
+  });
 
   const handleAddOne = (productId) => {
     cartStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
@@ -25,7 +30,7 @@ const CartPage = () => {
   const handleCheckout = () => {
     // Lógica para continuar con el proceso de compra
     // Redireccionar a la página de checkout u otro lugar
-    router.push("/cart/pay");
+    token !== null ? router.push("/cart/pay") : router.push("/login");
   };
 
   // Calcular el total de la compra
@@ -37,9 +42,9 @@ const CartPage = () => {
       <div className="container relative mx-auto px-4 py-8">
         <h1 className="mb-4 text-2xl text-[#FEAF00]">Carrito de Compras</h1>
         <h3 className="mb-4 flex text-xl text-[#FEAF00]">
-          <Link href={"/supermarket"}>
+          <Link href={"/products"}>
             <img src="assets/arrow.svg" className="mr-4"></img>
-          </Link>{" "}
+          </Link>
           Continuar Comprando
         </h3>
         <div className="flex">
@@ -82,7 +87,6 @@ const CartPage = () => {
                 </div>
                 <p className=" ml-8 w-1/6">${item.quantity * item.price}</p>
                 <button onClick={() => handleRemoveOneItem(item.id)}>
-                  {" "}
                   <img src="assets/trash.svg"></img>
                 </button>
               </div>
@@ -93,17 +97,26 @@ const CartPage = () => {
               <p className="font-semibold">Total:</p>
               <p className="font-semibold">${Math.round(total * 100) / 100}</p>
             </div>
-            <button
-              onClick={handleCheckout}
-              disabled={total === 0}
-              className={`mx-auto flex h-[46px] w-[90%] items-center justify-center bg-black text-white ${
-                total === 0
-                  ? ""
-                  : "transition-all hover:scale-[1.02] hover:decoration-gray-900"
-              } `}
-            >
-              Continuar con la Compra
-            </button>
+            {token !== null ? (
+              <button
+                onClick={handleCheckout}
+                disabled={total === 0}
+                className={`mx-auto flex h-[46px] w-[90%] items-center justify-center bg-black text-white ${
+                  total === 0
+                    ? ""
+                    : "transition-all hover:scale-[1.02] hover:decoration-gray-900"
+                } `}
+              >
+                Continuar con la Compra
+              </button>
+            ) : (
+              <button
+                onClick={handleCheckout}
+                className="mx-auto flex h-[46px] w-[90%] items-center justify-center bg-black text-white transition-all hover:scale-[1.02] hover:decoration-gray-900"
+              >
+                Ingresa a tu cuenta para Comprar
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -9,9 +9,4 @@ export const routes = [
     path: "/products",
     protected: false,
   },
-  {
-    name: "Panel de control",
-    path: "/control_panel",
-    protected: true,
-  },
 ];
