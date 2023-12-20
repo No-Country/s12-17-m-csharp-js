@@ -33,7 +33,7 @@ function ControlPanel() {
             placeholder="Buscar"
           />
           <Link
-            href={"/control_panel/products/create"}
+            href={"create"}
             className="rounded-xl bg-primary px-6 py-2 text-center text-white"
           >
             Añadir producto

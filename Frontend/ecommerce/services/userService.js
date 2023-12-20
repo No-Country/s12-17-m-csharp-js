@@ -46,6 +46,33 @@ class UserService {
         );
       });
   }
+
+  dataUser() {
+    return apiClient
+      .get("Datos/MisDatos")
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        throw new Error(
+          "An error occurred while trying to obtain data: " + error.message
+        );
+      });
+  }
+
+  updateData(datas, id) {
+    return apiClient
+      .put("/Datos?id=" + id, datas)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error(
+          "An error occurred while trying to update data: " + error.message
+        );
+      });
+  }
 }
 
 const userService = new UserService();
