@@ -57,7 +57,7 @@ class ProductService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to add product: " + error.message,
+          "An error occurred while trying to add product: " + error.message
         );
       });
   }
@@ -106,7 +106,7 @@ class ProductService {
           `&idCategoria=${categoryId}`,
           `&idMarca=${brandId}`,
           `&estado=${productConditon}`,
-        ].join(""),
+        ].join("")
       )
       .then((response) => {
         return response.data.productos.map((product) => ({
@@ -133,8 +133,7 @@ class ProductService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to get all products: " +
-            error.message,
+          "An error occurred while trying to get all products: " + error.message
         );
       });
   }
@@ -167,8 +166,7 @@ class ProductService {
       })
       .catch((error) => {
         throw new Error(
-          "An error occurred while trying to get all products: " +
-            error.message,
+          "An error occurred while trying to get all products: " + error.message
         );
       });
   }
@@ -176,8 +174,7 @@ class ProductService {
   deactivateProduct(id) {
     return apiClient.put("/producto/desactivar?id=" + id).catch((error) => {
       throw new Error(
-        "An error occurred while trying to deactivate product: " +
-          error.message,
+        "An error occurred while trying to deactivate product: " + error.message
       );
     });
   }

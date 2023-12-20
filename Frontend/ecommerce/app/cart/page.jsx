@@ -1,17 +1,13 @@
 "use client";
 
 import React from "react";
-import { cartStore } from "@/store";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { cartStore } from "@/store";
 
 const CartPage = () => {
   const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
   const router = useRouter();
-
-  const { data } = useSession();
-  console.log("data", data);
 
   const handleAddOne = (productId) => {
     cartStore.getState().incrementQuantity(productId); // Incrementar cantidad de producto en el carrito
@@ -20,12 +16,6 @@ const CartPage = () => {
   const handleRemoveOne = (productId) => {
     cartStore.getState().decrementQuantity(productId); // Decrementar cantidad de producto en el carrito
   };
-
-  // const handleRemoveAll = () => {
-  //   // Lógica para eliminar todos los productos del carrito
-  //   // Puedes utilizar la función removeFromCart del cartStore si está definida
-  //   cartStore.getState().removeAllFromCart();
-  // };
 
   const handleRemoveOneItem = (productId) => {
     // Lógica para eliminar uno de los productos del carrito
@@ -39,10 +29,7 @@ const CartPage = () => {
   };
 
   // Calcular el total de la compra
-  const total = cart.reduce(
-    (acc, item) => acc + item.precio * item.quantity,
-    0,
-  );
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
     <div>
@@ -51,7 +38,7 @@ const CartPage = () => {
         <h1 className="mb-4 text-2xl text-[#FEAF00]">Carrito de Compras</h1>
         <h3 className="mb-4 flex text-xl text-[#FEAF00]">
           <Link href={"/supermarket"}>
-            <img src="assets/arrow.svg" className="mr-4" alt=""></img>
+            <img src="assets/arrow.svg" className="mr-4"></img>
           </Link>{" "}
           Continuar Comprando
         </h3>
@@ -71,13 +58,13 @@ const CartPage = () => {
                 <div className="m-2 flex w-2/5 items-center font-semibold">
                   <div className="mx-4 flex h-20 w-20 items-center justify-center rounded-xl border bg-white">
                     <img
-                      src={item.imagenes[0].url}
+                      src={item.images[0].url}
                       className=" mx-4 h-full w-full object-contain"
                     ></img>
                   </div>
-                  <p>{item.nombre}</p>
+                  <p>{item.name}</p>
                 </div>
-                <p className=" m-2 w-[15%]">${item.precio}</p>
+                <p className=" m-2 w-[15%]">${item.price}</p>
                 <div className="flex w-1/6 justify-between">
                   <button
                     onClick={() => handleRemoveOne(item.id)}
@@ -93,7 +80,7 @@ const CartPage = () => {
                     +
                   </button>
                 </div>
-                <p className=" ml-8 w-1/6">${item.quantity * item.precio}</p>
+                <p className=" ml-8 w-1/6">${item.quantity * item.price}</p>
                 <button onClick={() => handleRemoveOneItem(item.id)}>
                   {" "}
                   <img src="assets/trash.svg"></img>
@@ -108,13 +95,17 @@ const CartPage = () => {
             </div>
             <button
               onClick={handleCheckout}
-              className="mx-auto flex h-[46px] w-[90%] items-center justify-center bg-black text-white"
+              disabled={total === 0}
+              className={`mx-auto flex h-[46px] w-[90%] items-center justify-center bg-black text-white ${
+                total === 0
+                  ? ""
+                  : "transition-all hover:scale-[1.02] hover:decoration-gray-900"
+              } `}
             >
               Continuar con la Compra
             </button>
           </div>
         </div>
-        <div className="mt-8 flex justify-between"></div>
       </div>
     </div>
   );

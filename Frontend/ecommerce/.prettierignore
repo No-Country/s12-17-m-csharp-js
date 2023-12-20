@@ -1,0 +1,12 @@
+node_modules
+.next
+.husky
+coverage
+.prettierignore
+.stylelintignore
+.eslintignore
+.tsconfig.json
+.prettierrc
+package-lock.json
+package.json
+pnpm-lock.yaml
