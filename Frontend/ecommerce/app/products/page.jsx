@@ -10,7 +10,7 @@ const ProductsPage = () => {
 
   const categoryId = searchParams.get("categoryId") ?? "";
   const brandId = searchParams.get("brandId") ?? "";
-  const productCondition = searchParams.get("priceRangeId") ?? "";
+  const productCondition = searchParams.get("productCondition") ?? "";
 
   useEffect(() => {
     productService
