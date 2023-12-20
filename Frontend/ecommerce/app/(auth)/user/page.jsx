@@ -20,7 +20,7 @@ function UserPanel() {
         console.log("An error ocurred while fetching data");
         console.log(error);
       })
-      .finally(() => setEdit(false));
+      .finally(() => setShowPopUp(true));
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function UserPanel() {
         console.log("An error ocurred while fetching data");
         console.error(error);
       });
-  }, []);
+  }, [showPopUp]);
 
   return (
     <div className="mx-auto mt-12 h-screen max-w-7xl p-4">
@@ -42,7 +42,10 @@ function UserPanel() {
           redirectTo="/user"
           title="Datos editados corréctamente"
           description=""
-          onClose={() => setShowPopUp(false)}
+          onClose={() => {
+            setShowPopUp(false);
+            setEdit(false);
+          }}
         />
       )}
       <div className="flex justify-between">
