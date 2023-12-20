@@ -13,7 +13,7 @@ const StarRating = ({ rating, className = "" }) => {
     } else {
       // Add an empty star
       starRatingIcons.push(
-        <IoStarOutline key={i} className="text-slate-400" />,
+        <IoStarOutline key={i} className="text-slate-400" />
       );
     }
   }

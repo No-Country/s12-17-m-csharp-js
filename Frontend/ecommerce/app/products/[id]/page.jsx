@@ -8,7 +8,6 @@ import {
   PRODUCT_CARDS,
 } from "@/constants/product";
 
-import Tabs from "@/components/Tabs";
 import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 import CardCarousel from "@/components/Carrusel/Cardproduct";
 import { productService } from "@/services";
@@ -69,9 +68,9 @@ const ProductDetail = ({ params }) => {
         <HiOutlineChevronDoubleDown className="mx-auto h-6 w-6 animate-bounce text-gray-500" />
       </div>
 
-      <Tabs>
+      {/* <Tabs>
         <Tabs.Content title="Descripción">{product.description}</Tabs.Content>
-      </Tabs>
+      </Tabs> */}
 
       <hr className="mt-24 border-gray-200" />
       <div className="-mx-4">

@@ -33,7 +33,7 @@ const FilterSection = ({ title, options, name, ...props }) => {
               type="radio"
               value=""
               label="Todos"
-              defaultChecked={true}
+              {...props}
             />
           </div>
           {options.map((option, index) => (
@@ -43,6 +43,7 @@ const FilterSection = ({ title, options, name, ...props }) => {
               type="radio"
               value={option.value}
               label={option.label}
+              {...props}
             />
           ))}
         </>

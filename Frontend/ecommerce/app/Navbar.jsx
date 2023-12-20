@@ -30,7 +30,7 @@ const Navbar = () => {
       .getAllCategories()
       .then((categories) => {
         const updatedCategories = categories.map((category) => {
-          return { ...category, route: `/products?category=${category.id}` };
+          return { ...category, route: `/products?categoryId=${category.id}` };
         });
         setCategories(updatedCategories);
       })
