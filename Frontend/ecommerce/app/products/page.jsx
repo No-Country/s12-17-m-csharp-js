@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
 
   const categoryId = searchParams.get("categoryId") ?? "";
@@ -21,6 +22,7 @@ const ProductsPage = () => {
       })
       .then((products) => {
         setProducts(products);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -32,15 +34,19 @@ const ProductsPage = () => {
       <div className="hidden md:block">
         <Sidebar />
       </div>
-      {products.length !== 0 ? (
+      {isLoading ? (
+        <div className="col-span-3 min-h-screen bg-white text-center text-xl font-medium">
+          Cargando productos...
+        </div>
+      ) : products.length !== 0 ? (
         <div className="3xl:grid-cols-4 mx-auto grid w-full grid-cols-1 justify-center gap-8 xl:grid-cols-2 2xl:grid-cols-3">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       ) : (
-        <div className="col-span-3 min-h-screen bg-white text-center text-xl font-semibold">
-          Cargando productos...
+        <div className="col-span-3 min-h-screen bg-white text-center text-xl font-medium">
+          No hay productos que coincidan con el criterio de busqueda
         </div>
       )}
     </div>

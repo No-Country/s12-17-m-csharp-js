@@ -1,5 +1,4 @@
 import apiClient from "./apiClient";
-import { brandService, categoryService } from ".";
 
 class ProductService {
   /**
@@ -142,39 +141,30 @@ class ProductService {
   getUserProducts() {
     return apiClient
       .get("/producto/misproductos")
-      .then(async (response) => {
-        const products = await Promise.all(
-          response.data.map(async (product) => {
-            const category = await categoryService.getCategoryById(
-              product.categoriaId
-            );
-            const brand = await brandService.getBrandById(product.marcaId);
-
-            return {
-              id: product.id,
-              name: product.nombre,
-              description: product.descripcion,
-              userId: product.usuarioId,
-              category: {
-                id: category.id,
-                name: category.name,
-              },
-              brand: {
-                id: brand.id,
-                name: brand.name,
-              },
-              model: product.modelo,
-              unit: product.unidad,
-              active: product.activo,
-              currentStock: product.stock_Actual,
-              productCondition: product.estado,
-              price: product.precio,
-              images: product.imagenes,
-            };
-          })
-        );
-
-        return products;
+      .then((response) => {
+        return response.data.map((product) => {
+          return {
+            id: product.id,
+            name: product.nombre,
+            description: product.descripcion,
+            userId: product.usuarioId,
+            category: {
+              id: product.categoria.id,
+              name: product.categoria.nombre,
+            },
+            brand: {
+              id: product.marca.id,
+              name: product.marca.nombre,
+            },
+            model: product.modelo,
+            unit: product.unidad,
+            active: product.activo,
+            currentStock: product.stock_Actual,
+            productCondition: product.estado,
+            price: product.precio,
+            images: product.imagenes,
+          };
+        });
       })
       .catch((error) => {
         throw new Error(

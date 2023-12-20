@@ -29,7 +29,9 @@ const ProductsTable = ({ products }) => {
         {products.map((product) => (
           <tr key={product.id}>
             <td className="whitespace-nowrap px-6 py-4">{product.name}</td>
-            <td className="whitespace-nowrap px-6 py-4">{product.category}</td>
+            <td className="whitespace-nowrap px-6 py-4">
+              {product.category.name}
+            </td>
             <td className="whitespace-nowrap px-6 py-4">
               $ {parseFloat(product.price).toFixed(2)}
             </td>
