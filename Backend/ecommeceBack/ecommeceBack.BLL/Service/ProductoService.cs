@@ -71,6 +71,8 @@ namespace ecommeceBack.BLL.Service
 
                 var lista = await query
                     .Include(p=>p.Imagenes)
+                    .Include(p=>p.Marca)
+                    .Include(p=>p.Categoria)
                     .Where(p=>p.UsuarioId==id)
                     .ToListAsync();
                 return mapper.Map<IEnumerable<ProductoDTO>>(lista);
