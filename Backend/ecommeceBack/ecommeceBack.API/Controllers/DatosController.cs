@@ -75,7 +75,7 @@ namespace ecommeceBack.API.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<ActionResult<DatosDTO>>registrar(CreacionDatosDTO modelo) 
         {
@@ -84,7 +84,7 @@ namespace ecommeceBack.API.Controllers
             return Ok(datos);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         public async Task<ActionResult<DatosDTO>>Actualizar(int id, CreacionDatosDTO modelo) 
         {   
