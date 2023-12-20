@@ -1,40 +1,23 @@
 "use client";
-// import { useState, useEffect, useMemo, useCallback } from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { productService } from "@/services";
 import { ProductCard, Sidebar } from "./Partials";
-// import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
-  // const [category, setCategory] = useState("");
-  // const [condition, setCondition] = useState("");
-  // const [priceRange, setPriceRange] = useState("");
+  const searchParams = useSearchParams();
 
-  // const router = useRouter();
-  // const pathname = usePathname();
-  // const searchParams = useSearchParams();
-
-  // const createQueryString = useCallback(
-  //   (name, value) => {
-  //     const params = new URLSearchParams(searchParams);
-  //     params.set(name, value);
-
-  //     return params.toString();
-  //   },
-  //   [searchParams]
-  // );
-
-  // const categoryId = searchParams.get("categoryId");
-  // const brandId = searchParams.get("brandId");
-  // const productCondition = searchParams.get("priceRangeId");
+  const categoryId = searchParams.get("categoryId") ?? "";
+  const brandId = searchParams.get("brandId") ?? "";
+  const productCondition = searchParams.get("priceRangeId") ?? "";
 
   useEffect(() => {
-    // createQueryString("itemsPerPage", "3");
     productService
       .getAllProducts({
-        itemsPerPage: "3",
-        pageNumber: "1",
+        categoryId,
+        brandId,
+        productCondition,
       })
       .then((products) => {
         setProducts(products);
@@ -42,7 +25,7 @@ const ProductsPage = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [brandId, categoryId, productCondition]);
 
   return (
     <div className="mx-5 mt-8 flex gap-20 lg:mx-12 lg:mt-12">

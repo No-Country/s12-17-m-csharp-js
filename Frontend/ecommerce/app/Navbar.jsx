@@ -30,7 +30,7 @@ const Navbar = () => {
       .getAllCategories()
       .then((categories) => {
         const updatedCategories = categories.map((category) => {
-          return { ...category, route: `/products?category=${category.id}` };
+          return { ...category, route: `/products?categoryId=${category.id}` };
         });
         setCategories(updatedCategories);
       })
@@ -68,13 +68,15 @@ const Navbar = () => {
           ))}
         </div>
         <Dropdown title="Categorías" options={categories} />
-        <Dropdown
-          title="Panel de control"
-          options={[
-            { name: "Mis productos", route: "/products/user-products" },
-            { name: "Mis compras", route: "/products/user-orders" },
-          ]}
-        />
+        {isLoggedIn && (
+          <Dropdown
+            title="Panel de control"
+            options={[
+              { name: "Mis productos", route: "/products/user-products" },
+              { name: "Mis compras", route: "/products/user-orders" },
+            ]}
+          />
+        )}
       </div>
       <div className="mx-4 flex h-full items-center justify-end gap-8">
         {pathname === "/supermarket" && (
@@ -101,7 +103,9 @@ const Navbar = () => {
         </div>
         {isLoggedIn ? (
           <>
-            <FaRegUserCircle size={26} />
+            <Link href={"/user"}>
+              <FaRegUserCircle size={26} />
+            </Link>
             <button
               onClick={() => signOut()}
               className="rounded-full bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-secondary hover:text-black hover:decoration-inherit"

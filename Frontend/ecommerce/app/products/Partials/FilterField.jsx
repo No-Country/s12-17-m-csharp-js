@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-const FilterField = ({ name, type, value, label, defaultChecked = false }) => {
+const FilterField = ({ name, type, value, label, ...props }) => {
   const { register } = useFormContext();
 
   return (
@@ -9,10 +9,10 @@ const FilterField = ({ name, type, value, label, defaultChecked = false }) => {
         <input
           {...register(name)}
           className="h-3.5 w-3.5 rounded-sm border-2 border-slate-500"
-          defaultChecked={defaultChecked}
           name={name}
           type={type}
           value={value}
+          {...props}
         />
         <span>{label}</span>
       </span>

@@ -95,12 +95,14 @@ const CreateProduct = () => {
             <TextInput
               label="Precio"
               name="price"
+              min={1}
               type="number"
               placeholder="$"
             />
             <TextInput
               label="Stock"
               name={"stock"}
+              min={1}
               type="number"
               placeholder="1"
             />

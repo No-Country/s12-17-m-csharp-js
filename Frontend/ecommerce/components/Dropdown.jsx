@@ -34,7 +34,7 @@ function Dropdown({ title, options }) {
           <AiOutlineCaretUp className="h-8" />
         )}
         {isOpen && (
-          <div className="absolute left-0 top-0 z-40 mt-10 flex flex-col items-start overflow-hidden rounded-md border border-slate-500">
+          <div className="absolute left-0 top-0 z-10 mt-10 flex flex-col items-start overflow-hidden rounded-md border border-slate-500 bg-white">
             {options.map((option) => (
               <Link
                 key={option.id ?? option.name}

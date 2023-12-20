@@ -28,7 +28,7 @@ const Tabs = ({ children, ...props }) => {
         <hr className="mt-2 border-gray-300 dark:border-gray-700" />
         <div className="my-4 text-lg">
           {children.map(
-            (child) => child.props.title === activeTab && child.props.children,
+            (child) => child.props.title === activeTab && child.props.children
           )}
         </div>
       </div>

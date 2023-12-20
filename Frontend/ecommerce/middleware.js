@@ -1,3 +1,5 @@
 export { default } from "next-auth/middleware";
 
-export const config = { matcher: ["/control_panel"] };
+export const config = {
+  matcher: ["/products/create", "/products/user-products"],
+};
