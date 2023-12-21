@@ -25,6 +25,8 @@ Funcionalidades:<br>
 -Estado del Pago: Confirmación y notificación de compra realizada.<br>
 -Historial con detalle de compras realizadas.<br>
 
+##Video presentacion
+https://youtu.be/XVZX1U4BzVU/
 
 ## Equipo: s12-17-m-csharp-js
 
@@ -55,9 +57,6 @@ Funcionalidades:<br>
 
 ## Demo
 https://surshop-beta.vercel.app/
-
-https://youtu.be/XVZX1U4BzVU
-
 
 [behance]: https://img.shields.io/badge/Behance-1769ff?style=for-the-badge&logo=behance&logoColor=white
 [linkedin]: https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white
