@@ -1,13 +1,13 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrum";
-import { useRouter } from "next/navigation";
-import { ProductInfo, ProductImages } from "./Partials";
-import { PRODUCT_CARDS, PRODUCT_IMAGES } from "@/constants/product";
-
-import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 import CardCarousel from "@/components/Carrusel/Cardproduct";
+import { HiOutlineChevronDoubleDown } from "react-icons/hi";
+import { PRODUCT_CARDS, PRODUCT_IMAGES } from "@/constants/product";
+import { ProductInfo, ProductImages } from "./Partials";
 import { productService } from "@/services";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Tabs from "@/components/Tabs";
 
 const ProductDetail = ({ params }) => {
   const [product, setProduct] = useState(null);
@@ -75,6 +75,10 @@ const ProductDetail = ({ params }) => {
         </div>
         <HiOutlineChevronDoubleDown className="mx-auto h-6 w-6 animate-bounce text-gray-500" />
       </div>
+
+      <Tabs>
+        <Tabs.Content title="Descripción">{product.description}</Tabs.Content>
+      </Tabs>
 
       <hr className="mt-24 border-gray-200" />
       <div className="-mx-4">

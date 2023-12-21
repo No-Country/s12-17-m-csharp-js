@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
-import { IoIosSearch } from "react-icons/io";
 import { Logo } from "@/public/assets/img";
 import { cartStore } from "@/store";
 import { categoryService } from "@/services";
@@ -12,6 +11,7 @@ import { routes } from "../constants/routes";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Search from "@/components/Search";
 
 const Navbar = () => {
   const cart = cartStore((state) => state.cart);
@@ -79,18 +79,7 @@ const Navbar = () => {
         )}
       </div>
       <div className="mx-4 flex h-full items-center justify-end gap-8">
-        {pathname === "/supermarket" && (
-          <div className="relative h-full py-3">
-            <input
-              className="h-full w-80 rounded-md bg-gray-200 px-4 outline-gray-500 placeholder:text-gray-700"
-              placeholder="Buscar"
-            />
-            <IoIosSearch
-              className="absolute right-2 top-5 text-primary"
-              size={25}
-            />
-          </div>
-        )}
+        {pathname.match(/^\/products(\?.*)?$/) && <Search />}
         <div className="relative">
           {cart.length !== 0 && (
             <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-medium text-white">
@@ -108,7 +97,7 @@ const Navbar = () => {
             </Link>
             <button
               onClick={() => signOut()}
-              className="rounded-full bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-secondary hover:text-black hover:decoration-inherit"
+              className="whitespace-nowrap rounded-full bg-primary px-4 py-2 font-semibold text-white transition-colors hover:bg-secondary hover:text-black hover:decoration-inherit"
             >
               Cerrar sesión
             </button>

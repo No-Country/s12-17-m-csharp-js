@@ -15,7 +15,6 @@ const Categories = () => {
   useEffect(() => {
     for (const categoryName of categoryNames) {
       categoryService.getCategoryByName(categoryName).then((category) => {
-        console.log(category);
         setCategoryIds((prev) => ({
           ...prev,
           [categoryName]: category.id,

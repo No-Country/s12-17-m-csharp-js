@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import ProductsTable from "./Partials/ProductsTable";
 import { productService } from "@/services";
@@ -7,27 +7,52 @@ import { productService } from "@/services";
 function ControlPanel() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    productService
-      .getUserProducts()
-      .then((products) => {
-        setProducts(products);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log("An error occurred while trying to get user products");
-        console.error(error);
-        setIsLoading(false);
-      });
+    fetchUserProducts();
   }, []);
 
+  const fetchUserProducts = async () => {
+    const products = await productService.getUserProducts();
+    setProducts(products);
+    setIsLoading(false);
+  };
+
+  const handleDelete = (id) => {
+    const targetProduct = products.find((product) => product.id === id);
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+
+    productService
+      .deactivateProduct(id)
+      .then(() => {
+        fetchUserProducts();
+      })
+      .catch((error) => {
+        setProducts((prevProducts) => [...prevProducts, targetProduct]);
+        console.log("An error occurred while trying to delete product", error);
+      });
+  };
+
+  const filteredProducts = useMemo(
+    () =>
+      products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery)
+      ),
+    [products, searchQuery]
+  );
+
   return (
-    <div className="mx-auto mt-12 h-screen max-w-7xl p-4">
+    <div className="mx-auto mt-12 min-h-screen max-w-7xl p-4">
       <div className="flex justify-between">
         <h2 className="text-3xl font-bold">Mis productos</h2>
         <div className="flex items-center space-x-4">
           <input
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
             className="h-10 w-80 rounded-md border border-gray-300 bg-white px-4 pr-10 outline-none placeholder:text-gray-700"
             placeholder="Buscar"
           />
@@ -51,7 +76,7 @@ function ControlPanel() {
             crear uno.
           </span>
         ) : (
-          <ProductsTable products={products} />
+          <ProductsTable products={filteredProducts} onDelete={handleDelete} />
         )}
       </div>
     </div>

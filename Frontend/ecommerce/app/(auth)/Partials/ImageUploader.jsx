@@ -28,7 +28,7 @@ const ImageUploader = ({
         name={name}
         rules={{
           validate: (files) =>
-            files.length === numberFiles ||
+            (files && files.length === numberFiles) ||
             `Debes subir ${numberFiles} imágenes`,
         }}
         render={({ field, fieldState: { error } }) => (
@@ -39,18 +39,16 @@ const ImageUploader = ({
               onupdatefiles={(fileItems) => {
                 // Set current file objects to state
                 setImages(fileItems.map((fileItem) => fileItem.file));
-                // Update the field value
-                field.onChange(fileItems.map((fileItem) => fileItem.file));
               }}
-              allowFileTypeValidation={true}
               acceptedFileTypes={["image/*"]}
+              allowFileTypeValidation={true}
+              allowImageCrop={true}
               allowMultiple={true}
+              allowReorder={true}
+              imageCropAspectRatio="1:1"
+              labelIdle='Arrastra y suelta tus archivos o <span class="filepond--label-action">Buscalos</span>'
               maxFiles={numberFiles}
               name="files"
-              allowImageCrop={true}
-              imageCropAspectRatio="1:1"
-              allowReorder={true}
-              labelIdle='Arrastra y suelta tus archivos o <span class="filepond--label-action">Buscalos</span>'
               required
             />
             {/* Display error message */}

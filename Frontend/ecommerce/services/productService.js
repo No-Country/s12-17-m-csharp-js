@@ -65,7 +65,6 @@ class ProductService {
   getProductById(id) {
     return apiClient.get("/producto/busquedaxid?id=" + id).then((response) => {
       const product = response.data;
-
       return {
         id: product.id,
         name: product.nombre,
@@ -96,6 +95,7 @@ class ProductService {
     categoryId = "",
     brandId = "",
     productCondition = "",
+    name = "",
   } = {}) {
     return apiClient
       .get(
@@ -106,10 +106,11 @@ class ProductService {
           `&idCategoria=${categoryId}`,
           `&idMarca=${brandId}`,
           `&estado=${productCondition}`,
+          `&nombre=${name}`,
         ].join("")
       )
       .then((response) => {
-        return response.data.productos.map((product) => ({
+        const products = response.data.productos.map((product) => ({
           id: product.id,
           name: product.nombre,
           description: product.descripcion,
@@ -130,6 +131,11 @@ class ProductService {
           price: product.precio,
           images: product.imagenes,
         }));
+
+        return {
+          products: products.filter((product) => product.active),
+          totalPages: response.data.paginas,
+        };
       })
       .catch((error) => {
         throw new Error(
@@ -141,8 +147,8 @@ class ProductService {
   getUserProducts() {
     return apiClient
       .get("/producto/misproductos")
-      .then((response) => {
-        return response.data.map((product) => {
+      .then(async (response) => {
+        const products = response.data.map((product) => {
           return {
             id: product.id,
             name: product.nombre,
@@ -165,6 +171,8 @@ class ProductService {
             images: product.imagenes,
           };
         });
+
+        return products.filter((product) => product.active);
       })
       .catch((error) => {
         throw new Error(
@@ -174,7 +182,7 @@ class ProductService {
   }
 
   deactivateProduct(id) {
-    return apiClient.put("/producto/desactivar?id=" + id).catch((error) => {
+    return apiClient.put(`/producto/activo?idProducto=${id}`).catch((error) => {
       throw new Error(
         "An error occurred while trying to deactivate product: " + error.message
       );

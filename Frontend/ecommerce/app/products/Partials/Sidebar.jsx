@@ -1,12 +1,12 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FilterSection from "./FilterSection";
 import { FormProvider, useForm } from "react-hook-form";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
+import { usePushQueryString } from "@/hooks";
 
 const Sidebar = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   // Initialize form methods
@@ -17,37 +17,7 @@ const Sidebar = () => {
   const brandId = watch("brandId");
   const productCondition = watch("productCondition");
 
-  const createQueryString = useCallback(
-    (params) => {
-      const newParams = new URLSearchParams(searchParams);
-      Object.entries(params).forEach(([key, value]) => {
-        if (value) {
-          newParams.set(key, value);
-        } else {
-          newParams.delete(key);
-        }
-      });
-
-      return newParams.toString();
-    },
-    [searchParams]
-  );
-
-  useEffect(() => {
-    const queryString = createQueryString({
-      categoryId,
-      brandId,
-      productCondition,
-    });
-    router.push(`${pathname}?${queryString}`, { scroll: false });
-  }, [
-    categoryId,
-    brandId,
-    productCondition,
-    router,
-    createQueryString,
-    pathname,
-  ]);
+  const pushQueryString = usePushQueryString();
 
   useEffect(() => {
     if (!searchParams) return;
@@ -62,6 +32,14 @@ const Sidebar = () => {
     setValue("brandId", brandId);
     setValue("productCondition", productCondition);
   }, [searchParams, setValue]);
+
+  useEffect(() => {
+    pushQueryString({
+      categoryId,
+      brandId,
+      productCondition,
+    });
+  }, [categoryId, brandId, productCondition, pushQueryString]);
 
   return (
     <div className="w-[calc(100%+3rem)] lg:w-72">
