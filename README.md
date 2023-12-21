@@ -53,6 +53,9 @@ Funcionalidades:<br>
 | Others        | ![GIT](https://img.shields.io/badge/Git-fc6d26?style=for-the-badge&logo=git&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)                                                                                                                                                                                                                                                                                                                                                                                                              |
 |               |
 
+## Video de Presentación
+[youtube]: https://youtu.be/XVZX1U4BzVU
+
 
 ## Demo
 https://surshop-beta.vercel.app/
