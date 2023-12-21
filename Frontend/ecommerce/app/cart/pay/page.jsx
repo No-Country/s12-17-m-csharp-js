@@ -23,6 +23,7 @@ const PayPage = () => {
     },
   };
 
+
   const onSubmit = async (formData) => {
     const renglones = [];
     cart.forEach(prod => {
@@ -31,7 +32,12 @@ const PayPage = () => {
         "cantidad": prod.quantity,
         "unidad": prod.unit
       })
+                .catch((error) => {
+                    // manejar la respuesta de error al intentar crear el pago
+                    reject();
+                });
     });
+    };
 
     const data = {
       ...formData,
@@ -45,6 +51,7 @@ const PayPage = () => {
     // callback llamado para todos los casos de error de Brick
     console.log(error);
   };
+
 
   const onReady = async () => {
     /*
@@ -66,6 +73,7 @@ const PayPage = () => {
     }
   };
 
+    const total = cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
 
   return (
     <div>
@@ -83,6 +91,7 @@ const PayPage = () => {
         <h3 className="mb-4 flex text-xl text-[#FEAF00]"><Link href={"/cart"}><img src='../assets/arrow.svg' className='mr-4' ></img></Link>  Volver al Carrito</h3>
         <div className='mt-20 flex justify-around'>
           <div className=' w-2/5 rounded-[20px] shadow-md'>
+
             <CardPayment
               initialization={initialization}
               onSubmit={onSubmit}
@@ -117,11 +126,14 @@ const PayPage = () => {
                 <p className="font-semibold">${Math.round(total * 100) / 100}</p>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
+
   )
+
 }
 
 export default PayPage

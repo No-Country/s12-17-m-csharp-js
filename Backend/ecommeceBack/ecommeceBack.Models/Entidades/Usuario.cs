@@ -16,5 +16,9 @@ namespace ecommeceBack.Models.Entidades
         
         public bool Activo {  get; set; } 
 
+        public Datos? Datos { get; set; }
+
+        public int? DatosId { get; set; }
+
     }
 }

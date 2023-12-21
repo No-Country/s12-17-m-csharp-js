@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { cartStore } from "@/store";
 import { getToken } from "@/services/apiClient";
 
+
 const CartPage = () => {
   const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
   const router = useRouter();
@@ -34,7 +35,11 @@ const CartPage = () => {
   };
 
   // Calcular el total de la compra
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
+
+  
+
+  
 
   return (
     <div>

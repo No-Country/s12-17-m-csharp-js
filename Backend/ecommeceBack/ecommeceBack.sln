@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommeceBack.DAL", "ecommeceBack.DAL\ecommeceBack.DAL.csproj", "{8E62C17E-B66B-4D40-AF25-C6E95F850F17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ecommeceBack.DAL", "ecommeceBack.DAL\ecommeceBack.DAL.csproj", "{8E62C17E-B66B-4D40-AF25-C6E95F850F17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommeceBack.Models", "ecommeceBack.Models\ecommeceBack.Models.csproj", "{1484DAA9-38AE-42D2-AAD0-B76FEBBA31BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ecommeceBack.Models", "ecommeceBack.Models\ecommeceBack.Models.csproj", "{1484DAA9-38AE-42D2-AAD0-B76FEBBA31BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommeceBack.BLL", "ecommeceBack.BLL\ecommeceBack.BLL.csproj", "{033C2880-1677-4938-86E8-F4262C5E0F6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ecommeceBack.BLL", "ecommeceBack.BLL\ecommeceBack.BLL.csproj", "{033C2880-1677-4938-86E8-F4262C5E0F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ecommeceBack.API", "ecommeceBack.API\ecommeceBack.API.csproj", "{6D8269DC-8CD2-4678-931C-647406072032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ecommeceBack.API", "ecommeceBack.API\ecommeceBack.API.csproj", "{6D8269DC-8CD2-4678-931C-647406072032}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
