@@ -33,7 +33,7 @@ https://youtu.be/XVZX1U4BzVU/
 | Rol               | Nombre               | Redes                                                                                                                             |
 | :---------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
 | `Project Manager` | Victoria Chaile      | [![GitHub]](https://github.com/victoria-chaile) [![linkedin]](https://www.linkedin.com/in/victoria-agustina-chaile/)                 |
-| `UX/UI Designer`  | Sergio Arancibia     | [![behance]](https://www.behance.net/solramirez10) [![linkedin]](https://www.linkedin.com/in/sergio-arancibia-517345237/)               |
+| `UX/UI Designer`  | Sergio Arancibia     | [![behance]](https://www.behance.net/sergioarancibia3) [![linkedin]](https://www.linkedin.com/in/sergio-arancibia-517345237/)               |
 | `Front End`       | Rafael Cangahuala    | [![GitHub]](https://github.com/rcpc265) [![linkedin]](https://www.linkedin.com/in/rafael-cangahuala-864748251/)              |
 | `Front End`       | Leandro Canon        | [![GitHub]](https://github.com/LeanCano) [![linkedin]](https://www.linkedin.com/in/leandrocanoc/)                             |
 | `Back End`        | Rodrigo Arguello     | [![GitHub]](https://github.com/rodriarguello) [![linkedin]](https://www.linkedin.com/in/rodrigo-arguello-402073240/)               |                                                                                             
