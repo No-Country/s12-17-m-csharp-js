@@ -26,12 +26,7 @@ const ImageUploader = ({
       <Controller
         control={control}
         name={name}
-        rules={{
-          validate: (files) =>
-            (files && files.length === numberFiles) ||
-            `Debes subir ${numberFiles} imágenes`,
-        }}
-        render={({ field, fieldState: { error } }) => (
+        render={({ field }) => (
           <>
             <FilePond
               {...field}
@@ -51,10 +46,6 @@ const ImageUploader = ({
               name="files"
               required
             />
-            {/* Display error message */}
-            {error && (
-              <span className="text-sm text-red-500">{error.message}</span>
-            )}
           </>
         )}
       />
