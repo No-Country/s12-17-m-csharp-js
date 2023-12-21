@@ -1,114 +1,38 @@
-import CardCarousel from "./components/Carrusel/Cardproduct";
-import Carousel from "./components/Carrusel/Carousel";
-import CombinedCarousel from "./components/Carrusel/Carousel_section1";
-import Categories from "./components/Categories/Categories";
-import Promos from "./components/Promos/Promos";
+import CardCarousel from "@/components/Carrusel/Cardproduct";
+import Carousel from "@/components/Carrusel/Carousel";
+import CombinedCarousel from "@/components/Carrusel/Carousel_section1";
+import Categories from "@/components/Categories/Categories";
+import Promos from "@/components/Promos/Promos";
+import {
+  SLIDES,
+  SECOND_SLIDES,
+  THIRD_SLIDES,
+  CARDS_DATA,
+} from "@/constants/homeData";
 
 export default function Home() {
-  let slides = ["/megasale1.png", "/megasale2.png", "/megasale3.png"];
-  let secondSlides = ["/specialoffer.png", "/specialoffer2.png"];
-  let thirdSlides = [
-    "/Ellipse 146.png",
-    "/Ellipse 147.png",
-    "/carrefour.png",
-    "/wallmart.png",
-    "/icbf.png",
-    "/santander.png",
-  ];
-  const cardsData = [
-    {
-      id: 1,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 1",
-    },
-    {
-      id: 2,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 2",
-    },
-    {
-      id: 3,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 3",
-    },
-    {
-      id: 4,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 4",
-    },
-
-    {
-      id: 5,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 5",
-    },
-
-    {
-      id: 6,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 6",
-    },
-
-    // Agrega más datos para tarjetas adicionales aquí
-    {
-      id: 7,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 7",
-    },
-    {
-      id: 8,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 8",
-    },
-    {
-      id: 9,
-      title: "Lenovo IdeaPad Slim 3 8va Gen (14”, AMD)",
-      image: "/lenovo.png",
-      price: "$593.998",
-      description: "Description for Product 9",
-    },
-  ];
-
   return (
-    <div>
-      <div className="flex mt-20 ml-20">
+    <>
+      <div className="mx-24 mt-24 flex justify-center gap-6">
         {/* Primer carrusel */}
-        <div className="w-[50%] h-70  ml-10 ">
-          <Carousel slides={slides} />
+        <div className="w-1/2">
+          <Carousel slides={SLIDES} />
         </div>
         {/* Segundo carrusel dividido en dos */}
-        <div className="w-[35%]  flex flex-col">
-          <div className="h-[96%] ml-10 ">
-            <Carousel slides={secondSlides} />
-          </div>
-          <div className="h-[50%] ml-10 mt-4 ">
+        <div className="flex w-[35%] flex-col justify-between">
+          <Carousel slides={SECOND_SLIDES} />
+          <div className="h-[50%]">
             {/* Carrusel en la mitad inferior del segundo carrusel */}
-            <CombinedCarousel slides={thirdSlides} />
+            <CombinedCarousel slides={THIRD_SLIDES} />
           </div>
         </div>
       </div>
-      <div className="mt-20 mr-40 ml-40">
-        <CardCarousel cards={cardsData} />
-      </div>
 
-      <Categories />
-      <Promos />
-    </div>
+      <div className="mx-auto mt-20 max-w-[1200px]">
+        <CardCarousel cards={CARDS_DATA} />
+        <Categories />
+        <Promos />
+      </div>
+    </>
   );
 }

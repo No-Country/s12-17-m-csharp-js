@@ -1,21 +1,21 @@
-"use client"
-import React from 'react';
-import useStore from '../store/useStore';
- 
+"use client";
+import React from "react";
+import cartStore from "../../store/cartStore";
 
 const CartPage = () => {
-  const cart = useStore(state => state.cart); // Obtener el estado del carrito
+  const cart = cartStore((state) => state.cart); // Obtener el estado del carrito
 
-  const handleAddOne = productId => {
+  const handleAddOne = (productId) => {
     // Lógica para agregar un producto al carrito (incrementar cantidad)
   };
 
-  const handleRemoveOne = productId => {
+  const handleRemoveOne = (productId) => {
     // Lógica para quitar un producto del carrito (disminuir cantidad)
   };
 
   const handleRemoveAll = () => {
     // Lógica para eliminar todos los productos del carrito
+    return null;
   };
 
   const handleCheckout = () => {
@@ -24,10 +24,10 @@ const CartPage = () => {
   };
 
   return (
-    <div className="cart-page">
+    <div>
       <h1>Carrito de Compras</h1>
-      <div className="cart-items">
-        {cart.map(item => (
+      <div>
+        {cart.map((item) => (
           <div key={item.id}>
             <p>{item.title}</p>
             <p>${item.price}</p>

@@ -1,58 +1,91 @@
 "use client";
-import Breadcrumb from "@/app/components/Breadcrum";
-import { ProductInfo, ProductImages } from "./Partials";
-import {
-  PRODUCT_BREADCRUM_ITEMS,
-  PRODUCT_IMAGES,
-  PRODUCT_INFORMATION,
-  PRODUCT_TABS,
-  PRODUCT_CARDS,
-} from "@/app/constants/product";
-
-import Tabs from "@/app/components/Tabs";
+import Breadcrumb from "@/components/Breadcrum";
+import CardCarousel from "@/components/Carrusel/Cardproduct";
 import { HiOutlineChevronDoubleDown } from "react-icons/hi";
-import CardCarousel from "@/app/components/Carrusel/Cardproduct";
+import { PRODUCT_CARDS, PRODUCT_IMAGES } from "@/constants/product";
+import { ProductInfo, ProductImages } from "./Partials";
+import { productService } from "@/services";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Tabs from "@/components/Tabs";
 
-const ProductDetailPage = () => {
+const ProductDetail = ({ params }) => {
+  const [product, setProduct] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    productService
+      .getProductById(params.id)
+      .then((product) => {
+        setProduct(product);
+        console.log(product);
+      })
+      .catch((error) => {
+        if (error.response?.status === 404) {
+          console.log("Product not found");
+          router.push("/404");
+        }
+      });
+  }, [params.id, router]);
+
+  if (!product) {
+    return (
+      <div className="mx-auto mt-10 min-h-screen w-full max-w-5xl">
+        Cargando producto...
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white max-w-5xl mx-auto mb-10">
-      <div className="min-h-[calc(100vh-80px)] flex flex-col justify-center">
-        <Breadcrumb items={PRODUCT_BREADCRUM_ITEMS} />
-        <div className="flex w-full gap-20 mt-6">
+    <div className="mx-auto mb-10 max-w-5xl bg-white">
+      <div className="flex min-h-[calc(100vh-80px)] flex-col justify-center">
+        <Breadcrumb
+          items={[
+            {
+              path: "/",
+              label: "Inicio",
+            },
+            {
+              path: "/products",
+              label: "Productos",
+            },
+            {
+              label: `${product.category.name}`,
+              path: `/products?categoryId=${product.category.id}`,
+            },
+          ]}
+        />
+        <div className="mt-6 flex w-full gap-16">
           <ProductImages
-            mainImage={PRODUCT_IMAGES.mainImage}
-            additionalImages={PRODUCT_IMAGES.additionalImages}
+            mainImage={product.images[0]?.url ?? PRODUCT_IMAGES.mainImage}
+            additionalImages={[
+              product.images[1]?.url ?? PRODUCT_IMAGES.additionalImages[0],
+              product.images[2]?.url ?? PRODUCT_IMAGES.additionalImages[1],
+              product.images[3]?.url ?? PRODUCT_IMAGES.additionalImages[2],
+            ]}
           />
           <ProductInfo
-            category={PRODUCT_INFORMATION.category}
-            name={PRODUCT_INFORMATION.name}
-            rating={PRODUCT_INFORMATION.rating}
-            numReviews={PRODUCT_INFORMATION.numReviews}
-            price={PRODUCT_INFORMATION.price}
-            productCondition={PRODUCT_INFORMATION.productCondition}
-            stock={PRODUCT_INFORMATION.stock}
+            category={product.category.name}
+            name={product.name}
+            price={product.price}
+            productCondition={product.productCondition}
+            currentStock={product.currentStock}
+            product={product}
           />
         </div>
-        <HiOutlineChevronDoubleDown className="w-6 h-6 mx-auto text-gray-500 animate-bounce" />
+        <HiOutlineChevronDoubleDown className="mx-auto h-6 w-6 animate-bounce text-gray-500" />
       </div>
 
       <Tabs>
-        <Tabs.Content title="Descripción">
-          {PRODUCT_TABS.description}
-        </Tabs.Content>
-        <Tabs.Content title="Calificaciones">
-          {PRODUCT_TABS.reviews}
-        </Tabs.Content>
-        <Tabs.Content title="Preguntas y Respuestas">
-          {PRODUCT_TABS.questions}
-        </Tabs.Content>
+        <Tabs.Content title="Descripción">{product.description}</Tabs.Content>
       </Tabs>
 
-      <hr className="border-gray-200 mt-24" />
+      <hr className="mt-24 border-gray-200" />
       <div className="-mx-4">
         <CardCarousel cards={PRODUCT_CARDS} />
       </div>
     </div>
   );
 };
-export default ProductDetailPage;
+
+export default ProductDetail;

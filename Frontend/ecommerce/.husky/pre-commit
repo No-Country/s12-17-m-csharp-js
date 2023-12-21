@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+echo "Running pre-commit hook"
+cd Frontend/ecommerce
+
+npx lint-staged
+# echo "Running prettier 🎨"
+# echo "Formatting files:"
+# npx prettier --write . | grep -v "unchanged" | xargs -I{} echo "- {}"
+
+# echo "Running ESLint 🧹"
+# npx next lint --fix . 
